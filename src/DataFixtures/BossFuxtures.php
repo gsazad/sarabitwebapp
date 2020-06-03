@@ -15,7 +15,7 @@ use Doctrine\Persistence\ObjectManager;
 class BossFuxtures extends Fixture {
 
     public function load(ObjectManager $manager) {
-        $dateNow = new DateTime("now", new DateTimeZone('UTC'));
+        $dateNow = new DateTime("now", new DateTimeZone('Asia/Kolkata'));
         $u = new Admin();
         $u->setName('Gurjeet Singh');
         $u->setUsername('singh@gurjeet.co.in');
