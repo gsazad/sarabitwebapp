@@ -1,0 +1,44 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block body %}
+    <h1>Section</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ section.id }}</td>
+            </tr>
+            <tr>
+                <th>Header</th>
+                <td>{{ section.header }}</td>
+            </tr>
+            <tr>
+                <th>Body</th>
+                <td>{{ section.body }}</td>
+            </tr>
+            <tr>
+                <th>Url</th>
+                <td>{{ section.url }}</td>
+            </tr>
+            <tr>
+                <th>Rank</th>
+                <td>{{ section.rank }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('myadmin_section_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('myadmin_section_edit', { 'id': section.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

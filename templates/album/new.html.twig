@@ -1,0 +1,16 @@
+{% extends "baseAdmin.html.twig" %}
+
+{% block body %}
+    <h1>Album creation</h1>
+    <div class="col-sm-3">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input type="submit" value="Create" class="btn btn-info" />
+        {{ form_end(form) }}
+    </div>
+    <ul>
+        <li>
+            <a href="{{ path('myadmin_album_index') }}">Back to the list</a>
+        </li>
+    </ul>
+{% endblock %}

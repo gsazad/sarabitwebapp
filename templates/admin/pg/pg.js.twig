@@ -1,0 +1,5 @@
+var tinyMCEImageList = new Array(
+{% for im in pg %}
+["{{im.name}}", "{{url('pg_image',{'id':im.id,'name':'x.jpg'})}}"],
+{% endfor %}
+);

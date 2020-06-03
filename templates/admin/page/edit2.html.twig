@@ -1,0 +1,65 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block body %}
+    <h1>Edit Page</h1>
+    {{ form_start(edit_form) }}
+    <div class="row">
+        <div class="col-sm-3">
+            {{ form_label(edit_form.name) }}
+            {{ form_widget(edit_form.name) }}
+        </div>
+        <div class="col-sm-2">
+            {{ form_label(edit_form.menu) }}
+            {{ form_widget(edit_form.menu) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            {{ form_label(edit_form.body) }}
+            {{ form_widget(edit_form.body) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div style="height: 15px"></div>
+            <input class="btn btn-lg btn-primary" type="submit" onclick="return SubmitForm()" value="Save" />
+            <span  class="pull-right"><a class="btn btn-danger" href="{{path('myadmin_page_delete',{'id':page.id})}}" onclick="return confirm('Want to Delete this page?')"><i class="fa fa-trash"></i> Delete</a></span>
+        </div>
+    </div>
+    {{ form_end(edit_form) }}
+
+    <ul>
+        <li>
+            <a href="{{ path('myadmin_page_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a class="btn btn-sm btn-primary" href="{{ path('myadmin_page_edit', { 'id': page.id }) }}"><i class="fa fa-pencil-square-o"></i>Back To Basic</a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{asset('')}}bundles/app/tinymce2/js/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript">
+                tinymce.init({
+                    selector: 'textarea',
+                    height: 500,
+                    theme: 'modern',
+                    plugins: 'print preview fullpage searchreplace autolink directionality  visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern help',
+                    toolbar1: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
+                    image_advtab: true,
+                    templates: [
+                        {title: 'Test template 1', content: 'Test 1'},
+                        {title: 'Test template 2', content: 'Test 2'}
+                    ],
+                    content_css: [
+                        '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+                        '//www.tinymce.com/css/codepen.min.css'
+                    ]
+                });
+                function SubmitForm() {
+                    tinyMCE.triggerSave();
+                    //$('#submit-form-training-materials').submit();
+                }
+    </script>
+{% endblock %}

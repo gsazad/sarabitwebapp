@@ -1,0 +1,49 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block body %}
+    <h1>Pages list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Title</th>
+                <th>Body</th>
+                <th>Keywords</th>
+                <th>Description</th>
+                <th>Menuid</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for page in pages %}
+            <tr>
+                <td><a href="{{ path('myadmin_page_show', { 'id': page.id }) }}">{{ page.id }}</a></td>
+                <td>{{ page.name }}</td>
+                <td>{{ page.title }}</td>
+                <td>{{ page.body }}</td>
+                <td>{{ page.keywords }}</td>
+                <td>{{ page.description }}</td>
+                <td>{{ page.menuId }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('myadmin_page_show', { 'id': page.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('myadmin_page_edit', { 'id': page.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('myadmin_page_new') }}">Create a new page</a>
+        </li>
+    </ul>
+{% endblock %}

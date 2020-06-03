@@ -1,0 +1,20 @@
+{% extends "baseAdmin.html.twig" %}
+
+{% block body %}
+    <h1>Scroller <small>edit</small></h1>
+    <p>{{scroller.header}}</p>
+    <div class="col-sm-4">
+        <img src="{{path('scroller_image',{'id':scroller.id,'name':'img.img'})}}" width="100%">
+    </div>
+
+    {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+        <input type="submit" value="Save" class="btn btn-primary" />
+    {{ form_end(edit_form) }}
+
+    <ul>
+        <li>
+            <a href="{{ path('myadmin_scroller_index') }}">Back to the list</a>
+        </li>
+    </ul>
+{% endblock %}

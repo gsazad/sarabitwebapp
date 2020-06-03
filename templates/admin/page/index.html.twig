@@ -1,0 +1,48 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block body %}
+    <h1>Pages list</h1>
+    <div class="pull-left">
+        <a href="{{path('myadmin_page_new')}}" class="btn btn-info"><i class="fa fa-plus"></i> New Page</a>
+    </div>
+        <table class="table table-bordered table-responsive-lg">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Title</th>
+                    <th>Menu</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for page in pages %}
+                    <tr>
+                        <td><a href="#">{{ page.id }}</a></td>
+                        <td>{{ page.name }}</td>
+                        <td>{{ page.title }}</td>
+                        <td>{{ page.menu.name }}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-sm btn-primary" href="{{ path('myadmin_page_edit', { 'id': page.id }) }}"><i class="fa fa-pencil-square-o"></i>Basic Edit</a>
+                                <a class="btn btn-sm btn-success" href="{{ path('myadmin_page_edit2', { 'id': page.id }) }}"><i class="fa fa-pencil-square-o"></i>Advanced Edit</a>
+                            </div>
+                            {#
+                            <ul>
+                                <li>
+                                    <a href="{{ path('page_show', { 'id': page.id }) }}">show</a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('page_edit', { 'id': page.id }) }}">edit</a>
+                                </li>
+                            </ul>#}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="pull-left">
+            <a href="{{path('myadmin_page_new')}}" class="btn btn-info"><i class="fa fa-plus"></i> New Page</a>
+        </div>
+{% endblock %}

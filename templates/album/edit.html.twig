@@ -1,0 +1,20 @@
+{% extends "baseAdmin.html.twig" %}
+
+{% block body %}
+    <h1>Album edit</h1>
+    <div class="col-sm-3">
+        {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+        <input type="submit" value="Save" class="btn btn-info" />
+        {{ form_end(edit_form) }}
+
+        <hr>
+        <div class="pull-right">{{ form_start(delete_form) }}
+            <a class="btn btn-sm btn-warning" href="{{ path('myadmin_album_index') }}"><i class="fa fa-backward"></i> Back to the list</a>
+
+            <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+            {{ form_end(delete_form) }}
+        </div>
+
+    </div>
+{% endblock %}

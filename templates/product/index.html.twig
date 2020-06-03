@@ -1,0 +1,54 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block body %}
+    <h1>{{cat.name}}: <small>Products List</small></h1>
+
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+                <tr>
+                    <td><a href="{{ path('myadmin_product_show', { 'id': product.id }) }}">{{ product.id }}</a></td>
+                    <td>
+                        <div class="col-sm-3">
+                            <h5>{{ product.name }}</h5>
+
+                            <div>
+                                <img class="img-thumbnail" style="width: 100%" src="{{path('product_image',{'id':product.id,'size':200,'name':product.fileName})}}">
+                            </div>
+
+                            <div class="pull-left"><a class="btn btn-sm btn-info aic-show-large-modal" href="javascript:void(0)" data-href="{{path('myadmin_product_image_edit',{'catId':product.procat.id,'id':product.id})}}">Image</a></div>
+                        </div>
+                    </td>
+                    <td>{{ product.description }}</td>
+                    <td>
+                        <ul>
+                            <li>
+                                <a class="aic-show-large-modal" href="javascript:void(0)" data-href="{{path('myadmin_product_image_edit',{'catId':product.procat.id,'id':product.id})}}">Image</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('myadmin_product_show', { 'id': product.id }) }}">show</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('myadmin_product_edit', { 'id': product.id }) }}">edit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('myadmin_product_new',{'catId':cat.id}) }}">Create a new product</a>
+        </li>
+    </ul>
+{% endblock %}

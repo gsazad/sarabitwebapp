@@ -1,0 +1,16 @@
+{% extends 'business/base.html.twig' %}
+{% block title %}{{page.title}}{% endblock %}
+{% block description %}{{page.description}}{% endblock %}
+{% block keywords %}{{page.keywords}}{% endblock %}
+{% block opengraph %}
+    <meta property="og:title" content="{{page.title}}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{url('page_show',{'id':page.id,'slug':page.name|slug})}}" />
+    <meta property="og:description" content="{{page.description}}" />
+{% endblock %}
+
+{% block body %}
+    <h1 class="my-4">{{ page.name }}</h1>
+    <hr>
+    {{ page.body|raw }}
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block body %}
+    <h1>Procats list</h1>
+
+    <div class="row">
+        <div class="col-sm-8">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+
+                        <th>Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for proCat in proCats %}
+                        <tr>
+                            <td>
+                                <h3>
+                                    {% if proCat.isSub %}
+                                        {{ proCat.name }}
+                                    {% else %}
+                                        <a href="{{path('myadmin_product_index',{'catId':proCat.id})}}">{{ proCat.name }}</a>
+                                    {% endif %}
+                                </h3>
+                            </td>
+                            <td>
+                                <div class="pull-right"><a class="btn btn-info" href="{{ path('myadmin_procat_edit', { 'id': proCat.id }) }}"><i class="fa fa-pencil"></i></a></div>
+                            </td>
+                        </tr>
+                        {% if proCat.isSub %}
+                            <tr>
+                                <td colspan="2">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        {% for subCat in proCat.sub %}
+                                            <tr>
+                                                <td><a href="{{path('myadmin_product_index',{'catId':subCat.id})}}">{{ subCat.name }}</a></td>
+                                                <td>
+                                                    <div class="pull-right"> <a class="btn btn-info" href="{{ path('myadmin_procat_edit', { 'id': subCat.id }) }}"><i class="fa fa-pencil"></i></a></div>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </table>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-4">
+            <h3>Add New Category</h3><hr>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <input type="submit" value="Create" />
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+    <ul>
+        <li>
+            <a href="{{ path('myadmin_procat_new') }}">Create a new proCat</a>
+        </li>
+    </ul>
+{% endblock %}

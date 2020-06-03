@@ -1,0 +1,53 @@
+{% extends "baseAdmin.html.twig" %}
+{% block header %}
+    <style>
+    </style>
+{% endblock %}
+{% block body %}
+    <h1>Image Manager</h1>
+    <div class="pull-right">
+        <a href="#" data-href="{{path('myadmin_photo_gallery_new')}}" class="aic-show-large-modal">Add New Image</a>
+    </div>
+    <table class="table table-bordered">
+        {% for im in pg %}
+            <tr>
+                <td>{{im.name}}<br><small>({{im.type}})</small></td>
+                <td>
+                    <img class="img-thumbnail" src="{{path('pg_image_thumb',{'id':im.id,'name':im.filename,'size':250})}}"><br>
+                    {{im.fileName}}<br>
+                    <p id="link{{im.id}}">{{url('pg_image2',{'id':im.id,'name':im.filename})}}</p>
+                    <button id="copy"class="btn btn-primary btn-sm" onclick="copy('{{im.id}}')">
+                        <i class="fa fa-clipboard"></i>
+                        <span id="copied{{im.id}}"></span>
+                    </button>
+                </td>
+                <td>
+                    <a href='{{path('myadmin_photo_gallery_delete',{'id':im.id})}}' class="btn btn-danger"><i class="fa fa-trash-o"></i> Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+            $("#copied").hide();
+            $("#copied").html('Copied!');
+        });
+        function copy(id) {
+            element = document.getElementById('link' + id);
+            $('#copied' + id).hide();
+            $('#copied' + id).html('Copied!');
+            $('#copied' + id).show(500);
+            setTimeout(function () {
+                $('#copied' + id).hide(500);
+            }, 1500);
+            var $temp = $("<input>");
+            $("body").append($temp);
+            $temp.val($(element).text()).select();
+            document.execCommand("copy");
+            $temp.remove();
+        }
+    </script>
+{% endblock %}

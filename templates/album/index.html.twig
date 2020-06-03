@@ -1,0 +1,40 @@
+{% extends "baseAdmin.html.twig" %}
+
+{% block body %}
+    <h1>Albums list</h1>
+    <div class="col-sm-4">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Rank</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for album in albums %}
+                    <tr>
+                        <td><a href="{{ path('myadmin_album_show', { 'id': album.id }) }}">{{ album.id }}</a></td>
+                        <td>{{ album.name }}</td>
+                        <td>{{ album.rank }}</td>
+                        <td>
+
+                            <a class="btn btn-primary btn-sm" href="{{ path('myadmin_photogallery_index', { 'albumId': album.id }) }}">Open Album</a>
+
+                            <a class="btn btn-warning btn-sm" href="{{ path('myadmin_album_edit', { 'id': album.id }) }}">Edit</a>
+
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <ul>
+        <li>
+            <a href="{{ path('myadmin_album_new') }}">Create a new album</a>
+        </li>
+    </ul>
+{% endblock %}

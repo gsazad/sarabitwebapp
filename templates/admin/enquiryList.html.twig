@@ -1,0 +1,40 @@
+{% extends "baseAdmin.html.twig" %}
+{% block body %}
+    <h1>Enquiry List</h1>
+    <table class="table table-bordered table-dark table-hover">
+        <tr class="text-primary">
+            <th>Dated</th>
+            <th>Sender Name</th>
+            <th>Sender Email</th>
+            <th>Action</th>
+        </tr>
+
+        {% for E in enquirys %}
+
+            {% if E.isReaded == true %}
+                {% set BOLD =  'normal'%}
+            {% else %}
+                {% set BOLD =  'bold'%}
+            {% endif %}
+            <tr style="font-weight: {{BOLD}}; cursor: pointer" class='enquiryRow' data-href='{{path('myadmin_enquiry_view',{'id':E.id})}}'>
+                <td>{{E.createdOn|date('d M Y h:i s a')}}</td>
+                <td>{{E.name}}</td>
+                <td>{{E.email}}</td>
+                <td>
+                    <a href="{{path('myadmin_enquiry_view',{'id':E.id})}}" class="btn btn-info btn-sm" style="font-weight: normal"><i class="fa fa-book"></i> Read</a>
+                    <a href="" class="btn btn-default  btn-sm"  style="font-weight: normal"><i class="fa fa-trash"></i> Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+
+    </table>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $('.enquiryRow').dblclick(function () {
+            var URL = $(this).data('href');
+            window.location = URL;
+        });
+
+    </script>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block body %}
+    <h1>Menu edit</h1>
+    <div class="col-sm-4">
+        {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+        <input type="submit" value="Save" class="btn btn-success" />
+        {{ form_end(edit_form) }}
+    </div>
+    <div class="col-sm-4">
+        <hr>
+        <a href="{{ path('myadmin_menu_index') }}" class="btn btn-info">Back to the list</a>
+        <hr>
+        {% if count == 0 %}
+            {{ form_start(delete_form) }}
+            <input type="submit" class="btn btn-danger" value="Delete">
+            {{ form_end(delete_form) }}
+        {% endif %}
+        </li>
+        </ul>
+    </div>
+{% endblock %}

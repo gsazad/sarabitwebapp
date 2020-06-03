@@ -1,0 +1,63 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block body %}
+    <h1>Product</h1>
+
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ product.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ product.name }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ product.description }}</td>
+            </tr>
+            <tr>
+                <th>Category</th>
+                <td>{{ product.procat.name }}</td>
+            </tr>
+            <tr>
+                <th>Filedata</th>
+                <td>
+                    <img class="img-thumbnail" src="{{path('product_image',{'id':product.id,'size':200,'name':product.fileName})}}">
+
+                </td>
+            </tr>
+            <tr>
+                <th>Filetype</th>
+                <td>{{ product.fileType }}</td>
+            </tr>
+            <tr>
+                <th>Filename</th>
+                <td>{{ product.fileName }}</td>
+            </tr>
+            <tr>
+                <th>Body</th>
+                <td>{{ product.body|raw }}</td>
+            </tr>
+            <tr>
+                <th>Keywords</th>
+                <td>{{ product.keywords }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('myadmin_product_index',{'catId':product.categoryId}) }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('myadmin_product_edit', { 'id': product.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+            <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

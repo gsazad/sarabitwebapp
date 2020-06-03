@@ -1,0 +1,24 @@
+{% extends "baseAdmin.html.twig" %}
+
+{% block body %}
+    <h1>{{ album.name }} <small>Album</small></h1>
+    <a></a>
+    <div class="col-sm-8">
+        
+
+    </div>
+
+    <ul>
+        <li>
+            <a href="{{ path('myadmin_album_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('myadmin_album_edit', { 'id': album.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+            <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

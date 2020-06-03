@@ -1,0 +1,52 @@
+{% extends "baseAdmin.html.twig" %}
+
+{% block body %}
+    <h1>{{album.name}} <small>Photo Gallery</small></h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Album Name</th>
+                <th>Created On</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for photoGallery in photoGalleries %}
+                <tr>
+                    <td><a href="{{ path('myadmin_photogallery_show', { 'id': photoGallery.id }) }}">{{ photoGallery.id }}</a></td>
+                    <td>
+                        {{ photoGallery.title }}<br>
+                        <img src="{{path('photogallery_thumb',{'id':photoGallery.id,'size':250,'name':photoGallery.fileName})}}"
+
+                    </td>
+                    <td>{{ photoGallery.description }}</td>
+                    <td>{{ photoGallery.album.name }}</td>
+                    <td>{% if photoGallery.createdOn %}{{ photoGallery.createdOn|date('Y-m-d') }}{% endif %}</td>
+                    <td>
+                        <ul>
+                            <li>
+                                <a href="{{ path('myadmin_photogallery_show', { 'id': photoGallery.id }) }}">show</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('myadmin_photogallery_edit', { 'id': photoGallery.id }) }}">edit</a>
+                            </li>
+                            <li>
+                                <a href="#" data-href="{{path('myadmin_photogallery_edit_image',{'id': photoGallery.id,'albumId': photoGallery.album.id})}}" class="aic-show-large-modal">Edit Image</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('myadmin_photogallery_new',{'albumId':albumId}) }}">Create a new photoGallery</a>
+        </li>
+    </ul>
+{% endblock %}

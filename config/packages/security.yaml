@@ -1,0 +1,58 @@
+security:
+    encoders:
+        admin:
+            class: App\Entity\Admin
+            algorithm: sha1
+            iterations: 1
+            encode_as_base64: false
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    role_hierarchy:
+        ROLE_USER:        [ROLE_USER]
+        ROLE_ADMIN:       [ROLE_ADMIN]
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_SUPER_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+    
+    providers:
+        admin_area:
+            entity: { class: App\Entity\Admin, property: username }
+    firewalls:
+        admin_area:
+            logout_on_user_change: true
+            switch_user: true
+            pattern: ^/myadmin
+            anonymous: ~
+            form_login:
+                login_path: myadmin_login_page
+                check_path: myadmin_login_page
+                default_target_path: myadmin_index
+            remember_me:
+                secret:      admin_123456
+                lifetime: 31536000
+                always_remember_me: false
+                name: silva.admin
+                remember_me_parameter: _remember_me
+                path: /
+                domain: ~
+            logout:
+                path: myadmin_logout
+                target: /    
+            provider: admin_area
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+#        main:
+#            anonymous: lazy
+#            provider: users_in_memory
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control: 
+        - { path: ^/myadmin/login.html, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/myadmin/photo, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/myadmin, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/page.edit.html, roles: ROLE_SUPER_ADMIN }

@@ -1,0 +1,59 @@
+{% extends "baseAdmin.html.twig" %}
+
+{% block body %}
+    <h1>Scrollers list</h1>
+
+    <div class="col-sm-6">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Header</th>
+                    <th>Description</th>
+                    <th>Url</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for scroller in scrollers %}
+
+                    <tr>
+                        <td><a href="{{ path('myadmin_scroller_show', { 'id': scroller.id }) }}">{{ scroller.id }}</a></td>
+                        <td>{{ scroller.header }}</td>
+                        <td>{{ scroller.description }}</td>
+                        <td>{{ scroller.url }}</td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="{{ path('myadmin_scroller_image', { 'id': scroller.id }) }}">image</a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('myadmin_scroller_show', { 'id': scroller.id }) }}">show</a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('myadmin_scroller_edit', { 'id': scroller.id }) }}">edit</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">
+                            <img src="{{path('scroller_image',{'id':scroller.id,'name':'img.img'})}}" width="90%">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">
+                            <div class="bg-danger"><hr></div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <ul>
+        <li>
+            <a href="{{ path('myadmin_scroller_new') }}">Create a new scroller</a>
+        </li>
+    </ul>
+{% endblock %}

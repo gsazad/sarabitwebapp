@@ -1,0 +1,9 @@
+<h4>Product Image</h4>
+<p>{{product.name}}</p>
+<div>
+    <img class="img-thumbnail" src="{{path('product_image',{'id':product.id,'size':200,'name':product.fileName})}}">
+</div>
+{{ form_start(form) }}
+{{ form_widget(form) }}
+<input type="submit" value="Create" />
+{{ form_end(form) }}

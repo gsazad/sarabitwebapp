@@ -1,0 +1,31 @@
+{% extends "business/base.html.twig" %}
+{% block body %}
+    <h1 class="my-4">{{album.name|capitalize}} <small>Photo Gallery</small></h1>
+    <div><a class="btn btn-sm btn-warning" href="{{path('album_index')}}"><i class="fa fa-arrow-left"></i> Back to Album Home</a></div>
+
+    {% set X = 1 %}
+    {% for photo in gallery %}
+        {% if X == 1 %}
+            <!-- row start -->
+            <div class="row">
+            {% endif %}
+            <!-- col {{X}} start -->
+            <div class="col-sm-4">
+                <div>
+                    <img class="img-thumbnail" style="width: 100%" src="{{path('photogallery_thumb',{'id':photo.id,'size':512,'name':photo.fileName})}}">
+                </div>
+                <p><a href="{{path('photo_gallery_view',{'id':photo.id,'slug':photo.title|slug})}}">{{photo.title}}</a></p>
+            </div>
+                <!-- col {{X}} end -->
+            {% if X == 3 %}
+            </div>
+            {% set X = 0 %}
+            <!-- row end -->
+        {% endif %}
+
+        {% set X = X + 1 %}
+    {% endfor %}
+    {% if (X == 2 or X == 3) %}
+    </div> <!-- end row @ {{X}} -->
+{% endif %}
+{% endblock %}

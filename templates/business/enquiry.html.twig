@@ -1,0 +1,12 @@
+{% extends "business/base.html.twig" %}
+{% block body %}
+    <h1 class="my-4">Enquery</h1>
+    <div class="col-sm-6 offset-sm-3">
+        {{form_start(form)}}
+        {{form_widget(form)}}
+        <div class="form-group">
+            <input type="submit" value="submit" class="btn btn-primary">
+        </div>
+        {{form_end(form)}}
+    </div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'business/base.html.twig' %}
+{% block title %}{{cat.name}}{% endblock %}
+{% block description %}{{cat.name}}{% endblock %}
+{% block keywords %}{{cat.name}}{% endblock %}
+{% block opengraph %}
+{% endblock %}
+
+{% block body %}
+    <h1 class="my-4">{{ cat.name }}</h1>
+    <hr>
+
+    {% set X = 1 %}
+    {% for pro in products %}
+        {% if X == 1 %}<!-- row start X --><div class="row">{% endif %}
+            <div class="col-sm-4">
+                <div>
+                    <a href="{{path('product_show',{'id':pro.id,'slug':pro.name|slug})}}"><img style="width: 100%"  src="{{path('product_image',{'id':pro.id,'size':200,'name':pro.fileName})}}"></a>
+                </div>
+                <h5>{{pro.name}}</h5>
+                <p>{{pro.description}}</p>
+            </div><!-- {{X}} -->
+            {% if X == 3 %}
+            </div><!-- row end X -->
+        {% endif %}
+        {% set X = X + 1 %}
+    {% if X == 4 %}{% set X = 1 %}{% endif %}
+
+{% endfor %}
+{% if (X == 2 or X == 3 ) %}</div><!-- row end X -->{% endif %}
+
+
+{% endblock %}

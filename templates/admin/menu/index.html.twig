@@ -1,0 +1,33 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block body %}
+    <h1>Menus list</h1>
+    <div class="col-4">
+        <div class="pull-left"><a href="{{ path('myadmin_menu_new') }}" class="btn btn-info"><i class="fa fa-plus"></i> Create a new menu</a></div>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Location</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for menu in menus %}
+                    <tr>
+                        <td>{{ menu.menu.id }}</td>
+                        <td>{{ menu.menu.name }} <span class="pull-right badge badge-danger">{{menu.count}}</span></td>
+                        <td>{{ menu.menu.location }}</td>
+                        <td>
+                            {% if menu.menu.name != 'Home' %}
+                            <a class="btn btn-sm btn-info" href="{{ path('myadmin_menu_edit', { 'id': menu.menu.id }) }}"><i class="fa fa-edit"></i> edit</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

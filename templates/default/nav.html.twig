@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-md">
+    {#<a class="navbar-brand " href="#">Navbar</a>#}
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{path('homepage')}}">Home</a>
+            </li>
+            {% for menu in menus %}
+                {% if menu.sub %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown-{{menu.menu.id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{menu.menu.name}}</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown-{{menu.menu.id}}">
+                            {% for page in menu.pages %}
+                                <a class="dropdown-item" href="{{path('page_show',{'id':page.id,'slug':page.name|slug})}}">{{page.name}}</a>  
+                            {% endfor %}
+                        </div>
+                    </li>
+                {% else %}
+                    {% if menu.count ==1 %}
+                        <li class="nav-item">
+                            {% for page in menu.pages %}
+                                <a class="nav-link" href="{{path('page_show',{'id':page.id,'slug':page.name|slug})}}">{{menu.menu.name}}</a>
+                            {% endfor %}
+                        </li>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</nav>

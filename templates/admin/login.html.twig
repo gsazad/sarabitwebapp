@@ -1,0 +1,72 @@
+{% extends 'default/baseLogin.html.twig' %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-3 mx-auto">
+
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+            {% if app.session.flashBag.has('danger') %}
+                <div class="alert alert-danger">
+                    {% for msg in app.session.flashBag.get('danger') %}
+                        {{ msg|raw }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if app.session.flashBag.has('success') %}
+                <div class="alert alert-success">
+                    {% for msg in app.session.flashBag.get('success') %}
+                        {{ msg|raw }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <form action="{{ path('myadmin_login_page') }}" method="post">
+                <h3>Admin Login</h3>
+                <div class="form-group form-group-lg">
+                    <label for="username">Username:</label>
+                    <input autocomplete="off" class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" />
+                </div>
+                <div class="form-group  form-group-lg">
+                    <label for="password">Password:</label>
+                    <input autocomplete="off" class="form-control" type="password" id="password" name="_password" />
+                </div>
+
+
+                {#
+                    If you want to control the URL the user
+                    is redirected to on success (more details below)
+                    <input type="hidden" name="_target_path" value="/account" />
+                #}
+                <div class="form-group">
+                    <button type="submit" class="btn btn-lg btn-success">Login</button> 
+                </div>
+                <small><a href='#' id="fpBtn">Forget Password</a></small>
+            </form>
+            <div id="fp" style="display: none">
+                <div class="well">
+                    <form method="post" name="frm_fp" action="">
+                        <div class="form-group">
+                            <input type="email" class="form-control" name="email" placeholder="Email Address" required="">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Send Password</button>                      
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        $('#fpBtn').click(function () {
+            $('#fp').toggle();
+        })
+    </script>
+{% endblock %}

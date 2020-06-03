@@ -1,0 +1,60 @@
+{% extends "baseAdmin.html.twig" %}
+{% block header %}Global <small>Settings</small>{% endblock %}
+{% block body %}
+    <form action="{{path('myadmin_settings')}}" method="post">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th><span class="pull-right">Tags</span></th>
+                    <th>Values</th>
+                    <th>Type</th>
+                    <th style="width: 30%">Options</th>
+                </tr>
+                {% for opt in settings %}
+                    <tr>
+                        <th><span class="pull-right">{{opt.opt}}</span></th>
+                        <td>
+                            {% set ar = opt.options %}
+                            {% if opt.type == 'select' %}
+                                <select  class='form-control' name="opt[{{opt.id}}]" id='s-{{opt.opt}}'>
+                                    {% for o in ar %}
+                                        <option value="{{o}}" {% if o == opt.data %} selected {% endif %}>{{o}}</option>
+                                    {% endfor %}
+                                </select>
+                            {% elseif opt.type == 'textarea' %}
+                                <textarea class="form-control" name="opt[{{opt.id}}]" id='s-{{opt.opt}}'>{{opt.data}}</textarea>
+                            {% elseif opt.type == 'color' %}
+                                <input class="" type='{{opt.type}}' name="opt[{{opt.id}}]" id='s-{{opt.opt}}' value="{{opt.data}}">
+                            {% else %}
+                                <input class="form-control" name="opt[{{opt.id}}]" id='s-{{opt.opt}}' type='{{opt.type}}' value="{{opt.data}}">
+                            {% endif %}
+                        </td>
+                        <td>{{opt.type}}</td>
+                        <td>
+                            {% for o in ar %}
+                                <a class="btn btn-sm btn-default" href="#">{{o}}</a>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endfor%}
+                <tr>
+                    <td></td>
+                    <td><button type="submit" class="btn btn-info" name='btnSave'><i class="fa fa-save"></i> SAVE</button></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    </form>
+{% endblock %}
+{% block JS %}
+    <script type="text/javascript">
+
+        $("#s-smtpPassword").focusin(function () {
+            $("#s-smtpPassword").attr('type', 'text')
+        });
+        $("#s-smtpPassword").focusout(function () {
+            $("#s-smtpPassword").attr('type', 'password')
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block body %}
+    <h1>Sections list</h1>
+
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Header</th>
+                <th>Body</th>
+                <th>Url</th>
+                <th>Rank</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for section in sections %}
+                <tr>
+                    <td>{{ section.header }}<br>
+                        <img src="{{path('section_image',{'id':section.id,'size':200,'name':section.fileName})}}"></td>
+                    <td>{{ section.body }}</td>
+                    <td>{{ section.url }}</td>
+                    <td>{{ section.rank }}</td>
+                    <td>
+                        <div class="btn-group btn-group-vertical" role="group" aria-label="Basic example">
+                            <a class="btn btn-sm btn-success" href="{{ path('myadmin_section_image_new', { 'id': section.id }) }}"><i class="fa fa-image"></i> Image</a>
+
+                            <a  class="btn btn-sm btn-warning"  href="{{ path('myadmin_section_edit', { 'id': section.id }) }}"><i class="fa fa-pencil"></i> Edit</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr><td colspan="5"><hr></td></tr>
+                    {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('myadmin_section_new') }}">Create a new section</a>
+        </li>
+    </ul>
+{% endblock %}

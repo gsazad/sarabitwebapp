@@ -1,0 +1,11 @@
+{% for op in selects %}
+    {% if op.isSub %}
+        <optgroup label="{{op.value}}">
+            {% for sub in op.sub %}
+                <option value="{{sub.key}}">{{sub.value}}</option>
+            {% endfor%}
+        </optgroup>
+    {% else %}
+        <option value="{{op.key}}">{{op.value}}</option>
+    {% endif %}
+{% endfor %}

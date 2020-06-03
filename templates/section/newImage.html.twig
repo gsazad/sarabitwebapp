@@ -1,0 +1,19 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block body %}
+    <h1>Section Image</h1>
+
+    {{ form_start(form) }}
+    <div class="col-sm-4">
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+    </div>
+    <input type="submit" value="Create" />
+    {{ form_end(form) }}
+
+    <ul>
+        <li>
+            <a href="{{ path('myadmin_section_index') }}">Back to the list</a>
+        </li>
+    </ul>
+{% endblock %}

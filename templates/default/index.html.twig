@@ -1,0 +1,19 @@
+{% extends 'default/base.html.twig' %}
+
+{% block body %}
+
+    <div class="row">
+        {% for section in sections %}
+            <div class="col-4 text-center">
+                <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+                <h2>{{section.header}}</h2>
+                <p>{{section.body}}</p>
+                <p><a class="btn btn-primary" href="{{section.url}}" role="button">View details »</a></p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}
