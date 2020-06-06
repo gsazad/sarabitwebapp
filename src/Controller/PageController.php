@@ -175,7 +175,7 @@ class PageController extends BaseController {
     }
 
     /**
-     * @Route("/myadmin/grapes/save", name="myadmin_page_edit_grape_save", methods={"GET","POST"})
+     * @Route("/myadmin/pagebuilder/save", name="myadmin_page_edit_grape_save", methods={"GET","POST"})
      */
     public function grapesSaveAction(Request $request) {
         $id = $request->get('id');
@@ -192,7 +192,7 @@ class PageController extends BaseController {
     }
 
     /**
-     * @Route("/myadmin/grapes/page.edit.html", name="myadmin_page_edit_grape", methods={"GET","POST"})
+     * @Route("/myadmin/pagebuilder/page.edit.html", name="myadmin_page_edit_grape", methods={"GET","POST"})
      */
     public function grapesAction(Request $request) {
         $em = $this->getDoctrine()->getManager();

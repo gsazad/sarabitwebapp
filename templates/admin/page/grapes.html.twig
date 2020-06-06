@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>GrapesJS</title>
+        <title>Page Builder</title>
         <link rel="stylesheet" href="{{asset('bundles/app/MyNpm/')}}node_modules/grapesjs/dist/css/grapes.min.css">
         {#        <link rel="stylesheet" href="{{asset('bundles/app/fontawesome-free/')}}css/all.min.css">#}
         <script src="{{asset('bundles/app/MyNpm/')}}node_modules/grapesjs/dist/grapes.min.js"></script>
@@ -43,6 +43,7 @@
         <script src="{{asset('bundles/app/admin/')}}node_modules/jquery/dist/jquery.min.js"></script>
         <script src="{{asset('bundles/app/MyNpm/')}}node_modules/grapesjs-component-countdown/dist/grapesjs-component-countdown.min.js"></script>
         <script src="{{asset('bundles/app/MyNpm/')}}node_modules/grapesjs-typed/dist/grapesjs-typed.min.js"></script>
+        <script src="{{asset('bundles/app/MyNpm/')}}node_modules/grapesjs-tabs/dist/grapesjs-tabs.min.js"></script>
 
         <script type="text/javascript">
             var imageAssets = JSON.parse('{{imageAssets|raw}}')
@@ -58,49 +59,52 @@
                 fromElement: true,
                 storageManager: {autoload: 0},
                 blocks: ['form'],
-                plugins: ['gjs-blocks-basic', 'grapesjs-typed', 'grapesjs-style-gradient', 'gjs-component-countdown'],
+                plugins: ['gjs-blocks-basic', 'grapesjs-tabs', 'grapesjs-typed', 'grapesjs-style-gradient', 'gjs-component-countdown'],
                 pluginsOpts: {
                     'gjs-blocks-basic': {/* ...options */},
                     'grapesjs-style-gradient': {
-            {#                        'grapickOpts'#}
-                        },
-                        'gjs-component-countdown': {/* ...options */},
-                        'grapesjs-typed': {/* options */}
+                        colorPicker: 'default',
+                    },
+                    'gjs-component-countdown': {/* ...options */},
+                    'grapesjs-typed': {/* options */},
+                    'grapesjs-tabs': {
+                        // options
+                    }
 
-                    },
-                    styleManager: {
-                        sectors: [{
-                                name: 'General',
-                                open: false,
-                                buildProps: ['float', 'display', 'position', 'top', 'right', 'left', 'bottom']
-                            }, {
-                                name: 'Flex',
-                                open: false,
-                                buildProps: ['flex-direction', 'flex-wrap', 'justify-content', 'align-items', 'align-content', 'order', 'flex-basis', 'flex-grow', 'flex-shrink', 'align-self']
-                            }, {
-                                name: 'Dimension',
-                                open: false,
-                                buildProps: ['width', 'height', 'max-width', 'min-height', 'margin', 'padding'],
-                            }, {
-                                name: 'Typography',
-                                open: false,
-                                buildProps: ['font-family', 'font-size', 'font-weight', 'letter-spacing', 'color', 'line-height', 'text-shadow'],
-                            }, {
-                                name: 'Decorations',
-                                open: false,
-                                buildProps: ['border-radius-c', 'background-color', 'border-radius', 'border', 'box-shadow', 'background'],
-                            }, {
-                                name: 'Extra',
-                                open: false,
-                                buildProps: ['transition', 'perspective', 'transform'],
-                            }
-                        ],
-                    },
-                });
+                },
+                styleManager: {
+                    sectors: [{
+                            name: 'General',
+                            open: false,
+                            buildProps: ['float', 'display', 'position', 'top', 'right', 'left', 'bottom']
+                        }, {
+                            name: 'Flex',
+                            open: false,
+                            buildProps: ['flex-direction', 'flex-wrap', 'justify-content', 'align-items', 'align-content', 'order', 'flex-basis', 'flex-grow', 'flex-shrink', 'align-self']
+                        }, {
+                            name: 'Dimension',
+                            open: false,
+                            buildProps: ['width', 'height', 'max-width', 'min-height', 'margin', 'padding'],
+                        }, {
+                            name: 'Typography',
+                            open: false,
+                            buildProps: ['font-family', 'font-size', 'font-weight', 'letter-spacing', 'color', 'line-height', 'text-shadow'],
+                        }, {
+                            name: 'Decorations',
+                            open: false,
+                            buildProps: ['border-radius-c', 'background-color', 'border-radius', 'border', 'box-shadow', 'background'],
+                        }, {
+                            name: 'Extra',
+                            open: false,
+                            buildProps: ['transition', 'perspective', 'transform'],
+                        }
+                    ],
+                },
+            });
             {% for b in blocks %}
                 editor.BlockManager.add('{{ b.name }}', {
                     label: '{{ b.label }}',
-                    attributes: {{ b.attributes|raw }},
+                    attributes:{{ b.attributes|raw }} ,
                     content: `{{ b.content|raw }}`
                 });
             {% endfor %}

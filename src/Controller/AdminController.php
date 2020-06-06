@@ -16,7 +16,7 @@ class AdminController extends BaseController {
     }
 
     /**
-     * @Route("/myadmin/grapes/boss/block/save", name="myadmin_boss_block_grape_save", methods={"GET","POST"})
+     * @Route("/myadmin/pagebuilder/boss/block/save", name="myadmin_boss_block_grape_save", methods={"GET","POST"})
      */
     public function blockgrapesSaveAction(Request $request) {
         $id = $request->get('id');
@@ -33,7 +33,7 @@ class AdminController extends BaseController {
     }
 
     /**
-     * @Route("/myadmin/grapes/boss/block", name="myadmin_boss_block_grape", methods={"GET","POST"})
+     * @Route("/myadmin/pagebuilder/boss/block", name="myadmin_boss_block_grape", methods={"GET","POST"})
      */
     public function blockgrapesAction(Request $request) {
         $em = $this->getDoctrine()->getManager();

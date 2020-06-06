@@ -15,6 +15,7 @@
     "grapesjs-preset-webpage": "^0.1.11",
     "grapesjs-style-gradient": "^2.0.3",
     "grapesjs-swiper-slider": "0.0.5",
+    "grapesjs-tabs": "^0.2.2",
     "grapesjs-typed": "^1.0.5"
   }
 }
