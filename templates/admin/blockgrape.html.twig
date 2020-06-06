@@ -41,6 +41,8 @@
         <script src="{{asset('bundles/app/MyNpm/')}}node_modules/grapesjs-blocks-basic/dist/grapesjs-blocks-basic.min.js"></script>
         <script src="{{asset('bundles/app/MyNpm/')}}node_modules/grapesjs-style-gradient/dist/grapesjs-style-gradient.min.js"></script>
         <script src="{{asset('bundles/app/admin/')}}node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="{{asset('bundles/app/MyNpm/')}}node_modules/grapesjs-component-countdown/dist/grapesjs-component-countdown.min.js"></script>
+        <script src="{{asset('bundles/app/MyNpm/')}}node_modules/grapesjs-typed/dist/grapesjs-typed.min.js"></script>
 
         <script type="text/javascript">
             var imageAssets = JSON.parse('{{imageAssets|raw}}')
@@ -56,12 +58,15 @@
                 fromElement: true,
                 storageManager: {autoload: 0},
                 blocks: ['form'],
-                plugins: ['gjs-blocks-basic', 'grapesjs-style-gradient'],
+                plugins: ['gjs-blocks-basic', 'grapesjs-typed', 'grapesjs-style-gradient', 'gjs-component-countdown'],
                 pluginsOpts: {
                     'gjs-blocks-basic': {/* ...options */},
                     'grapesjs-style-gradient': {
             {#                        'grapickOpts'#}
                         },
+                        'gjs-component-countdown': {/* ...options */},
+                        'grapesjs-typed': {/* options */}
+
                     },
                     styleManager: {
                         sectors: [{

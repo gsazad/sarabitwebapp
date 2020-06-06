@@ -11,8 +11,10 @@
   "dependencies": {
     "grapesjs": "^0.16.12",
     "grapesjs-blocks-basic": "^0.1.8",
+    "grapesjs-component-countdown": "^0.1.3",
     "grapesjs-preset-webpage": "^0.1.11",
     "grapesjs-style-gradient": "^2.0.3",
-    "grapesjs-swiper-slider": "0.0.5"
+    "grapesjs-swiper-slider": "0.0.5",
+    "grapesjs-typed": "^1.0.5"
   }
 }
