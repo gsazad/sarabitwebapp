@@ -19,7 +19,12 @@ class DefaultController extends BaseController {
         //$core = $this->get('core_service');
         // replace this example code with whatever you need
         $em = $this->getDoctrine()->getManager();
-        $sections = $em->getRepository('App:Section')->findAll();
+        $settings = $this->getSetting();
+        if ($settings['default_home_sections'] == 'yes') {
+            $sections = $em->getRepository('App:Section')->findAll();
+        } else {
+            $sections = null;
+        }
         $scroller = $em->getRepository('App:Scroller')->findAll();
         $home = $em->getRepository('App:Page')->findOneBy(['name' => 'Home']);
         return $this->render('business/index.html.twig', ['sections' => $sections, 'scroller' => $scroller, 'home' => $home]);

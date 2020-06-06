@@ -20,7 +20,7 @@
         <div id="gjs" style="height:0px; overflow:hidden;">
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 
-            {{ page.body|raw }}
+            {{ body.body|raw }}
             {#<div class="panel">
                 <h1 class="welcome">Welcome to</h1>
                 <div class="big-title">
@@ -35,7 +35,7 @@
                 </div>
             </div>#}
             <style>
-                {{ page.css|raw }}
+                {{ body.css|raw }}
             </style>
         </div>
         <script src="{{asset('bundles/app/MyNpm/')}}node_modules/grapesjs-blocks-basic/dist/grapesjs-blocks-basic.min.js"></script>
@@ -126,7 +126,7 @@
                 function saveContent() {
                     var html = editor.getHtml();
                     var css = editor.getCss();
-                    var link = '{{ path('myadmin_page_edit_grape_save',{'id':page.id}) }}';
+                    var link = '{{ path('myadmin_boss_block_grape_save',{'id':body.id}) }}';
                     $.post(link, {html: html, css: css})
                             .done(function (data) {
             {#                            alert("Data Loaded: " + data);#}

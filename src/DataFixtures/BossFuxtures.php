@@ -49,6 +49,8 @@ class BossFuxtures extends Fixture {
             'navbar_text_color' => array('type' => 'color', 'data' => '', 'options' => ''),
             'navbar_font' => array('type' => 'select', 'data' => '', 'options' => json_encode($fonts)),
             'product_manu_id' => array('type' => 'number', 'data' => '', 'options' => ''),
+            'default_home_sections' => array('type' => 'select', 'data' => 'no', 'options' => json_encode(['yes', 'no'])),
+            'home_header' => array('type' => 'select', 'data' => 'grape', 'options' => json_encode(['slider', 'grape'])),
         );
 
         foreach ($settings as $k => $v) {
@@ -120,13 +122,13 @@ class BossFuxtures extends Fixture {
 //        Grapes Fixture
         $grapes = new \App\Entity\GrapeBlock();
         $grapes->setLabel('Card With Image 3')
-                ->setAttributes("{class: 'gjs-fonts gjs-f-b1'}")
+                ->setAttributes("{class: 'fa fa-address-card'}")
                 ->setName("cardImage3")
                 ->setContent('<div class="row"> <div class="col-sm-4"> <div class="card" style=""> <img src="..." class="card-img-top" alt="..."> <div class="card-body"> <h5 class="card-title">Card title</h5> <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card\'s content.</p> <a href="#" class="btn btn-primary">Go somewhere</a> </div> </div> </div> <div class="col-sm-4"> <div class="card" style=""> <img src="..." class="card-img-top" alt="..."> <div class="card-body"> <h5 class="card-title">Card title</h5> <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card\'s content.</p> <a href="#" class="btn btn-primary">Go somewhere</a> </div> </div> </div> <div class="col-sm-4"> <div class="card" style=""> <img src="..." class="card-img-top" alt="..."> <div class="card-body"> <h5 class="card-title">Card title</h5> <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card\'s content.</p> <a href="#" class="btn btn-primary">Go somewhere</a> </div> </div> </div> </div>');
         $manager->persist($grapes);
         $grapes = new \App\Entity\GrapeBlock();
         $grapes->setLabel('Jumbotron')
-                ->setAttributes("{class: 'gjs-fonts gjs-f-b1'}")
+                ->setAttributes("{class: 'fa fa-anchor'}")
                 ->setName("jumbotron")
                 ->setContent('<div class="jumbotron">
   <h1 class="display-4">Hello, world!</h1>
@@ -138,7 +140,7 @@ class BossFuxtures extends Fixture {
         $manager->persist($grapes);
         $grapes = new \App\Entity\GrapeBlock();
         $grapes->setLabel('Info Cards 3')
-                ->setAttributes("{class: 'gjs-fonts gjs-f-b1'}")
+                ->setAttributes("{class: 'fa fa-info'}")
                 ->setName("infocard3")
                 ->setContent('<div class="row">
 <div class="col-sm">
@@ -196,7 +198,7 @@ class BossFuxtures extends Fixture {
         $manager->persist($grapes);
         $grape = new \App\Entity\GrapeBlock();
         $grape->setName('sectionCenter')
-                ->setAttributes("{class: 'gjs-fonts gjs-f-b1'}")
+                ->setAttributes("{class: 'fa fa-puzzle-piece'}")
                 ->setLabel('Section Center')
                 ->setContent('<section class="mt-2 mb-2 pt-5 pb-5 text-center bg-light">
                 <div class="pr-5 pl-5">
@@ -208,7 +210,7 @@ class BossFuxtures extends Fixture {
         $manager->persist($grape);
         $grape = new \App\Entity\GrapeBlock();
         $grape->setName('sectionLeft')
-                ->setAttributes("{class: 'gjs-fonts gjs-f-b1'}")
+                ->setAttributes("{class: 'fa fa-puzzle-piece'}")
                 ->setLabel('Section Left')
                 ->setContent('<section class="mt-2 mb-2 pt-5 pb-5 text-left bg-light">
                 <div class="pr-5 pl-5">
@@ -220,7 +222,7 @@ class BossFuxtures extends Fixture {
         $manager->persist($grape);
         $grape = new \App\Entity\GrapeBlock();
         $grape->setName('sectionRight')
-                ->setAttributes("{class: 'gjs-fonts gjs-f-b1'}")
+                ->setAttributes("{class: 'fa fa-puzzle-piece'}")
                 ->setLabel('Section Right')
                 ->setContent('<section class="mt-2 mb-2 pt-5 pb-5 text-right bg-light">
                 <div class="pr-5 pl-5">
@@ -232,7 +234,7 @@ class BossFuxtures extends Fixture {
         $manager->persist($grape);
         $grape = new \App\Entity\GrapeBlock();
         $grape->setName('sectionWithImageLeft')
-                ->setAttributes("{class: 'gjs-fonts gjs-f-b1'}")
+                ->setAttributes("{class: 'fa fa-id-card-o'}")
                 ->setLabel('Section With Image Left')
                 ->setContent('<section class="mt-2 mb-2 text-left bg-light">
                 <div class="row">
@@ -251,7 +253,7 @@ class BossFuxtures extends Fixture {
         $manager->persist($grape);
         $grape = new \App\Entity\GrapeBlock();
         $grape->setName('sectionWithImageRight')
-                ->setAttributes("{class: 'gjs-fonts gjs-f-b1'}")
+                ->setAttributes("{class: 'fa fa-id-card-o'}")
                 ->setLabel('Section With Image Right')
                 ->setContent('<section class="mt-2 mb-2 text-left bg-light">
                 <div class="row">
@@ -268,7 +270,31 @@ class BossFuxtures extends Fixture {
                 </div>
             </section>');
         $manager->persist($grape);
+        $grape = new \App\Entity\GrapeBlock();
+        $grape->setName('homebanner')
+                ->setAttributes("{class: 'fa fa-home'}")
+                ->setLabel('Home Page Banner')
+                ->setContent(' <div class="mr-0 ml-0 bg-dark" style="min-height: 500px;background-size: cover;background-repeat: no-repeat;">
+            <div class="container">
+                <div class="row" style="padding-top: 150px">
+                    <div class="col-sm">
+                        <h1>Ready To Use</h1>
+                        <p>Home page banner with background image</p>
+                    </div>
+                    <div class="col-sm"></div>
+                </div>
+            </div>
+        </div>');
+        $manager->persist($grape);
 //        End
+//           Boss Blocks Start
+        $block = new \App\Entity\BossBlock();
+        $block->setName('header')
+                ->setBody('<p>header Block</p>')
+                ->setCss('');
+        $manager->persist($block);
+//        End
+
 
         $manager->flush();
     }

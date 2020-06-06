@@ -11,6 +11,7 @@ use Twig\TwigFunction;
 class AppExtension extends AbstractExtension {
 
     protected $container;
+    public $em;
 
     public function __construct(EntityManagerInterface $entityManager, ContainerInterface $container) {
         $this->em = $entityManager;
@@ -41,7 +42,14 @@ class AppExtension extends AbstractExtension {
             new TwigFunction('getcats', array($this, 'getCats')),
             new TwigFunction('getinput', array($this, 'getInput')),
             new TwigFunction('getsetting', array($this, 'getSetting')),
+            new TwigFunction('getGrapeHead', array($this, 'getGrapeHead')),
         );
+    }
+
+    public function getGrapeHead() {
+        $em = $this->em;
+        $header = $em->getRepository(\App\Entity\BossBlock::class)->findOneBy(['name' => 'header']);
+        return $header;
     }
 
     public function doDie($html) {

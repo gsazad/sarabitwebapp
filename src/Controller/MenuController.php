@@ -27,7 +27,7 @@ class MenuController extends BaseController {
         $array = array();
         foreach ($menus as $k => $v) {
             $array[$k]['menu'] = $v;
-            $pages = $em->getRepository('App:Page')->findBy(['menuId' => $v->getId()]);
+            $pages = $em->getRepository('App:Page')->findBy(['menu' => $v->getId()]);
             $array[$k]['count'] = count($pages);
         }
 
@@ -71,7 +71,10 @@ class MenuController extends BaseController {
     /**
      * @Route("/myadmin/menu/{id}/show", name="myadmin_menu_show", methods="GET")
      */
-    public function showAction(Menu $menu) {
+    public function showAction(Request $request) {
+        $id = $request->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $menu = $em->getRepository(Menu::class)->findOneBy(['id' => $id]);
         $deleteForm = $this->createDeleteForm($menu);
 
         return $this->render('admin/menu/show.html.twig', array(
@@ -88,12 +91,14 @@ class MenuController extends BaseController {
     /**
      * @Route("/myadmin/menu/{id}/edit", name="myadmin_menu_edit", methods={"GET","POST"})
      */
-    public function editAction(Request $request, Menu $menu) {
+    public function editAction(Request $request) {
+        $id = $request->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $menu = $em->getRepository(Menu::class)->findOneBy(['id' => $id]);
         $deleteForm = $this->createDeleteForm($menu);
         $editForm = $this->createForm('App\Form\MenuType', $menu);
         $editForm->handleRequest($request);
-        $em = $this->getDoctrine()->getManager();
-        $pages = $em->getRepository('App:Page')->findBy(['menuId' => $menu->getId()]);
+        $pages = $em->getRepository('App:Page')->findBy(['menu' => $menu->getId()]);
         $count = count($pages);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -118,7 +123,10 @@ class MenuController extends BaseController {
     /**
      * @Route("/myadmin/menu/{id}/delete", name="myadmin_menu_delete", methods="DELETE")
      */
-    public function deleteAction(Request $request, Menu $menu) {
+    public function deleteAction(Request $request) {
+        $id = $request->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $menu = $em->getRepository(Menu::class)->findOneBy(['id' => $id]);
         $form = $this->createDeleteForm($menu);
         $form->handleRequest($request);
 

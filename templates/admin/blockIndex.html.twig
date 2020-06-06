@@ -1,0 +1,16 @@
+{% extends "baseAdmin.html.twig" %}
+{% block body %}
+    <h2>Boss Blocks</h2>
+    <table class="table">
+        <tr>
+            <th>Name</th>
+            <th>Action</th>
+        </tr>
+        {% for b in blocks %}
+            <tr>
+                <td>{{ b.name }}</td>
+                <td><a class="btn btn-sm btn-success" href="{{ path('myadmin_boss_block_grape',{'id':b.id}) }}">Edit</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

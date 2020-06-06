@@ -16,6 +16,43 @@ class AdminController extends BaseController {
     }
 
     /**
+     * @Route("/myadmin/grapes/boss/block/save", name="myadmin_boss_block_grape_save", methods={"GET","POST"})
+     */
+    public function blockgrapesSaveAction(Request $request) {
+        $id = $request->get('id');
+        $html = $request->get('html');
+        $css = $request->get('css');
+        $em = $this->getDoctrine()->getManager();
+        $block = $em->getRepository(\App\Entity\BossBlock::class)->findOneBy(['id' => $id]);
+        $block->setBody($html)
+                ->setCss($css);
+        $em->persist($block);
+        $em->flush();
+        echo 'done';
+        die;
+    }
+
+    /**
+     * @Route("/myadmin/grapes/boss/block", name="myadmin_boss_block_grape", methods={"GET","POST"})
+     */
+    public function blockgrapesAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $body = $em->getRepository(\App\Entity\BossBlock::class)->findOneBy(['id' => $request->get('id')]);
+        $blocks = $em->getRepository(\App\Entity\GrapeBlock::class)->findAll();
+        $imageAssets = file_get_contents($this->generateUrl('image_assets_json', [], \Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL));
+        return $this->render('admin/blockgrape.html.twig', ['blocks' => $blocks, 'body' => $body, 'imageAssets' => $imageAssets]);
+    }
+
+    /**
+     * @Route("/myadmin/boss/block", name="myadmin_boss_block", methods={"GET","POST"})
+     */
+    public function blockindexAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $blocks = $em->getRepository(\App\Entity\BossBlock::class)->findAll();
+        return $this->render('admin/blockIndex.html.twig', ['blocks' => $blocks]);
+    }
+
+    /**
      * @Route("/image/assets/json", name="image_assets_json", methods="GET|POST")
      */
     public function imageAssetsJsonAction() {
