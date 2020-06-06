@@ -1,0 +1,39 @@
+{% extends "baseAdmin.html.twig" %}
+
+{% block body %}
+    <h1>GrapeBlock index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Label</th>
+                <th>Attributes</th>
+                <th>Name</th>
+                <th>Content</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for grape_block in grape_blocks %}
+            <tr>
+                <td>{{ grape_block.id }}</td>
+                <td>{{ grape_block.label }}</td>
+                <td>{{ grape_block.attributes }}</td>
+                <td>{{ grape_block.name }}</td>
+                <td>{{ grape_block.content }}</td>
+                <td>
+                    <a href="{{ path('grape_block_show', {'id': grape_block.id}) }}">show</a>
+                    <a href="{{ path('grape_block_edit', {'id': grape_block.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('grape_block_new') }}">Create new</a>
+{% endblock %}

@@ -112,7 +112,6 @@ class PageController extends BaseController {
      * @Route("/myadmin/page.edit.html", name="myadmin_page_edit", methods={"GET","POST"})
      */
     public function editAction(Request $request) {
-
         //$deleteForm = $this->createDeleteForm($page);
         $em = $this->getDoctrine()->getManager();
         $page = $em->getRepository(Page::class)->findOneBy(['id' => $request->get('id')]);
@@ -173,6 +172,34 @@ class PageController extends BaseController {
                     'edit_form' => $editForm->createView(),
 //
         ));
+    }
+
+    /**
+     * @Route("/myadmin/grapes/save", name="myadmin_page_edit_grape_save", methods={"GET","POST"})
+     */
+    public function grapesSaveAction(Request $request) {
+        $id = $request->get('id');
+        $html = $request->get('html');
+        $css = $request->get('css');
+        $em = $this->getDoctrine()->getManager();
+        $page = $em->getRepository(Page::class)->findOneBy(['id' => $id]);
+        $page->setBody($html)
+                ->setCss($css);
+        $em->persist($page);
+        $em->flush();
+        echo 'done';
+        die;
+    }
+
+    /**
+     * @Route("/myadmin/grapes/page.edit.html", name="myadmin_page_edit_grape", methods={"GET","POST"})
+     */
+    public function grapesAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $page = $em->getRepository(Page::class)->findOneBy(['id' => $request->get('id')]);
+        $blocks = $em->getRepository(\App\Entity\GrapeBlock::class)->findAll();
+        $imageAssets = file_get_contents($this->generateUrl('image_assets_json', [], \Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL));
+        return $this->render('admin/page/grapes.html.twig', ['blocks' => $blocks, 'page' => $page, 'imageAssets' => $imageAssets]);
     }
 
     /**

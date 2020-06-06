@@ -7,11 +7,14 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="{{url('homepage')}}" />
 {% endblock %}
+{% block css %}
+    <style>
+        {{ home.css|raw }}
+    </style>
+{% endblock %}
 {% block body %}
-    <div class="row">
-        <h1 class="my-4">{{home.title}}</h1>
+        {#        <h1 class="my-4">{{home.title}}</h1>#}
         <p>{{home.body|raw}}</p>
-    </div>
 
     <div class="row">
         {% for section in sections %}

@@ -16,6 +16,24 @@ class AdminController extends BaseController {
     }
 
     /**
+     * @Route("/image/assets/json", name="image_assets_json", methods="GET|POST")
+     */
+    public function imageAssetsJsonAction() {
+        $em = $this->getDoctrine()->getManager();
+        $images = $em->getRepository(\App\Entity\Pg::class)->findAll();
+        $img = array();
+        foreach ($images as $i) {
+            $url = $this->generateUrl('pg_image2', ['id' => $i->getId(), 'name' => $i->getName()], \Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL);
+            $ar = $url;
+
+            $img[] = $ar;
+        }
+//        echo json_encode($img);
+//        die;
+        return new \Symfony\Component\HttpFoundation\Response(json_encode($img), 200, ['content-type' => 'text/json']);
+    }
+
+    /**
      * @Route("/myadmin/enquiry", name="myadmin_enquiry", methods="GET")
      */
     public function enquiryAction() {

@@ -62,10 +62,10 @@ class BossFuxtures extends Fixture {
         }
 
         $menus = array(
-            'Home' => array('Home'),
-            'About Us' => array('About Us'),
-            'Our Services' => array('Service One', 'Service Two'),
-            'Contact Us' => array('Contact Us'),
+            'Home' => array('Home' => '<p>Home</p>'),
+            'About Us' => array('About Us' => '<p>Home</p>'),
+            'Our Services' => array('Service One' => '<p>Home</p>', 'Service Two' => '<p>Home</p>'),
+            'Contact Us' => array('Contact Us' => '<p>Home</p>'),
         );
 
         foreach ($menus as $k => $v) {
@@ -77,13 +77,14 @@ class BossFuxtures extends Fixture {
 
             foreach ($v as $kk => $vv) {
                 $p = new Page();
-                $p->setName($vv);
+                $p->setName($kk);
                 $p->setMenu($m);
-                $p->setTitle($vv);
+                $p->setTitle($kk);
                 $p->setTarget('_top');
                 $p->setKeywords($vv);
                 $p->setDescription($vv);
                 $p->setBody($vv);
+                $p->setCss(' ');
                 $p->setRank(0);
                 if ($vv == 'Home') {
                     $p->setIsHome(TRUE);
@@ -115,6 +116,159 @@ class BossFuxtures extends Fixture {
             $manager->persist($section);
             $manager->flush();
         }
+
+//        Grapes Fixture
+        $grapes = new \App\Entity\GrapeBlock();
+        $grapes->setLabel('Card With Image 3')
+                ->setAttributes("{class: 'gjs-fonts gjs-f-b1'}")
+                ->setName("cardImage3")
+                ->setContent('<div class="row"> <div class="col-sm-4"> <div class="card" style=""> <img src="..." class="card-img-top" alt="..."> <div class="card-body"> <h5 class="card-title">Card title</h5> <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card\'s content.</p> <a href="#" class="btn btn-primary">Go somewhere</a> </div> </div> </div> <div class="col-sm-4"> <div class="card" style=""> <img src="..." class="card-img-top" alt="..."> <div class="card-body"> <h5 class="card-title">Card title</h5> <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card\'s content.</p> <a href="#" class="btn btn-primary">Go somewhere</a> </div> </div> </div> <div class="col-sm-4"> <div class="card" style=""> <img src="..." class="card-img-top" alt="..."> <div class="card-body"> <h5 class="card-title">Card title</h5> <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card\'s content.</p> <a href="#" class="btn btn-primary">Go somewhere</a> </div> </div> </div> </div>');
+        $manager->persist($grapes);
+        $grapes = new \App\Entity\GrapeBlock();
+        $grapes->setLabel('Jumbotron')
+                ->setAttributes("{class: 'gjs-fonts gjs-f-b1'}")
+                ->setName("jumbotron")
+                ->setContent('<div class="jumbotron">
+  <h1 class="display-4">Hello, world!</h1>
+  <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+  <hr class="my-4">
+  <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+  <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+</div>');
+        $manager->persist($grapes);
+        $grapes = new \App\Entity\GrapeBlock();
+        $grapes->setLabel('Info Cards 3')
+                ->setAttributes("{class: 'gjs-fonts gjs-f-b1'}")
+                ->setName("infocard3")
+                ->setContent('<div class="row">
+<div class="col-sm">
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header">
+      <h4 class="my-0 font-weight-normal">Free</h4>
+    </div>
+    <div class="card-body">
+      <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1>
+      <ul class="list-unstyled mt-3 mb-4">
+        <li>10 users included</li>
+        <li>2 GB of storage</li>
+        <li>Email support</li>
+        <li>Help center access</li>
+      </ul>
+      <button type="button" class="btn btn-lg btn-block btn-outline-primary">Sign up for free</button>
+    </div>
+  </div>
+  </div>
+  <div class="col-sm">
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header">
+      <h4 class="my-0 font-weight-normal">Pro</h4>
+    </div>
+    <div class="card-body">
+      <h1 class="card-title pricing-card-title">$15 <small class="text-muted">/ mo</small></h1>
+      <ul class="list-unstyled mt-3 mb-4">
+        <li>20 users included</li>
+        <li>10 GB of storage</li>
+        <li>Priority email support</li>
+        <li>Help center access</li>
+      </ul>
+      <button type="button" class="btn btn-lg btn-block btn-primary">Get started</button>
+    </div>
+  </div>
+    </div>
+  <div class="col-sm">
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header">
+      <h4 class="my-0 font-weight-normal">Enterprise</h4>
+    </div>
+    <div class="card-body">
+      <h1 class="card-title pricing-card-title">$29 <small class="text-muted">/ mo</small></h1>
+      <ul class="list-unstyled mt-3 mb-4">
+        <li>30 users included</li>
+        <li>15 GB of storage</li>
+        <li>Phone and email support</li>
+        <li>Help center access</li>
+      </ul>
+      <button type="button" class="btn btn-lg btn-block btn-primary">Contact us</button>
+    </div>
+  </div>
+  </div>
+  </div>');
+        $manager->persist($grapes);
+        $grape = new \App\Entity\GrapeBlock();
+        $grape->setName('sectionCenter')
+                ->setAttributes("{class: 'gjs-fonts gjs-f-b1'}")
+                ->setLabel('Section Center')
+                ->setContent('<section class="mt-2 mb-2 pt-5 pb-5 text-center bg-light">
+                <div class="pr-5 pl-5">
+                    <h2>Ready To Use Secitons</h2>
+                    <p>Build your page section by section! We have created multiple options for you to put together and customise into pixel perfect pages. From headers to footers, you will be able to choose the best combination for your project.</p>
+                    <a href="#" class="btn btn-primary" style="border-radius: 100px">Click Here</a>
+                </div>
+            </section>');
+        $manager->persist($grape);
+        $grape = new \App\Entity\GrapeBlock();
+        $grape->setName('sectionLeft')
+                ->setAttributes("{class: 'gjs-fonts gjs-f-b1'}")
+                ->setLabel('Section Left')
+                ->setContent('<section class="mt-2 mb-2 pt-5 pb-5 text-left bg-light">
+                <div class="pr-5 pl-5">
+                    <h2>Ready To Use Secitons</h2>
+                    <p>Build your page section by section! We have created multiple options for you to put together and customise into pixel perfect pages. From headers to footers, you will be able to choose the best combination for your project.</p>
+                    <a href="#" class="btn btn-primary" style="border-radius: 100px">Click Here</a>
+                </div>
+            </section>');
+        $manager->persist($grape);
+        $grape = new \App\Entity\GrapeBlock();
+        $grape->setName('sectionRight')
+                ->setAttributes("{class: 'gjs-fonts gjs-f-b1'}")
+                ->setLabel('Section Right')
+                ->setContent('<section class="mt-2 mb-2 pt-5 pb-5 text-right bg-light">
+                <div class="pr-5 pl-5">
+                    <h2>Ready To Use Secitons</h2>
+                    <p>Build your page section by section! We have created multiple options for you to put together and customise into pixel perfect pages. From headers to footers, you will be able to choose the best combination for your project.</p>
+                    <a href="#" class="btn btn-primary" style="border-radius: 100px">Click Here</a>
+                </div>
+            </section>');
+        $manager->persist($grape);
+        $grape = new \App\Entity\GrapeBlock();
+        $grape->setName('sectionWithImageLeft')
+                ->setAttributes("{class: 'gjs-fonts gjs-f-b1'}")
+                ->setLabel('Section With Image Left')
+                ->setContent('<section class="mt-2 mb-2 text-left bg-light">
+                <div class="row">
+                    <div class="col-sm-4" >
+                        <div style="min-height: 150px;height: 100%;background-image: url(http://127.0.0.1/bossnew/public/photoG/6/photo/dv06-06-20.jpg); background-size: cover;background-position: center"></div>
+                    </div>
+                    <div class="col-sm-8 p-4">
+                        <div class="pr-5 pl-5">
+                            <h2>Ready To Use Secitons</h2>
+                            <p>Build your page section by section! We have created multiple options for you to put together and customise into pixel perfect pages. From headers to footers, you will be able to choose the best combination for your project.</p>
+                            <a href="#" class="btn btn-primary" style="border-radius: 100px">Click Here</a>
+                        </div>
+                    </div>
+                </div>
+            </section>');
+        $manager->persist($grape);
+        $grape = new \App\Entity\GrapeBlock();
+        $grape->setName('sectionWithImageRight')
+                ->setAttributes("{class: 'gjs-fonts gjs-f-b1'}")
+                ->setLabel('Section With Image Right')
+                ->setContent('<section class="mt-2 mb-2 text-left bg-light">
+                <div class="row">
+                    <div class="col-sm-8 p-4">
+                        <div class="pr-5 pl-5">
+                            <h2>Ready To Use Secitons</h2>
+                            <p>Build your page section by section! We have created multiple options for you to put together and customise into pixel perfect pages. From headers to footers, you will be able to choose the best combination for your project.</p>
+                            <a href="#" class="btn btn-primary" style="border-radius: 100px">Click Here</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-4" >
+                        <div style="min-height: 150px;height: 100%;background-image: url(http://127.0.0.1/bossnew/public/photoG/6/photo/dv06-06-20.jpg); background-size: cover;background-position: center"></div>
+                    </div>
+                </div>
+            </section>');
+        $manager->persist($grape);
+//        End
 
         $manager->flush();
     }

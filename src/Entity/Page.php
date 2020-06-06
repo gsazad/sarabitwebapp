@@ -101,6 +101,11 @@ class Page
      */
     private $menu;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $css;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -234,6 +239,18 @@ class Page
     public function setMenu(?Menu $menu): self
     {
         $this->menu = $menu;
+
+        return $this;
+    }
+
+    public function getCss(): ?string
+    {
+        return $this->css;
+    }
+
+    public function setCss(string $css): self
+    {
+        $this->css = $css;
 
         return $this;
     }

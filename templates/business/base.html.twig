@@ -16,7 +16,10 @@
         <link href="https://fonts.googleapis.com/css?family=Anton|Baloo+Paaji|Hind|Kalam|Khand|Mukta+Mahee|Noto+Sans|Rajdhani|Ubuntu|Yantramanav" rel="stylesheet">
         <link href="{{asset('bundles/app/business')}}/css/modern-business.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="{{path('css')}}">
+        <script src="{{asset('bundles/app/MyNpm/')}}node_modules/grapesjs/dist/grapes.min.js"></script>
+
         {% block opengraph %} {% endblock %}
+        {% block css %}{% endblock %}
         {{settings.headers|raw}}
     </head>
     <body>
@@ -30,6 +33,7 @@
             {% block body %}
             {% endblock %}
         </div>
+
         <!-- /.container -->
         <!-- Footer -->
         <footer class="py-5 bg-dark">
