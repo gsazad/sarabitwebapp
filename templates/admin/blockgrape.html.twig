@@ -18,7 +18,7 @@
 
     <body>
         <div id="gjs" style="height:0px; overflow:hidden;">
-            {% if strPos(page.body,'bootstrap.min.css') == false %}
+            {% if strPos(body.body,'bootstrap.min.css') == false %}
                 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
             {% endif %}
             {{ body.body|raw }}
@@ -52,17 +52,47 @@
                 showOffsets: 1,
                 noticeOnUnload: 0,
                 assetManager: {
-                    assets: imageAssets
-                },
-                container: '#gjs',
-                height: '100%',
-                fromElement: true,
-                storageManager: {autoload: 0},
-                blocks: ['form'],
-                plugins: ['gjs-blocks-basic', 'grapesjs-typed', 'grapesjs-style-gradient', 'gjs-component-countdown'],
-                pluginsOpts: {
-                    'gjs-blocks-basic': {/* ...options */},
-                    'grapesjs-style-gradient': {
+                    assets: imageAssets,
+                    storageType: '',
+                    storeOnChange: true,
+                    storeAfterUpload: true,
+                    uploadFile: function (e) {
+                        var files = e.dataTransfer ? e.dataTransfer.files : e.target.files;
+                        var formData = new FormData();
+                        for (var i in files) {
+                            formData.append('file-' + i, files[i]) //containing all the selected images from local
+                        }
+            {#                        alert(formData);#}
+                            $.ajax({
+                                url: '{{ path('image_man_upload') }}',
+                                type: 'POST',
+                                data: formData,
+                                contentType: false,
+                                crossDomain: true,
+                                dataType: 'json',
+                                mimeType: "multipart/form-data",
+                                processData: false,
+                                success: function (result) {
+            {#                                alert(result);#}
+                                    if (result['error'] == 0) {
+                                        var images = result['path'];
+                                        editor.AssetManager.add(images); //adding images to asset 
+                                    } else {
+                                        alert(result['message']);
+                                    }
+                                }
+                            });
+                        },
+                    },
+                    container: '#gjs',
+                    height: '100%',
+                    fromElement: true,
+                    storageManager: {autoload: 0},
+                    blocks: ['form'],
+                    plugins: ['gjs-blocks-basic', 'grapesjs-typed', 'grapesjs-style-gradient', 'gjs-component-countdown'],
+                    pluginsOpts: {
+                        'gjs-blocks-basic': {/* ...options */},
+                        'grapesjs-style-gradient': {
             {#                        'grapickOpts'#}
                         },
                         'gjs-component-countdown': {/* ...options */},

@@ -55,55 +55,85 @@
                 showOffsets: 1,
                 noticeOnUnload: 0,
                 assetManager: {
-                    assets: imageAssets
-                },
-                container: '#gjs',
-                height: '100%',
-                fromElement: true,
-                storageManager: {autoload: 0},
-                blocks: ['form'],
-                plugins: ['gjs-blocks-basic', 'grapesjs-tabs', 'grapesjs-typed', 'grapesjs-style-gradient', 'gjs-component-countdown'],
-                pluginsOpts: {
-                    'gjs-blocks-basic': {/* ...options */},
-                    'grapesjs-style-gradient': {
-                        colorPicker: 'default',
-                    },
-                    'gjs-component-countdown': {/* ...options */},
-                    'grapesjs-typed': {/* options */},
-                    'grapesjs-tabs': {
-                        // options
-                    }
-
-                },
-                styleManager: {
-                    sectors: [{
-                            name: 'General',
-                            open: false,
-                            buildProps: ['float', 'display', 'position', 'top', 'right', 'left', 'bottom']
-                        }, {
-                            name: 'Flex',
-                            open: false,
-                            buildProps: ['flex-direction', 'flex-wrap', 'justify-content', 'align-items', 'align-content', 'order', 'flex-basis', 'flex-grow', 'flex-shrink', 'align-self']
-                        }, {
-                            name: 'Dimension',
-                            open: false,
-                            buildProps: ['width', 'height', 'max-width', 'min-height', 'margin', 'padding'],
-                        }, {
-                            name: 'Typography',
-                            open: false,
-                            buildProps: ['font-family', 'font-size', 'font-weight', 'letter-spacing', 'color', 'line-height', 'text-shadow'],
-                        }, {
-                            name: 'Decorations',
-                            open: false,
-                            buildProps: ['border-radius-c', 'background-color', 'border-radius', 'border', 'box-shadow', 'background'],
-                        }, {
-                            name: 'Extra',
-                            open: false,
-                            buildProps: ['transition', 'perspective', 'transform'],
+                    assets: imageAssets,
+                    storageType: '',
+                    storeOnChange: true,
+                    storeAfterUpload: true,
+                    uploadFile: function (e) {
+                        var files = e.dataTransfer ? e.dataTransfer.files : e.target.files;
+                        var formData = new FormData();
+                        for (var i in files) {
+                            formData.append('file-' + i, files[i]) //containing all the selected images from local
                         }
-                    ],
-                },
-            });
+            {#                        alert(formData);#}
+                            $.ajax({
+                                url: '{{ path('image_man_upload') }}',
+                                type: 'POST',
+                                data: formData,
+                                contentType: false,
+                                crossDomain: true,
+                                dataType: 'json',
+                                mimeType: "multipart/form-data",
+                                processData: false,
+                                success: function (result) {
+            {#                                alert(result);#}
+                                    if (result['error'] == 0) {
+                                        var images = result['path'];
+                                        editor.AssetManager.add(images); //adding images to asset 
+                                    }else{
+                                        alert(result['message']);
+                                    }
+                                }
+                            });
+                        },
+                    },
+                    container: '#gjs',
+                    height: '100%',
+                    fromElement: true,
+                    storageManager: {autoload: 0},
+                    blocks: ['form'],
+                    plugins: ['gjs-blocks-basic', 'grapesjs-tabs', 'grapesjs-typed', 'grapesjs-style-gradient', 'gjs-component-countdown'],
+                    pluginsOpts: {
+                        'gjs-blocks-basic': {/* ...options */},
+                        'grapesjs-style-gradient': {
+                            colorPicker: 'default',
+                        },
+                        'gjs-component-countdown': {/* ...options */},
+                        'grapesjs-typed': {/* options */},
+                        'grapesjs-tabs': {
+                            // options
+                        }
+
+                    },
+                    styleManager: {
+                        sectors: [{
+                                name: 'General',
+                                open: false,
+                                buildProps: ['float', 'display', 'position', 'top', 'right', 'left', 'bottom']
+                            }, {
+                                name: 'Flex',
+                                open: false,
+                                buildProps: ['flex-direction', 'flex-wrap', 'justify-content', 'align-items', 'align-content', 'order', 'flex-basis', 'flex-grow', 'flex-shrink', 'align-self']
+                            }, {
+                                name: 'Dimension',
+                                open: false,
+                                buildProps: ['width', 'height', 'max-width', 'min-height', 'margin', 'padding'],
+                            }, {
+                                name: 'Typography',
+                                open: false,
+                                buildProps: ['font-family', 'font-size', 'font-weight', 'letter-spacing', 'color', 'line-height', 'text-shadow'],
+                            }, {
+                                name: 'Decorations',
+                                open: false,
+                                buildProps: ['border-radius-c', 'background-color', 'border-radius', 'border', 'box-shadow', 'background'],
+                            }, {
+                                name: 'Extra',
+                                open: false,
+                                buildProps: ['transition', 'perspective', 'transform'],
+                            }
+                        ],
+                    },
+                });
             {% for b in blocks %}
                 editor.BlockManager.add('{{ b.name }}', {
                     label: '{{ b.label }}',

@@ -16,6 +16,37 @@ class AdminController extends BaseController {
     }
 
     /**
+     * @Route("/myadmin/image/man/upload", name="image_man_upload", methods={"GET","POST"})
+     */
+    public function imageManUploadAction(Request $request) {
+        $files = $_FILES['file-0'];
+        $filename = $files['name'];
+        $filetmp = $files['tmp_name'];
+        $filetype = $files['type'];
+        $res = array();
+        if ($filetype == "image/jpeg" || $filetype == "image/png" || $filetype == "image/gif") {
+            $em = $this->getDoctrine()->getManager();
+            $img = new \App\Entity\Pg();
+            $img->setName($filename)
+                    ->setFileName($filename)
+                    ->setCreatedOn($this->myDate())
+                    ->setType($filetype)
+                    ->setData(file_get_contents($filetmp));
+            $em->persist($img);
+            $em->flush();
+            $res['error'] = 0;
+            $res['path'] = $this->generateUrl('pg_image2', ['id' => $img->getId(), 'name' => $img->getName()], \Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL);
+            $res['message'] = 'Image Uploaded';
+        } else {
+            $res['error'] = 1;
+            $res['message'] = 'File Format Not supported';
+        }
+        echo json_encode($res);
+        die;
+        return new \Symfony\Component\HttpFoundation\Response(json_encode($_FILES), 200);
+    }
+
+    /**
      * @Route("/myadmin/pagebuilder/boss/block/save", name="myadmin_boss_block_grape_save", methods={"GET","POST"})
      */
     public function blockgrapesSaveAction(Request $request) {
