@@ -43,7 +43,16 @@ class AppExtension extends AbstractExtension {
             new TwigFunction('getinput', array($this, 'getInput')),
             new TwigFunction('getsetting', array($this, 'getSetting')),
             new TwigFunction('getGrapeHead', array($this, 'getGrapeHead')),
+            new TwigFunction('strPos', array($this, 'strPos')),
         );
+    }
+
+    public function strPos($string, $word) {
+        if (strpos($string, $word) !== false) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function getGrapeHead() {

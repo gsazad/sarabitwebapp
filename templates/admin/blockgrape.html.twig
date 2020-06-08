@@ -18,8 +18,9 @@
 
     <body>
         <div id="gjs" style="height:0px; overflow:hidden;">
-            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-
+            {% if strPos(page.body,'bootstrap.min.css') == false %}
+                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+            {% endif %}
             {{ body.body|raw }}
             {#<div class="panel">
                 <h1 class="welcome">Welcome to</h1>
