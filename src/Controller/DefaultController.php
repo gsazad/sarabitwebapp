@@ -27,7 +27,8 @@ class DefaultController extends BaseController {
         }
         $scroller = $em->getRepository('App:Scroller')->findAll();
         $home = $em->getRepository('App:Page')->findOneBy(['name' => 'Home']);
-        return $this->render('business/index.html.twig', ['sections' => $sections, 'scroller' => $scroller, 'home' => $home]);
+        $body = $this->bodyFilter($home->getBody());
+        return $this->render('business/index.html.twig', ['sections' => $sections, 'scroller' => $scroller, 'home' => $home, 'body' => $body]);
     }
 
     /**

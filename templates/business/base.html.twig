@@ -17,7 +17,6 @@
         <link href="{{asset('bundles/app/business')}}/css/modern-business.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="{{path('css')}}">
         <script src="{{asset('bundles/app/MyNpm/')}}node_modules/grapesjs/dist/grapes.min.js"></script>
-
         {% block opengraph %} {% endblock %}
         {% block css %}{% endblock %}
         {{settings.headers|raw}}
@@ -25,7 +24,7 @@
     <body>
         <!-- Navigation -->
         {{render(controller('App\\Controller\\DefaultController:navAction'))}}
-      
+
         {% block header %}
             <!-- space for header -->
         {% endblock %}
@@ -46,7 +45,31 @@
         <!-- Bootstrap core JavaScript -->
         <script src="{{asset('bundles/app/business')}}/vendor/jquery/jquery.min.js"></script>
         <script src="{{asset('bundles/app/business')}}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.js"></script>
         <script>
+            $(document).ready(function () {
+                $('.customer-logos').slick({
+                    slidesToShow: 6,
+                    slidesToScroll: 1,
+                    autoplay: true,
+                    autoplaySpeed: 1500,
+                    arrows: false,
+                    dots: false,
+                    pauseOnHover: false,
+                    responsive: [{
+                            breakpoint: 768,
+                            settings: {
+                                slidesToShow: 4
+                            }
+                        }, {
+                            breakpoint: 520,
+                            settings: {
+                                slidesToShow: 3
+                            }
+                        }]
+                });
+            });
+
             $('#megaMenuBtn').on('click', function (e) {
                 $('#megaMenu').modal('toggle');
             });

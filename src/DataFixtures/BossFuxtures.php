@@ -49,6 +49,7 @@ class BossFuxtures extends Fixture {
             'navbar_text_color' => array('type' => 'color', 'data' => '', 'options' => ''),
             'navbar_font' => array('type' => 'select', 'data' => '', 'options' => json_encode($fonts)),
             'product_manu_id' => array('type' => 'number', 'data' => '', 'options' => ''),
+            'logo_album_id' => array('type' => 'number', 'data' => '', 'options' => ''),
             'default_home_sections' => array('type' => 'select', 'data' => 'no', 'options' => json_encode(['yes', 'no'])),
             'home_header' => array('type' => 'select', 'data' => 'grape', 'options' => json_encode(['slider', 'grape'])),
         );
@@ -285,6 +286,12 @@ class BossFuxtures extends Fixture {
                 </div>
             </div>
         </div>');
+        $manager->persist($grape);
+        $grape = new \App\Entity\GrapeBlock();
+        $grape->setName('logoslider')
+                ->setAttributes("{class: 'fa fa-slideshare'}")
+                ->setLabel('Logo Slider')
+                ->setContent('<div> <h2 class="text-center">Partners</h2> <div data-gjs-editable="false"> [[LOGOSLIDER]] </div> </div>');
         $manager->persist($grape);
 //        End
 //           Boss Blocks Start

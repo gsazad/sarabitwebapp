@@ -26,7 +26,7 @@ class PhotoGalleryController extends BaseController {
         $albumId = $request->get('albumId');
         $em = $this->getDoctrine()->getManager();
 
-        $photoGalleries = $em->getRepository('App:PhotoGallery')->findBy(['albumId' => $albumId]);
+        $photoGalleries = $em->getRepository('App:PhotoGallery')->findBy(['album' => $albumId]);
         $album = $em->getRepository('App:Album')->findOneBy(['id' => $albumId]);
 
         return $this->render('photogallery/index.html.twig', array(
@@ -47,7 +47,7 @@ class PhotoGalleryController extends BaseController {
     public function newAction(Request $request) {
         $albumId = $request->get('albumId');
         $photoGallery = new Photogallery();
-        $form = $this->createForm('App\Form\PhotoGalleryType', $photoGallery);
+        $form = $this->createForm(\App\Form\PhotoGalleryType::class, $photoGallery);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

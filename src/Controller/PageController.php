@@ -98,8 +98,10 @@ class PageController extends BaseController {
         $id = $request->get('id');
         $em = $this->getDoctrine()->getManager();
         $page = $em->getRepository(Page::class)->findOneBy(['id' => $id]);
+        $body = $this->bodyFilter($page->getBody());
         return $this->render('business/page.html.twig', array(
-                    'page' => $page
+                    'page' => $page,
+                    'body' => $body,
         ));
     }
 

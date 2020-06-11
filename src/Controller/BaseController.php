@@ -13,6 +13,32 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class BaseController extends \Symfony\Bundle\FrameworkBundle\Controller\AbstractController {
 
+    public function bodyFilter($body) {
+        $logoScroller = $this->getLogoScroller();
+        $array = array(
+            '[[LOGOSLIDER]]' => $logoScroller,
+        );
+        return strtr($body, $array);
+    }
+
+    public function getLogoScroller() {
+        $settings = $this->getSetting();
+        $em = $this->getDoctrine()->getManager();
+        $albumId = $settings['logo_album_id'];
+        if ($albumId == null || $albumId == "" || $albumId == "0") {
+            return '/* album id not given */';
+        } else {
+            $album = $em->getRepository(\App\Entity\Album::class)->findOneBy(['id' => $albumId]);
+            if ($album) {
+                $images = $em->getRepository(\App\Entity\PhotoGallery::class)->findBy(['album' => $album->getId()]);
+                $content = $this->renderView('business/logoslider.html.twig', ['images' => $images]);
+            } else {
+                return '/* album ' . $albumId . ' not found */';
+            }
+        }
+        return $content;
+    }
+
     //put your code here
     public function myDate() {
         return new \DateTime("now", new \DateTimeZone('UTC'));
