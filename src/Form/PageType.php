@@ -23,7 +23,7 @@ class PageType extends AbstractType {
                 ->add('description', TextType::class)
                 ->add('body', TextareaType::class, array('attr' => array('novalidate' => 'novalidate')))
                 ->add('menu', EntityType::class, array(
-                    'class' => 'AppBundle:Menu',
+                    'class' => 'App:Menu',
                     'choice_label' => 'name',
                 ))
                 ->add('url', TextType::class,array('required'=>false))
@@ -35,7 +35,7 @@ class PageType extends AbstractType {
      */
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Page'
+            'data_class' => 'App\Entity\Page'
         ));
     }
 

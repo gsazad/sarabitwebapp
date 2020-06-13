@@ -1,0 +1,19 @@
+{% extends "business/base.html.twig" %}
+{% block title %}Youtube Gallery{% endblock %}
+
+{% block body %}
+    <h2>Youtube Gallery</h2>
+    <div class="row">
+        {% for y in yt %}
+            <div class="col-sm-3">
+                <div class="card">
+                    <img src="https://img.youtube.com/vi/{{ y.url|getYtId }}/hqdefault.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5>{{ y.title }}</h5>
+                        <a href="{{ path('yt_video',{'id':y.id}) }}" class="btn btn-primary">Go to</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -27,7 +27,7 @@ class MenuType extends AbstractType {
      */
     public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Menu'
+            'data_class' => 'App\Entity\Menu'
         ));
     }
 

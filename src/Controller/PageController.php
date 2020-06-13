@@ -58,7 +58,8 @@ class PageController extends BaseController {
             $page->setMenu($menu);
             $page->setIsHome(0);
             $page->setRank(0);
-            $page->setBody($form['body']->getData());
+            $page->setBody($form['body']->getData())
+                    ->setCss(' ');
             $em->persist($page);
             $em->flush();
 

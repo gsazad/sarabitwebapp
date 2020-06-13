@@ -2,7 +2,6 @@
 
 {% block body %}
     <h1>Page creation</h1>
-
     {{ form_start(form) }}
     <div class="row">
         <div class="col-sm-3">
@@ -51,6 +50,13 @@
     </div>
     {{ form_end(form) }}
 
+    <div class="jumbotron">
+        <h5>Links</h5>
+        <ul>
+            <li>{{ url('album_index') }} - Photo Gallery</li>
+            <li>{{ url('yt_index') }} - Youtube Gallery</li>
+        </ul>
+    </div>
     <ul>
         <li>
             <a href="{{ path('myadmin_page_index') }}">Back to the list</a>

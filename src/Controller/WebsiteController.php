@@ -19,6 +19,25 @@ use Symfony\Component\Routing\Annotation\Route;
 class WebsiteController extends BaseController {
 
     /**
+     * @Route("/yt/{id}/video", name="yt_video")
+     */
+    public function ytvideo(Request $request) {
+        $id = $request->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $yt = $em->getRepository(\App\Entity\YtGallery::class)->findOneBy(['id' => $id]);
+        return $this->render('business/ytVideo.html.twig', ['yt' => $yt]);
+    }
+
+    /**
+     * @Route("/yt", name="yt_index")
+     */
+    public function ytindex() {
+        $em = $this->getDoctrine()->getManager();
+        $yt = $em->getRepository(\App\Entity\YtGallery::class)->findBy([], ['id' => 'DESC']);
+        return $this->render('business/ytIndex.html.twig', ['yt' => $yt]);
+    }
+
+    /**
      * @Route("/album", name="album_index")
      */
     public function albumAction() {

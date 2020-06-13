@@ -33,6 +33,7 @@ class AppExtension extends AbstractExtension {
             new TwigFilter('md5', [$this, 'md5']),
             new TwigFilter('getuserinfo', [$this, 'getuserinfo']),
             new TwigFilter('getHtml', [$this, 'getHtml']),
+            new TwigFilter('getYtId', [$this, 'getYtId']),
             new TwigFilter('die', [$this, 'doDie']),
         ];
     }
@@ -53,6 +54,11 @@ class AppExtension extends AbstractExtension {
         } else {
             return false;
         }
+    }
+
+    public function getYtId($url) {
+        $url = explode('?v=', $url);
+        return $url[1];
     }
 
     public function getGrapeHead() {

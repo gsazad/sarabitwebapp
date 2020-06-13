@@ -1,0 +1,10 @@
+{% extends 'baseAdmin.html.twig' %}
+
+
+{% block body %}
+    <h1>Create new YtGallery</h1>
+
+    {{ include('yt_gallery/_form.html.twig') }}
+
+    <a href="{{ path('yt_gallery_index') }}">back to list</a>
+{% endblock %}

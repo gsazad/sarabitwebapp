@@ -1,0 +1,12 @@
+{% extends 'baseAdmin.html.twig' %}
+
+
+{% block body %}
+    <h1>Edit YtGallery</h1>
+
+    {{ include('yt_gallery/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('yt_gallery_index') }}">back to list</a>
+
+    {{ include('yt_gallery/_delete_form.html.twig') }}
+{% endblock %}
