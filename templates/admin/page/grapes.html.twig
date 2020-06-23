@@ -18,11 +18,6 @@
 
     <body>
         <div id="gjs" style="height:0px; overflow:hidden;">
-
-            {% if strPos(page.body,'bootstrap.min.css') == false %}
-                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-            {% endif %}
-
             {{ page.body|raw }}
             {#<div class="panel">
                 <h1 class="welcome">Welcome to</h1>
@@ -80,7 +75,7 @@
                                     if (result['error'] == 0) {
                                         var images = result['path'];
                                         editor.AssetManager.add(images); //adding images to asset 
-                                    }else{
+                                    } else {
                                         alert(result['message']);
                                     }
                                 }
@@ -89,6 +84,9 @@
                     },
                     container: '#gjs',
                     height: '100%',
+                    canvas: {
+                        styles: ['{{asset('bundles/app/business')}}/vendor/bootstrap/css/bootstrap.min.css']
+                    },
                     fromElement: true,
                     storageManager: {autoload: 0},
                     blocks: ['form'],

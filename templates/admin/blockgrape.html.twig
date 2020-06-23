@@ -87,6 +87,9 @@
                     container: '#gjs',
                     height: '100%',
                     fromElement: true,
+                    canvas: {
+                        styles: ['{{asset('bundles/app/business')}}/vendor/bootstrap/css/bootstrap.min.css']
+                    },
                     storageManager: {autoload: 0},
                     blocks: ['form'],
                     plugins: ['gjs-blocks-basic', 'grapesjs-typed', 'grapesjs-style-gradient', 'gjs-component-countdown'],
