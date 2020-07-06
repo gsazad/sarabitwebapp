@@ -10,7 +10,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('myadmin_photogallery_index',{'albumId': photoGallery.albumId}) }}">Back to the list</a>
+            <a href="{{ path('myadmin_photogallery_index',{'albumId': photoGallery.album.id}) }}">Back to the list</a>
         </li>
         <li>
             {{ form_start(delete_form) }}

@@ -58,15 +58,20 @@ class PhotoGalleryController extends BaseController {
             $fileName = $file['name']['fileData'];
             $fileType = $file['type']['fileData'];
             $fileTmpName = $file['tmp_name']['fileData'];
-            $to = $this->getTmpPath() . '/Photo' . $fileName;
-            $this->imageResizeAndSave($fileTmpName, $to, 800);
+            
+            $data = $this->imageResize(file_get_contents($fileTmpName), $fileType, 800);
+            
+//            $to = $this->getTmpPath() . '/Photo' . $fileName;
+//            $this->imageResizeAndSave($fileTmpName, $to, 800);
+            
+            
             $photoGallery->setTitle($form['title']->getData());
             $photoGallery->setDescription($form['description']->getData());
             $photoGallery->setAlbum($album);
             $photoGallery->setCreatedOn($this->mydate());
             $photoGallery->setFileName($this->getSlug($fileName));
             $photoGallery->setFileType($fileType);
-            $photoGallery->setFileData(file_get_contents($to));
+            $photoGallery->setFileData($data);
 
 
             $em = $this->getDoctrine()->getManager();
@@ -91,7 +96,7 @@ class PhotoGalleryController extends BaseController {
         $em = $this->getDoctrine()->getManager();
         $imageId = $request->get('id');
         $albumId = $request->get('albumId');
-        $pg = $em->getRepository('App:PhotoGallery')->findOneBy(['id' => $imageId, 'albumId' => $albumId]);
+        $pg = $em->getRepository('App:PhotoGallery')->findOneBy(['id' => $imageId, 'album' => $albumId]);
         $form = $this->createFormBuilder()
                 ->setAction($this->generateUrl('myadmin_photogallery_edit_image', ['id' => $imageId, 'albumId' => $albumId]))
                 ->setMethod('POST')
@@ -114,7 +119,7 @@ class PhotoGalleryController extends BaseController {
                     'success', '<b>Success!</b><br> Image Saved...'
             );
 
-            return $this->redirectToRoute('myadmin_photogallery_index', array('albumId' => $albumId));
+            return $this->redirectToRoute('myadmin_photogallery_index', array('albumId' => $pg->getAlbum()->getId()));
         }
         return $this->render('photogallery/editImage.html.twig', array('form' => $form->createView()));
     }

@@ -39,7 +39,7 @@ class AlbumController extends BaseController {
      */
     public function newAction(Request $request) {
         $album = new Album();
-        $form = $this->createForm(\AppBundle\Form\AlbumType::class, $album);
+        $form = $this->createForm(\App\Form\AlbumType::class, $album);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

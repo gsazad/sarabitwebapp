@@ -93,9 +93,6 @@ body {
 
 /* Slider */
 
-.slick-slide {
-    margin: 0px 20px;
-}
 
 .slick-slide img {
     width: 100%;
@@ -171,8 +168,17 @@ body {
 {
     display: none;
     float: left;
-    height: 100%;
-    min-height: 1px;
+    height: 150px;
+    min-height: 150px;
+    margin: 0px 20px;
+    border: gray 1px solid;
+    width: 150px;
+    padding: 2px;
+    background-position: center center;
+    background-size: 97%;
+    background-repeat: no-repeat;
+    
+    
 }
 [dir='rtl'] .slick-slide
 {

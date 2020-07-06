@@ -41,7 +41,7 @@ class BaseController extends \Symfony\Bundle\FrameworkBundle\Controller\Abstract
 
     //put your code here
     public function myDate() {
-        return new \DateTime("now", new \DateTimeZone('UTC'));
+        return new \DateTime("now", new \DateTimeZone('Asia/Kolkata'));
     }
 
     public function dummyText() {
@@ -102,12 +102,17 @@ Quisque volutpat ipsum sed turpis semper finibus. Donec ornare est vitae risus r
 
         $dst_img = imagecreatetruecolor($thumb_w, $thumb_h);
         imagecopyresampled($dst_img, $src_img, 0, 0, 0, 0, $thumb_w, $thumb_h, $old_x, $old_y);
+        ob_start();
+
         if ($type == 'image/png') {
             imagepng($dst_img);
         }
         if ($type == 'image/jpg' || $type == 'image/jpeg') {
             imagejpeg($dst_img);
         }
+        $content = ob_get_contents();
+        ob_end_clean();
+        return $content;
     }
 
     function imageResizeAndSave($file, $to, $size) {
