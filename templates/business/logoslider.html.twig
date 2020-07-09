@@ -1,6 +1,6 @@
 <section class="customer-logos slider mb-1 mt-1">
     {% for i in images %}
-        <div class="slide" style="background-image: url({{path('photogallery_thumb',{'id':i.id,'size':710,'name':i.fileName})}})">
+        <div class="slide" style="background-image: url({{path('photogallery_thumb',{'id':i.id,'size':300,'name':i.fileName})}})">
 {#            <img src="{{path('photogallery_thumb',{'id':i.id,'size':710,'name':i.fileName})}}">#}
         </div>
         {% endfor %}
