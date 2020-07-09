@@ -168,4 +168,31 @@ Quisque volutpat ipsum sed turpis semper finibus. Donec ornare est vitae risus r
         return $this->redirect($url);
     }
 
+    public function etagResponse($response, $request, $catch = false) {
+        //return $response;
+        $encodings = $request->getEncodings();
+            if (in_array('gzip', $encodings) && function_exists('gzencode')) {
+                $content = gzencode($response->getContent());
+                $response->setContent($content);
+                $response->headers->set('Content-encoding', 'gzip');
+            } elseif (in_array('deflate', $encodings) && function_exists('gzdeflate')) {
+                $content = gzdeflate($response->getContent());
+                $response->setContent($content);
+                $response->headers->set('Content-encoding', 'deflate');
+            }
+
+        $response->setEtag(md5($response->getContent()));
+        $response->setPublic();
+        if ($catch == true) {
+            $response->setMaxAge(60 * 60 * 24);
+            $response->setSharedMaxAge(60 * 60 * 24);
+        } else {
+            $response->setMaxAge(60 * 10);
+            $response->setSharedMaxAge(60 * 10);
+        }
+
+        $response->isNotModified($request);
+        return $response;
+    }
+
 }

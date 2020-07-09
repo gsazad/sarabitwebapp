@@ -247,14 +247,19 @@ class PhotoGalleryController extends BaseController {
 
         $dst_img = imagecreatetruecolor($thumb_w, $thumb_h);
         imagecopyresampled($dst_img, $src_img, 0, 0, 0, 0, $thumb_w, $thumb_h, $old_x, $old_y);
-        header('Content-Type:' . $type);
+        //header('Content-Type:' . $type);
+        ob_start();
         if ($type == 'image/png') {
             imagepng($dst_img);
         } elseif ($type == 'image/jpg' || $type == 'image/jpeg') {
             imagejpeg($dst_img);
         }
-        die;
-
+        $content = ob_get_contents();
+        ob_end_clean();
+        
+        $response = new \Symfony\Component\HttpFoundation\Response($content, 200, ['content-type'=>$type]);
+        
+        return $this->etagResponse($response, $request, true);
         //resize
     }
 
