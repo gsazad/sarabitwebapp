@@ -10,12 +10,12 @@
         <meta name="description" content="{% block description %}Webiste{% endblock %}">
         <meta name="keywords" content="{% block keywords %}Webiste{% endblock %}">
         <!-- Bootstrap core CSS -->
-        <link rel="stylesheet" href="{{asset('bundles/app/admin/')}}node_modules/font-awesome/css/font-awesome.min.css" />
-        <link href="{{asset('bundles/app/business')}}/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="{{asset('bundles/app/admin/')}}node_modules/font-awesome/css/font-awesome.min.css" media="nope!" onload="this.media = 'all'" >
+        <link href="{{asset('bundles/app/business')}}/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="nope!" onload="this.media = 'all'">
         <!-- Custom styles for this template -->
-        <link href="https://fonts.googleapis.com/css?family=Anton|Baloo+Paaji|Hind|Kalam|Khand|Mukta+Mahee|Noto+Sans|Rajdhani|Ubuntu|Yantramanav" rel="stylesheet">
-        <link href="{{asset('bundles/app/business')}}/css/modern-business.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="{{path('css')}}">
+        <link href="https://fonts.googleapis.com/css?family=Anton|Baloo+Paaji|Hind|Kalam|Khand|Mukta+Mahee|Noto+Sans|Rajdhani|Ubuntu|Yantramanav" rel="stylesheet" media="nope!" onload="this.media = 'all'">
+        <link href="{{asset('bundles/app/business')}}/css/modern-business.css" rel="stylesheet" media="nope!" onload="this.media = 'all'">
+        <link rel="stylesheet" type="text/css" href="{{path('css')}}" media="nope!" onload="this.media = 'all'">
         {% block opengraph %} {% endblock %}
         {% block css %}{% endblock %}
         {{settings.headers|raw}}
