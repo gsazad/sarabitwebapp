@@ -28,7 +28,9 @@ class DefaultController extends BaseController {
         $scroller = $em->getRepository('App:Scroller')->findAll();
         $home = $em->getRepository('App:Page')->findOneBy(['name' => 'Home']);
         $body = $this->bodyFilter($home->getBody());
-        return $this->render('business/index.html.twig', ['sections' => $sections, 'scroller' => $scroller, 'home' => $home, 'body' => $body]);
+        $response = $this->render('business/index.html.twig', ['sections' => $sections, 'scroller' => $scroller, 'home' => $home, 'body' => $body]);
+
+        return $this->etagResponse($response, $request, true);
     }
 
     /**
@@ -45,7 +47,8 @@ class DefaultController extends BaseController {
         }
         rewind($s->getFiledata());
 
-        return new Response($data, Response::HTTP_OK, array('content-type' => $s->getFiletype()));
+        $response = new Response($data, Response::HTTP_OK, array('content-type' => $s->getFiletype()));
+        return $this->etagResponse($response, $request, true);
     }
 
     /**
@@ -78,8 +81,8 @@ class DefaultController extends BaseController {
             $data .= fread($s->getData(), 1024);
         }
         rewind($s->getData());
-
-        return new Response($data, Response::HTTP_OK, array('content-type' => $s->getType()));
+        $response = new Response($data, 200, ['content-type' => $s->getType()]);
+        return $this->etagResponse($response, $request, true);
     }
 
     /**
@@ -120,16 +123,19 @@ class DefaultController extends BaseController {
 
         $dst_img = imagecreatetruecolor($thumb_w, $thumb_h);
         imagecopyresampled($dst_img, $src_img, 0, 0, 0, 0, $thumb_w, $thumb_h, $old_x, $old_y);
-        header('Content-Type:' . $type);
+        //header('Content-Type:' . $type);
+        ob_start();
+
         if ($type == 'image/png') {
             imagepng($dst_img);
         } elseif ($type == 'image/jpg' || $type == 'image/jpeg') {
             imagejpeg($dst_img);
         }
-        die;
+        $content = ob_get_contents();
+        ob_end_clean();
+        $response = new Response($content, 200, ['content-type' => $type]);
 
-        //resize
-        return new Response($dst_img, Response::HTTP_OK, array('content-type' => $s->getType()));
+        return $this->etagResponse($response, $request, true);
     }
 
     /**
@@ -138,7 +144,8 @@ class DefaultController extends BaseController {
     public function cssAction(Request $request) {
         //header("Content-Type: text/html");
         $css = $this->renderView('business/style.css', []);
-        return $response = new Response($css, Response::HTTP_OK, array('content-type' => 'text/css'));
+        $response = new Response($css, Response::HTTP_OK, array('content-type' => 'text/css'));
+        return $this->etagResponse($response, $request, true);
     }
 
     /**

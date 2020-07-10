@@ -100,10 +100,12 @@ class PageController extends BaseController {
         $em = $this->getDoctrine()->getManager();
         $page = $em->getRepository(Page::class)->findOneBy(['id' => $id]);
         $body = $this->bodyFilter($page->getBody());
-        return $this->render('business/page.html.twig', array(
+        $response = $this->render('business/page.html.twig', array(
                     'page' => $page,
                     'body' => $body,
         ));
+        
+        return $this->etagResponse($response, $request);
     }
 
     /**
