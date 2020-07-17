@@ -9,7 +9,7 @@
         {% for b in blocks %}
             <tr>
                 <td>{{ b.name }}</td>
-                <td><a class="btn btn-sm btn-success" href="{{ path('myadmin_boss_block_grape',{'id':b.id}) }}">Edit</a></td>
+                <td><a class="btn btn-sm btn-success" target="_blank" href="{{ path('myadmin_boss_block_grape',{'id':b.id}) }}">Edit</a></td>
             </tr>
         {% endfor %}
     </table>
