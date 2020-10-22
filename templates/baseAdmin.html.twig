@@ -1,163 +1,200 @@
-{% set current_path = app.request.get('_route') %}
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
-        <!-- Required meta tags -->
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="stylesheet" href="{{asset('bundles/app/admin/')}}node_modules/font-awesome/css/font-awesome.min.css" />
-        <link rel="stylesheet" href="{{asset('bundles/app/admin/')}}node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.min.css" />
-        <link rel="stylesheet" href="{{asset('bundles/app/admin/')}}css/style.css"/>
-        <link rel="shortcut icon" href="{{asset('bundles/app/admin/')}}images/favicon.png"/>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="{{ asset('')}}bundles/app/admin/css/select2-bootstrap.css" />
-        <style type="text/css">
-            .form-control {
-                display: block;
-                width: 100%;
-                padding: 0.5rem 0.75rem;
-                font-size: 1rem;
-                line-height: 1.25;
-                color: #444;
-                background-color: #fff;
-                background-image: none;
-                background-clip: padding-box;
-                border: 1px solid rgb(25, 145, 235);
-                /* border-radius: 0.25rem; */
-                transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-            }
-            .control-label{
-                color: #444;
-                font-weight: bold;
-            }
-            .aic-show-large-modal{}
-            .aic-show-modal{}
-        </style>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>{% block title %}Arashinfo Pvt. Ltd{% endblock %}</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="{{asset('bundles/app/fa/')}}css/fontawesome.min.css" />
+        <link rel="stylesheet" href="{{asset('bundles/app/fa/')}}css/all.min.css" />
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+        <!-- Tempusdominus Bbootstrap 4 -->
+        <link rel="stylesheet" href="{{ asset('bundles/app/MyAdmin/') }}plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+        <!-- iCheck -->
+        <link rel="stylesheet" href="{{ asset('bundles/app/MyAdmin/') }}plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+        <!-- JQVMap -->
+        <link rel="stylesheet" href="{{ asset('bundles/app/MyAdmin/') }}plugins/jqvmap/jqvmap.min.css">
+        <!-- Theme style -->
+        <link rel="stylesheet" href="{{ asset('bundles/app/MyAdmin/') }}dist/css/adminlte.min.css">
+        <!-- overlayScrollbars -->
+        <link rel="stylesheet" href="{{ asset('bundles/app/MyAdmin/') }}plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+        <!-- Daterange picker -->
+        <link rel="stylesheet" href="{{ asset('bundles/app/MyAdmin/') }}plugins/daterangepicker/daterangepicker.css">
+        <!-- summernote -->
+        <link rel="stylesheet" href="{{ asset('bundles/app/MyAdmin/') }}plugins/summernote/summernote-bs4.css">
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+        <!-- in the <head> section -->
 
-    {% block stylesheets %}{% endblock %}
-</head>
-<body>
-    <div class=" container-scroller">
-        <!--Navbar-->
-        <nav class="navbar bg-primary-gradient col-lg-12 col-12 p-0 fixed-top navbar-inverse d-flex flex-row">
-            <div class="bg-white text-center navbar-brand-wrapper">
-                <a class="navbar-brand brand-logo" href="#"><small>Fastway&reg;</small> CMS</a>
-                <a class="navbar-brand brand-logo-mini" href="#"><small>CMS</small></a>
-            </div>
-            <div class="navbar-menu-wrapper d-flex align-items-center">
-                <button class="navbar-toggler navbar-toggler hidden-md-down align-self-center mr-3" type="button" data-toggle="minimize">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <ul class="navbar-nav ml-lg-auto d-flex align-items-center flex-row">
+        <!-- before the closing <body> tag -->
+        <!-- Google Font: Source Sans Pro -->
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+        {% block stylesheets %}
+        {% endblock %}
+        {% block stylesheet %}
+        {% endblock %}
+        <style>
+            .sidebar a {
+                color: #88a7dd !importent;
+            }
+        </style>
+    </head>
+    <body class="hold-transition sidebar-mini layout-fixed">
+        <div class="wrapper">
+
+            <!-- Navbar -->
+            <nav class="main-header navbar navbar-expand navbar-warning navbar-light">
+                <!-- Left navbar links -->
+                <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{path('myadmin_enquiry')}}"><i class="fa fa-envelope"></i></a>
+                        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-danger" href="{{path('myadmin_logout')}}"><i class="fa fa-sign-out"></i></a>
+                    <li class="nav-item d-none d-sm-inline-block">
+                        <a href="#" class="nav-link">Home</a>
                     </li>
                 </ul>
-                <button class="navbar-toggler navbar-toggler-right hidden-lg-up align-self-center" type="button" data-toggle="offcanvas">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </div>
-        </nav>
-        <!--End navbar-->
-        <div class="container-fluid">
 
-            <div class="row row-offcanvas row-offcanvas-right">
+                <!-- SEARCH FORM -->
 
-                {% include 'admin/adminNav.html.twig' %}
 
-                <!-- SIDEBAR ENDS -->
-                <div class="content-wrapper">
-                    {% for message in app.flashes('success') %}
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            {{ message|raw }}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    {% endfor %}
-                    {% for message in app.flashes('danger') %}
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            {{ message|raw }}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    {% endfor %}
+                <!-- Right navbar links -->
 
+            </nav>
+            <!-- /.navbar -->
+
+            <!-- Main Sidebar Container -->
+            <aside class="main-sidebar sidebar-white-primary elevation-4">
+                <!-- Brand Logo -->
+                <a href="index3.html" class="brand-link">
+                    <img src="{{ asset('bundles/app/MyAdmin/') }}dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+                         style="opacity: .8">
+                    <span class="brand-text font-weight-light">Arash Info</span>
+                </a>
+
+                <!-- Sidebar -->
+                <div class="sidebar">
+                    <!-- Sidebar user panel (optional) -->
+                    {#                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                                            <div class="image">
+                                                <i class="fas fa-user fa-2x text-white"></i>
+                                            </div>
+                                            <div class="info">
+                                                <a href="#" class="d-block">Super Admin</a>
+                                            </div>
+                                        </div>#}
+                    {% include 'admin/adminNav.html.twig' %}
+                    <!-- /.sidebar-menu -->
+                </div>
+                <!-- /.sidebar -->
+            </aside>
+
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                {# <div class="content-header">
+                     <div class="container-fluid">
+                         <div class="row mb-2">
+                             <div class="col-sm-6">
+                                 <h1 class="m-0 text-dark">Dashboard</h1>
+                             </div><!-- /.col -->
+                             <div class="col-sm-6">
+                                 <ol class="breadcrumb float-sm-right">
+                                     <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                     <li class="breadcrumb-item active">Dashboard v1</li>
+                                 </ol>
+                             </div><!-- /.col -->
+                         </div><!-- /.row -->
+                     </div><!-- /.container-fluid -->
+                 </div>#}
+                <div class="container">
                     {% block body %}
                     {% endblock %}
                 </div>
+            </div>
+            <div class="modal fade" id="aic-large-modal-window" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
 
-                <footer class="footer">
-                    <div class="container-fluid clearfix">
-                        <span class="">
-                            Hosted By: <a href="//www.delhiit.com" target="_blank">delhiit.com</a>, Developed By: Arash Info Corporation, Ludhiana. M: 9814790299 &copy; {{"now"|date('Y')}}
-                        </span>
-                    </div>
-                </footer>
+                        <div class="modal-body" id="aic-large-modal-window-body"></div>
+                    </div> 
+                </div>
+
+            </div>
+            <div class="modal fade" id="aic-modal-window" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="vertical-alignment-helper">
+                        <div class="modal-content" id="aic-modal-window-body">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            </div>
+                            <div class="modal-body" id="aic-modal-window-body"></div>
+                        </div>
+                    </div>                        
+                </div>                
             </div>
         </div>
+        <!-- /.content-wrapper -->
+        <footer class="main-footer">
+            <strong>Developed by <a href="https://arashinfo.com/p.5.contact-us.html" title="Mobile: 9814790299">Arash Info Pvt. Ltd.</a></strong>
+            <div class="float-right d-none d-sm-inline-block">
+                <b>Version</b> 1.0
+            </div>
+        </footer>
 
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
     </div>
+    <!-- ./wrapper -->
 
 
 
-
-    <!----- modal -->
-    <div class="modal fade" id="aic-large-modal-window" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Modal title</h4>
-                </div>
-
-                <div class="modal-body" id="aic-large-modal-window-body"></div>
-            </div> 
-        </div>
-
-    </div>
-    <div class="modal fade" id="aic-modal-window" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="vertical-alignment-helper">
-                <div class="modal-content" id="aic-modal-window-body">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Modal title</h4>
-                    </div>
-                    <div class="modal-body" id="aic-modal-window-body"></div>
-                </div>
-            </div>                        
-        </div>                
-    </div>
-    <!----- modal -->
-
-
-
-
-
-    <!--script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script-->
-    <script src="{{asset('bundles/app/admin/')}}node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
-    <script src="{{asset('bundles/app/admin/')}}node_modules/tether/dist/js/tether.min.js"></script>
-    <script src="{{asset('bundles/app/admin/')}}node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="{{asset('bundles/app/admin/')}}node_modules/chart.js/dist/Chart.min.js"></script>
-    <script src="{{asset('bundles/app/admin/')}}node_modules/perfect-scrollbar/dist/js/perfect-scrollbar.jquery.min.js"></script>
-    <!--script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5NXz9eVnyJOA81wimI8WYE08kW_JMe8g&callback=initMap" async defer></script-->
-    <script src="{{asset('bundles/app/admin/')}}js/off-canvas.js"></script>
-    <script src="{{asset('bundles/app/admin/')}}js/hoverable-collapse.js"></script>
-    <script src="{{asset('bundles/app/admin/')}}js/misc.js"></script>
-    <script src="{{asset('bundles/app/admin/')}}js/chart.js"></script>
-    <script src="{{asset('bundles/app/admin/')}}js/maps.js"></script>
+    <!-- jQuery -->
+    <script src="{{ asset('bundles/app/MyAdmin/') }}plugins/jquery/jquery.min.js"></script>
+    {#    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>#}
+    <!-- jQuery UI 1.11.4 -->
+    <script src="{{ asset('bundles/app/MyAdmin/') }}plugins/jquery-ui/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script>
+    <!-- Bootstrap 4 -->
+    <script src="{{ asset('bundles/app/MyAdmin/') }}plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- ChartJS -->
+    <script src="{{ asset('bundles/app/MyAdmin/') }}plugins/chart.js/Chart.min.js"></script>
+    <!-- Sparkline -->
+    <script src="{{ asset('bundles/app/MyAdmin/') }}plugins/sparklines/sparkline.js"></script>
+    <!-- JQVMap -->
+    <script src="{{ asset('bundles/app/MyAdmin/') }}plugins/jqvmap/jquery.vmap.min.js"></script>
+    <script src="{{ asset('bundles/app/MyAdmin/') }}plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+    <!-- jQuery Knob Chart -->
+    <script src="{{ asset('bundles/app/MyAdmin/') }}plugins/jquery-knob/jquery.knob.min.js"></script>
+    <!-- daterangepicker -->
+    <script src="{{ asset('bundles/app/MyAdmin/') }}plugins/moment/moment.min.js"></script>
+    <script src="{{ asset('bundles/app/MyAdmin/') }}plugins/daterangepicker/daterangepicker.js"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="{{ asset('bundles/app/MyAdmin/') }}plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- Summernote -->
+    <script src="{{ asset('bundles/app/MyAdmin/') }}plugins/summernote/summernote-bs4.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="{{ asset('bundles/app/MyAdmin/') }}plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="{{ asset('bundles/app/MyAdmin/') }}dist/js/adminlte.js"></script>
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script src="{{ asset('bundles/app/MyAdmin/') }}dist/js/pages/dashboard.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="{{ asset('bundles/app/MyAdmin/') }}dist/js/demo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
     <script>
         $('body').on("click", ".aic-show-large-modal", function (ev) {
 
@@ -182,36 +219,27 @@
                 type: 'POST',
                 cache: false,
                 global: false,
-
                 success: function (response) {
                     $('#aic-modal-window-body').html(response);
                     $('#aic-modal-window').modal('show');
                 }
             });
         });
-        $(".alert").fadeTo(2000, 500).slideUp(500, function () {
-            $(".alert").slideUp(500);
+    </script>
+    <script type="text/javascript">
+        $('#fySelect').on('change', function () {
+            var id = $('#fySelect').val();
+            var URL = Routing.generate('myadmin_fychange', {'id': id});
+            window.location = URL;
         });
+        $('.linkBtn').on('click', function () {
+            var url = $(this).data('href');
+            window.location = url;
 
+        })
     </script>
 
-{% block javascripts %}{% endblock %}
+    {% block javascripts %}
+    {% endblock %}
 </body>
-
 </html>
-
-{#
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
-</html>
-#}

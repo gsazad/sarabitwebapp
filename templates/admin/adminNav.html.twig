@@ -1,53 +1,107 @@
-<nav class="bg-white sidebar sidebar-fixed sidebar-offcanvas" id="sidebar">
-    <div class="user-info">
-        <p class="name">Gurjeet Singh <small>9814790299</small></p>
-        <p class="designation">Developer</p>
-        {#<p class="designation">{{current_path}}</p>#}
-    </div>
-    <ul class="nav">
-        <li class="nav-item">
-            <a class="nav-link" href="{{path('myadmin_index')}}">
-                <!-- <i class="fa fa-dashboard"></i> -->
-                <i class="fa fa-dashboard text-success"></i>
-                <span class="menu-title">Dashboard</span>
-            </a>
 
-            <a class="nav-link" href="{{path('myadmin_menu_index')}}">
-                <i class="fa fa-bars  text-warning"></i>
-                <span class="menu-title">Page Menu</span>
-            </a>
-            <a class="nav-link" href="{{path('myadmin_page_index')}}">
-                <i class="fa fa-file  text-danger"></i>
-                <span class="menu-title">Page Manager</span>
-            </a>
-            <a class="nav-link" href="{{path('myadmin_procat_index')}}">
-                <i class="fa fa-th-list text-primary"></i>
-                <span class="menu-title">Products Caregories</span>
-            </a>
-            <a class="nav-link" href="{{path('myadmin_section_index')}}">
-                <i class="fa fa-list  text-primary"></i>
-                <span class="menu-title">Section</span>
-            </a>
-            <a class="nav-link" href="{{path('myadmin_scroller_index')}}">
-                <i class="fa fa-photo text-success"></i>
-                <span class="menu-title">Scroller</span>
-            </a>
-            <a class="nav-link" href="{{path('myadmin_album_index')}}">
-                <i class="fa fa-photo text-success"></i>
-                <span class="menu-title">Photo Gallery</span>
-            </a>
-            <a class="nav-link" href="{{path('myadmin_photo_gallery')}}">
-                <i class="fa fa-image  text-warning"></i>
-                <span class="menu-title">Image Manager</span>
-            </a>
-            <a class="nav-link" href="{{path('myadmin_settings')}}">
-                <i class="fa fa-gear  text-danger"></i>
-                <span class="menu-title">Settings</span>
-            </a>
-            <a class="nav-link" href="{{path('myadmin_enquiry')}}">
-                <i class="fa fa-envelope  text-primary"></i>
-                <span class="menu-title">Enquiry</span>
+<!-- Sidebar Menu -->
+<nav class="mt-2">
+    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Add icons to the links using the .nav-icon class
+             with font-awesome or any other icon font library -->
+        <li class="nav-item">
+            <a href="{{ path('myadmin_index') }}" class="nav-link">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                    Dashboard
+                </p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{ path('myadmin_menu_index') }}" class="nav-link">
+                <i class="nav-icon fas fa-ellipsis-v"></i>
+                <p>
+                    Page Menu
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ path('myadmin_page_index') }}" class="nav-link">
+                <i class="nav-icon fas fas fa-file"></i>
+                <p>
+                    Page Manager
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ path('myadmin_procat_index') }}" class="nav-link">
+                <i class="nav-icon fab fa-product-hunt"></i>
+                <p>
+                    Products Category
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ path('myadmin_section_index') }}" class="nav-link">
+                <i class="nav-icon fas fa-puzzle-piece"></i>
+                <p>
+                    Sections
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ path('myadmin_scroller_index') }}" class="nav-link">
+                <i class="nav-icon fas fa-swimming-pool"></i>
+                <p>
+                    Scroller
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ path('myadmin_album_index') }}" class="nav-link">
+                <i class="nav-icon fas fa-images"></i>
+                <p>
+                    Photo Gallery
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ path('myadmin_photo_gallery') }}" class="nav-link">
+                <i class="nav-icon fas fa-camera-retro"></i>
+                <p>
+                    Image Manager
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ path('myadmin_settings') }}" class="nav-link">
+                <i class="nav-icon fas fa-cog"></i>
+                <p>
+                    Settings
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ path('myadmin_enquiry') }}" class="nav-link">
+                <i class="nav-icon fas fa-stream"></i>
+                <p>
+                    Enquery
+                </p>
+            </a>
+        </li>
+
+        {# <li class="nav-item has-treeview">
+             <a href="#" class="nav-link ">
+                 <i class="nav-icon fas fa-filter"></i>
+                 <p>
+                     Reports
+                     <i class="right fas fa-angle-left"></i>
+                 </p>
+             </a>
+             <ul class="nav nav-treeview">
+                 <li class="nav-item">
+                     <a href="{{ path('myadmin_invoice_pull') }}" class="nav-link active">
+                         <i class="far fa-circle nav-icon"></i>
+                         <p>Pull Purchase Invoice (RC)</p>
+                     </a>
+                 </li>
+             </ul>
+         </li>#}
     </ul>
 </nav>
+

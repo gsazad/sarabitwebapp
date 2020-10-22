@@ -1,0 +1,53 @@
+<nav class="bg-white sidebar sidebar-fixed sidebar-offcanvas" id="sidebar">
+    <div class="user-info">
+        <p class="name">Gurjeet Singh <small>9814790299</small></p>
+        <p class="designation">Developer</p>
+        {#<p class="designation">{{current_path}}</p>#}
+    </div>
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link" href="{{path('myadmin_index')}}">
+                <!-- <i class="fa fa-dashboard"></i> -->
+                <i class="fa fa-dashboard text-success"></i>
+                <span class="menu-title">Dashboard</span>
+            </a>
+
+            <a class="nav-link" href="{{path('myadmin_menu_index')}}">
+                <i class="fa fa-bars  text-warning"></i>
+                <span class="menu-title">Page Menu</span>
+            </a>
+            <a class="nav-link" href="{{path('myadmin_page_index')}}">
+                <i class="fa fa-file  text-danger"></i>
+                <span class="menu-title">Page Manager</span>
+            </a>
+            <a class="nav-link" href="{{path('myadmin_procat_index')}}">
+                <i class="fa fa-th-list text-primary"></i>
+                <span class="menu-title">Products Caregories</span>
+            </a>
+            <a class="nav-link" href="{{path('myadmin_section_index')}}">
+                <i class="fa fa-list  text-primary"></i>
+                <span class="menu-title">Section</span>
+            </a>
+            <a class="nav-link" href="{{path('myadmin_scroller_index')}}">
+                <i class="fa fa-photo text-success"></i>
+                <span class="menu-title">Scroller</span>
+            </a>
+            <a class="nav-link" href="{{path('myadmin_album_index')}}">
+                <i class="fa fa-photo text-success"></i>
+                <span class="menu-title">Photo Gallery</span>
+            </a>
+            <a class="nav-link" href="{{path('myadmin_photo_gallery')}}">
+                <i class="fa fa-image  text-warning"></i>
+                <span class="menu-title">Image Manager</span>
+            </a>
+            <a class="nav-link" href="{{path('myadmin_settings')}}">
+                <i class="fa fa-gear  text-danger"></i>
+                <span class="menu-title">Settings</span>
+            </a>
+            <a class="nav-link" href="{{path('myadmin_enquiry')}}">
+                <i class="fa fa-envelope  text-primary"></i>
+                <span class="menu-title">Enquiry</span>
+            </a>
+        </li>
+    </ul>
+</nav>
