@@ -7,14 +7,6 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="{{url('homepage')}}" />
 {% endblock %}
-{% set header = getGrapeHead() %}
-{% block css %}
-    <style>
-        {{ header.css|raw }}
-        {{ home.css|raw }}
-
-    </style>
-{% endblock %}
 {% block body %}
     {#        <h1 class="my-4">{{home.title}}</h1>#}
     <p>{{body|raw}}</p>
@@ -34,52 +26,49 @@
 
 
 {% block header %}
-    {% if settings.home_header == 'grape' %}
-    {{ header.body|raw }}
-    {% endif %}
-        {% if settings.home_header == 'slider' %}
-        <header>
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                    {% set X = 0 %}
-                    {% for s in scroller %}
-                        {% if X == 0 %}
-                            <li data-target="#carouselExampleIndicators" data-slide-to="{{X}}" class="active"></li>
-                            {% else %}
-                            <li data-target="#carouselExampleIndicators" data-slide-to="{{X}}"></li>
-                            {% endif %}
-                            {% set X = X+1 %}
-                        {% endfor %}
-                </ol>
-                <div class="carousel-inner" role="listbox">
-                    <!-- Slide -->
-                    {% set X = 0 %}
-                    {% for s in scroller %}
-                        {% if X == 0 %}
-                            {% set active = 'active' %}
+    {% if settings.home_header == 'slider' %}
+    <header>
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                {% set X = 0 %}
+                {% for s in scroller %}
+                    {% if X == 0 %}
+                        <li data-target="#carouselExampleIndicators" data-slide-to="{{X}}" class="active"></li>
                         {% else %}
-                            {% set active = '' %}
+                        <li data-target="#carouselExampleIndicators" data-slide-to="{{X}}"></li>
                         {% endif %}
-                        <div class="carousel-item {{active}}" style="background-image: url('{{path('scroller_image',{'id':s.id,'name':'img.img'})}}')">
-                            <div class="carousel-caption d-none d-md-block">
-                                <h3>{{s.header}}</h3>
-                                <p>{{s.description}}</p>
-                            </div>
-                        </div>
                         {% set X = X+1 %}
                     {% endfor %}
-                    <!-- Slide -->
+            </ol>
+            <div class="carousel-inner" role="listbox">
+                <!-- Slide -->
+                {% set X = 0 %}
+                {% for s in scroller %}
+                    {% if X == 0 %}
+                        {% set active = 'active' %}
+                    {% else %}
+                        {% set active = '' %}
+                    {% endif %}
+                    <div class="carousel-item {{active}}" style="background-image: url('{{path('scroller_image',{'id':s.id,'name':'img.img'})}}')">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h3>{{s.header}}</h3>
+                            <p>{{s.description}}</p>
+                        </div>
+                    </div>
+                    {% set X = X+1 %}
+                {% endfor %}
+                <!-- Slide -->
 
-                </div>
-                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
             </div>
-        </header>
-        {% endif %}
-            {% endblock %}
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </header>
+    {% endif %}
+        {% endblock %}
