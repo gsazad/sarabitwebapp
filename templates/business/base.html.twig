@@ -9,12 +9,10 @@
         <title>{% block title %}Webiste{% endblock %}</title>
         <meta name="description" content="{% block description %}Webiste{% endblock %}">
         <meta name="keywords" content="{% block keywords %}Webiste{% endblock %}">
-        <!-- Bootstrap core CSS -->
-        <link rel="stylesheet" href="{{asset('bundles/app/admin/')}}node_modules/font-awesome/css/font-awesome.min.css" media="nope!" onload="this.media = 'all'" >
-        <link href="{{asset('bundles/app/business')}}/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="nope!" onload="this.media = 'all'">
-        <!-- Custom styles for this template -->
+                {{ encore_entry_link_tags('app') }}
+
         <link href="https://fonts.googleapis.com/css?family=Anton|Baloo+Paaji|Hind|Kalam|Khand|Mukta+Mahee|Noto+Sans|Rajdhani|Ubuntu|Yantramanav" rel="stylesheet" media="nope!" onload="this.media = 'all'">
-        <link href="{{asset('bundles/app/business')}}/css/modern-business.css" rel="stylesheet" media="nope!" onload="this.media = 'all'">
+
         <link rel="stylesheet" type="text/css" href="{{path('css')}}" media="nope!" onload="this.media = 'all'">
         {% block opengraph %} {% endblock %}
         {% block css %}{% endblock %}
@@ -41,11 +39,8 @@
             </div>
             <!-- /.container -->
         </footer>
-        <!-- Bootstrap core JavaScript -->
-        <script src="{{asset('bundles/app/business')}}/vendor/jquery/jquery.min.js"></script>
-        <script src="{{asset('bundles/app/business')}}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.js"></script>
-{#        <script async src="{{asset('bundles/app/MyNpm/')}}node_modules/grapesjs/dist/grapes.min.js"></script>#}
+            
+                  {{ encore_entry_script_tags('app') }}
         <script>
             $(document).ready(function () {
 
