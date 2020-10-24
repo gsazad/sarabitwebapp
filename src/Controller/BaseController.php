@@ -13,6 +13,16 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class BaseController extends \Symfony\Bundle\FrameworkBundle\Controller\AbstractController {
 
+    public function getLongLerom() {
+        return "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla congue sollicitudin mauris ac blandit. Duis pellentesque condimentum sem nec pellentesque. Aliquam in maximus dolor, quis bibendum ex. Nulla congue, nulla at consequat tempor, justo est finibus ligula, ut pretium arcu massa at quam. Vestibulum in enim diam. Aliquam posuere risus ac posuere pulvinar. In luctus ex quis erat faucibus, eget pellentesque nunc consequat. Sed ac laoreet neque. Integer id odio nec metus vulputate consectetur vel non arcu. Morbi et pharetra turpis, vel egestas magna. Phasellus ac lectus felis. Proin ultrices nulla eu dolor finibus, in pharetra metus ullamcorper.
+
+Morbi facilisis suscipit iaculis. Donec semper nibh a felis tincidunt, a dapibus magna iaculis. Cras eu lorem pellentesque magna condimentum malesuada nec ut massa. Nullam dictum ut magna ut fringilla. Nam porttitor consequat enim, ut placerat leo. Maecenas dapibus tincidunt velit, et venenatis tortor fermentum et. Phasellus sit amet felis quis nisi dignissim vulputate eu non augue. Cras ullamcorper vehicula elit, vel aliquam sapien feugiat vel. Cras et erat nec ante pulvinar dapibus.";
+    }
+
+    public function getSmallLerom() {
+        return "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla congue sollicitudin mauris ac blandit. Duis pellentesque condimentum sem nec pellentesque";
+    }
+
     public function bodyFilter($body) {
         $logoScroller = $this->getLogoScroller();
         $array = array(
@@ -169,17 +179,17 @@ Quisque volutpat ipsum sed turpis semper finibus. Donec ornare est vitae risus r
     }
 
     public function etagResponse($response, $request, $catch = false) {
-        //return $response;
+        return $response;
         $encodings = $request->getEncodings();
-            if (in_array('gzip', $encodings) && function_exists('gzencode')) {
-                $content = gzencode($response->getContent());
-                $response->setContent($content);
-                $response->headers->set('Content-encoding', 'gzip');
-            } elseif (in_array('deflate', $encodings) && function_exists('gzdeflate')) {
-                $content = gzdeflate($response->getContent());
-                $response->setContent($content);
-                $response->headers->set('Content-encoding', 'deflate');
-            }
+        if (in_array('gzip', $encodings) && function_exists('gzencode')) {
+            $content = gzencode($response->getContent());
+            $response->setContent($content);
+            $response->headers->set('Content-encoding', 'gzip');
+        } elseif (in_array('deflate', $encodings) && function_exists('gzdeflate')) {
+            $content = gzdeflate($response->getContent());
+            $response->setContent($content);
+            $response->headers->set('Content-encoding', 'deflate');
+        }
 
         $response->setEtag(md5($response->getContent()));
         $response->setPublic();

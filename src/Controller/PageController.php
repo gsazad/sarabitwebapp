@@ -115,8 +115,52 @@ class PageController extends BaseController {
     public function openAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $page = $em->getRepository(Page::class)->findOneBy(['id' => $request->get('id')]);
-        $pageSections = $em->getRepository(PageSection::class)->findOneBy(['id' => $request->get('id')]);
-        return $this->render('admin/page/open.html.twig', ['page' => $page, 'sections' => $pageSections]);
+        $pageSections = $em->getRepository(PageSection::class)->findBy(['page' => $page->getId()]);
+        return $this->render('admin/page/open.html.twig', [
+                    'page' => $page,
+                    'sections' => $pageSections
+        ]);
+    }
+
+    /**
+     * @Route("/myadmin/new/section_{id}.html", name="myadmin_page_new_section", methods={"GET","POST"})
+     */
+    public function newSection(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $id = $request->get('id');
+        $page = $em->getRepository(Page::class)->findOneBy(['id' => $id]);
+        $lastPage = $em->getRepository(PageSection::class)->findOneBy(['page' => $page->getId()], ['rank' => 'desc']);
+        $form = $this->createFormBuilder()
+                ->setAction($this->generateUrl('myadmin_page_new_section', ['id' => $id]))
+                ->add('title', TextType::class)
+                ->add('type', ChoiceType::class, ['choices' => [
+                        'simple' => 'simple'
+            ]])
+                ->getForm();
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $section = new PageSection();
+                $section->setTitle($form['title']->getData());
+                if ($form['type']->getData() == 'simple') {
+                    $section->setContent($this->getLongLerom());
+                }
+                if ($lastPage) {
+                    $rank = $lastPage->getRank() + 1;
+                } else {
+                    $rank = 1;
+                }
+                $section->setRank($rank)
+                        ->setPage($page)
+                        ->setType($form['type']->getData());
+                $em->persist($section);
+                $em->flush();
+                return $this->redirectToRoute('myadmin_page_open', ['id' => $page->getId()]);
+            }
+        }
+        return $this->render('admin/page/newSection.html.twig', [
+                    'form' => $form->createView()
+        ]);
     }
 
     /**

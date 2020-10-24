@@ -2,5 +2,15 @@
 
 {% block body %}
     <h2>Page</h2>
-    
+    <a href="javascript:void(this)" class="aic-show-large-modal" data-href="{{ path('myadmin_page_new_section',{'id':page.id}) }}">New Section</a>
+    <table>
+        <tr>
+            <th>id</th>
+        </tr>
+        {% for s in sections %}
+            <tr>
+                <td>{{ s.id }}</td>
+            </tr>
+        {% endfor %}
+    </table>
 {% endblock %}
