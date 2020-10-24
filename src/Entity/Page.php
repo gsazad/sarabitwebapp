@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -105,6 +107,16 @@ class Page
      * @ORM\Column(type="text")
      */
     private $css;
+
+    /**
+     * @ORM\OneToMany(targetEntity=PageSection::class, mappedBy="page")
+     */
+    private $pageSections;
+
+    public function __construct()
+    {
+        $this->pageSections = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -251,6 +263,37 @@ class Page
     public function setCss(string $css): self
     {
         $this->css = $css;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PageSection[]
+     */
+    public function getPageSections(): Collection
+    {
+        return $this->pageSections;
+    }
+
+    public function addPageSection(PageSection $pageSection): self
+    {
+        if (!$this->pageSections->contains($pageSection)) {
+            $this->pageSections[] = $pageSection;
+            $pageSection->setPage($this);
+        }
+
+        return $this;
+    }
+
+    public function removePageSection(PageSection $pageSection): self
+    {
+        if ($this->pageSections->contains($pageSection)) {
+            $this->pageSections->removeElement($pageSection);
+            // set the owning side to null (unless already changed)
+            if ($pageSection->getPage() === $this) {
+                $pageSection->setPage(null);
+            }
+        }
 
         return $this;
     }

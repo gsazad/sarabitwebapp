@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Page;
+use App\Entity\PageSection;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -32,11 +33,6 @@ class PageController extends BaseController {
                     'pages' => $pages,
         ));
     }
-
-    /**
-     * Creates a new page entity.
-     *
-     */
 
     /**
      * @Route("/myadmin/page.new.html", name="myadmin_page_new", methods={"GET","POST"})
@@ -101,10 +97,10 @@ class PageController extends BaseController {
         $page = $em->getRepository(Page::class)->findOneBy(['id' => $id]);
         $body = $this->bodyFilter($page->getBody());
         $response = $this->render('business/page.html.twig', array(
-                    'page' => $page,
-                    'body' => $body,
+            'page' => $page,
+            'body' => $body,
         ));
-        
+
         return $this->etagResponse($response, $request);
     }
 
@@ -112,6 +108,16 @@ class PageController extends BaseController {
      * Displays a form to edit an existing page entity.
      *
      */
+
+    /**
+     * @Route("/myadmin/open/page_{id}.html", name="myadmin_page_open", methods={"GET","POST"})
+     */
+    public function openAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $page = $em->getRepository(Page::class)->findOneBy(['id' => $request->get('id')]);
+        $pageSections = $em->getRepository(PageSection::class)->findOneBy(['id' => $request->get('id')]);
+        return $this->render('admin/page/open.html.twig', ['page' => $page, 'sections' => $pageSections]);
+    }
 
     /**
      * @Route("/myadmin/page.edit.html", name="myadmin_page_edit", methods={"GET","POST"})
