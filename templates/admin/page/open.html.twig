@@ -1,16 +1,21 @@
 {% extends 'baseAdmin.html.twig' %}
 
+{% block stylesheets %}
+    {{ encore_entry_link_tags('datatable') }}
+{% endblock %}
 {% block body %}
     <h2>Page</h2>
     <a href="javascript:void(this)" class="aic-show-large-modal" data-href="{{ path('myadmin_page_new_section',{'id':page.id}) }}">New Section</a>
-    <table>
-        <tr>
-            <th>id</th>
-        </tr>
-        {% for s in sections %}
-            <tr>
-                <td>{{ s.id }}</td>
-            </tr>
-        {% endfor %}
-    </table>
+    <div id="presidents">Loading...</div>
+
+{% endblock %}
+{% block javascripts %}
+    <!-- Insert this at the end of your body element, but before the closing tag -->
+    {{ encore_entry_script_tags('datatable') }}
+    <script src="{{ asset('bundles/datatables/js/datatables.js') }}"></script>
+    <script>
+        $(function () {
+            $('#presidents').initDataTables({{ datatable_settings(datatable) }});
+        });
+    </script>
 {% endblock %}

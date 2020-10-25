@@ -2,9 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\GrapeBlock;
 use App\Entity\Page;
 use App\Entity\PageSection;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
+use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
+use Omines\DataTablesBundle\Column\NumberColumn;
+use Omines\DataTablesBundle\Column\TextColumn;
+use Omines\DataTablesBundle\DataTableFactory;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -12,6 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Page controller.
@@ -112,13 +119,28 @@ class PageController extends BaseController {
     /**
      * @Route("/myadmin/open/page_{id}.html", name="myadmin_page_open", methods={"GET","POST"})
      */
-    public function openAction(Request $request) {
+    public function openAction(Request $request, DataTableFactory $dtf) {
         $em = $this->getDoctrine()->getManager();
         $page = $em->getRepository(Page::class)->findOneBy(['id' => $request->get('id')]);
-        $pageSections = $em->getRepository(PageSection::class)->findBy(['page' => $page->getId()]);
+        $datatable = $dtf->create()
+                        ->add('rank', NumberColumn::class, ['label' => 'Rank'])
+                        ->add('title', TextColumn::class, ['label' => 'Title'])
+                        ->createAdapter(ORMAdapter::class, [
+                            'entity' => PageSection::class,
+                            'query' => function (QueryBuilder $builder) {
+                                $builder
+                                ->select('p')
+                                ->from(PageSection::class, 'p')
+                                ;
+                            },
+                        ])->handleRequest($request);
+
+        if ($datatable->isCallback()) {
+            return $datatable->getResponse();
+        }
         return $this->render('admin/page/open.html.twig', [
                     'page' => $page,
-                    'sections' => $pageSections
+                    'datatable' => $datatable
         ]);
     }
 
@@ -252,8 +274,8 @@ class PageController extends BaseController {
     public function grapesAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $page = $em->getRepository(Page::class)->findOneBy(['id' => $request->get('id')]);
-        $blocks = $em->getRepository(\App\Entity\GrapeBlock::class)->findAll();
-        $imageAssets = file_get_contents($this->generateUrl('image_assets_json', [], \Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL));
+        $blocks = $em->getRepository(GrapeBlock::class)->findAll();
+        $imageAssets = file_get_contents($this->generateUrl('image_assets_json', [], UrlGeneratorInterface::ABSOLUTE_URL));
         return $this->render('admin/page/grapes.html.twig', ['blocks' => $blocks, 'page' => $page, 'imageAssets' => $imageAssets]);
     }
 
