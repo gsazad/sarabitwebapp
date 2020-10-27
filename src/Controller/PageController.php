@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -125,6 +126,7 @@ class PageController extends BaseController {
         $datatable = $dtf->create()
                         ->add('rank', NumberColumn::class, ['label' => 'Rank'])
                         ->add('title', TextColumn::class, ['label' => 'Title'])
+                        ->addOrderBy('rank', \Omines\DataTablesBundle\DataTable::SORT_ASCENDING)
                         ->createAdapter(ORMAdapter::class, [
                             'entity' => PageSection::class,
                             'query' => function (QueryBuilder $builder) {
@@ -142,6 +144,21 @@ class PageController extends BaseController {
                     'page' => $page,
                     'datatable' => $datatable
         ]);
+    }
+
+    /**
+     * @Route("/myadmin/page/section/reorder", name="myadmin_page_section_reorder", methods={"GET","POST"})
+     */
+    public function pageSectionReorder(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $data = $request->get('data');
+        foreach ($data as $d) {
+            $row = $em->getRepository(PageSection::class)->findOneBy(['page' => $request->get('id'), 'rank' => $d['old']]);
+            $row->setRank($d['new']);
+            $em->persist($row);
+        }
+        $em->flush();
+        return new JsonResponse(['true']);
     }
 
     /**

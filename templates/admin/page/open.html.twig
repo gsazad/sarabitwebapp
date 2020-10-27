@@ -15,7 +15,31 @@
     <script src="{{ asset('bundles/datatables/js/datatables.js') }}"></script>
     <script>
         $(function () {
-            $('#presidents').initDataTables({{ datatable_settings(datatable) }});
-        });
+            $('#presidents').initDataTables({{ datatable_settings(datatable) }},
+                    {
+                        responsive: true,
+                        searching: false,
+                        dom: 'Bfrtip',
+                        ordering: false,
+                        rowReorder: true,
+                    }
+            ).then(function (dt) {
+                dt.on('row-reorder', function (e, diff, edit) {
+                    var result = '';
+                    var order = [];
+                    for (var i = 0, ien = diff.length; i < ien; i++) {
+                        var rowData = dt.row(diff[i].node).data();
+                        var newPos = diff[i].newPosition + 1;
+                        var oldPos = diff[i].oldPosition + 1;
+                        var ar = {'old': oldPos, 'new': newPos};
+                        order.push(ar);
+                    }
+                    $.post("{{path("myadmin_page_section_reorder")}}", {data: order, id: '{{ page.id }}'})
+                            .done(function (data) {
+        {#                                alert("Data Loaded: " + data);#}
+                                });
+                    });
+                });
+            });
     </script>
 {% endblock %}
