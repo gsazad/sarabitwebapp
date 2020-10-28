@@ -10,4 +10,8 @@
 {% endblock %}
 {% block body %}
     {{ body|raw }}
+      {{ render(controller(
+        'App\\Controller\\DefaultController::pageSectionAction',
+        { 'pageSections': pageSection }
+    )) }}
 {% endblock %}

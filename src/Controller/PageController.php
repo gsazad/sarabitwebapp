@@ -103,10 +103,13 @@ class PageController extends BaseController {
         $id = $request->get('id');
         $em = $this->getDoctrine()->getManager();
         $page = $em->getRepository(Page::class)->findOneBy(['id' => $id]);
+        $PageSections = $em->getRepository(PageSection::class)->findBy(['page' => $page->getId()]);
+
         $body = $this->bodyFilter($page->getBody());
         $response = $this->render('business/page.html.twig', array(
             'page' => $page,
             'body' => $body,
+            'pageSection'=>$PageSections
         ));
 
         return $this->etagResponse($response, $request);
@@ -129,10 +132,12 @@ class PageController extends BaseController {
                         ->addOrderBy('rank', \Omines\DataTablesBundle\DataTable::SORT_ASCENDING)
                         ->createAdapter(ORMAdapter::class, [
                             'entity' => PageSection::class,
-                            'query' => function (QueryBuilder $builder) {
+                            'query' => function (QueryBuilder $builder) use ($page) {
                                 $builder
                                 ->select('p')
                                 ->from(PageSection::class, 'p')
+                                        ->where('p.page = :page')
+                                        ->setParameter('page', $page->getId())
                                 ;
                             },
                         ])->handleRequest($request);

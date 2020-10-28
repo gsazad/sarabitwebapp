@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Enquiry;
+use App\Entity\PageSection;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -27,10 +28,14 @@ class DefaultController extends BaseController {
         }
         $scroller = $em->getRepository('App:Scroller')->findAll();
         $home = $em->getRepository('App:Page')->findOneBy(['name' => 'Home']);
+        $PageSections=$em->getRepository(PageSection::class)->findBy(['page'=>$home->getId()]);
         $body = $this->bodyFilter($home->getBody());
-        $response = $this->render('business/index.html.twig', ['sections' => $sections, 'scroller' => $scroller, 'home' => $home, 'body' => $body]);
+        $response = $this->render('business/index.html.twig', ['sections' => $sections, 'scroller' => $scroller, 'home' => $home, 'body' => $body, 'pageSection'=>$PageSections]);
 
         return $this->etagResponse($response, $request, true);
+    }
+    public function pageSectionAction($pageSections){
+        return $this->render('default/pageSection.html.twig',['pageSections'=>$pageSections]);
     }
 
     /**
