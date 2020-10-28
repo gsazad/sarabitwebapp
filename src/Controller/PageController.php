@@ -103,13 +103,13 @@ class PageController extends BaseController {
         $id = $request->get('id');
         $em = $this->getDoctrine()->getManager();
         $page = $em->getRepository(Page::class)->findOneBy(['id' => $id]);
-        $PageSections = $em->getRepository(PageSection::class)->findBy(['page' => $page->getId()]);
+        $PageSections = $em->getRepository(PageSection::class)->findBy(['page' => $page->getId()], ['rank' => 'ASC']);
 
         $body = $this->bodyFilter($page->getBody());
         $response = $this->render('business/page.html.twig', array(
             'page' => $page,
             'body' => $body,
-            'pageSection'=>$PageSections
+            'pageSection' => $PageSections
         ));
 
         return $this->etagResponse($response, $request);
@@ -124,11 +124,16 @@ class PageController extends BaseController {
      * @Route("/myadmin/open/page_{id}.html", name="myadmin_page_open", methods={"GET","POST"})
      */
     public function openAction(Request $request, DataTableFactory $dtf) {
+        $id = $request->get('id');
         $em = $this->getDoctrine()->getManager();
-        $page = $em->getRepository(Page::class)->findOneBy(['id' => $request->get('id')]);
+        $page = $em->getRepository(Page::class)->findOneBy(['id' => $id]);
         $datatable = $dtf->create()
                         ->add('rank', NumberColumn::class, ['label' => 'Rank'])
                         ->add('title', TextColumn::class, ['label' => 'Title'])
+                        ->add('action', TextColumn::class, ['label' => 'Edit', 'render' => function($c, $v) {
+                                $editUrl = $this->generateUrl('myadmin_page_section_edit', ['id' => $v->getId()]);
+                                return"<a href='javascript:void(0)' class='btn btn-sm btn-primary aic-show-large-modal' data-href='$editUrl'>Edit</a>";
+                            }])
                         ->addOrderBy('rank', \Omines\DataTablesBundle\DataTable::SORT_ASCENDING)
                         ->createAdapter(ORMAdapter::class, [
                             'entity' => PageSection::class,
@@ -136,8 +141,8 @@ class PageController extends BaseController {
                                 $builder
                                 ->select('p')
                                 ->from(PageSection::class, 'p')
-                                        ->where('p.page = :page')
-                                        ->setParameter('page', $page->getId())
+                                ->where('p.page = :page')
+                                ->setParameter('page', $page->getId())
                                 ;
                             },
                         ])->handleRequest($request);
@@ -164,6 +169,32 @@ class PageController extends BaseController {
         }
         $em->flush();
         return new JsonResponse(['true']);
+    }
+
+    /**
+     * @Route("/myadmin/page/section/edit/{id}", name="myadmin_page_section_edit", methods={"GET","POST"})
+     */
+    public function pageSectionEdit(Request $request) {
+        $id = $request->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $pageSection = $em->getRepository(PageSection::class)->findOneBy(['id' => $id]);
+        $form = $this->createFormBuilder($pageSection)
+                ->setAction($this->generateUrl('myadmin_page_section_edit', ['id' => $id]))
+                ->add('title')
+                ->add('type')
+                ->add('alignContent', ChoiceType::class,['choices'=>['center'=>'center','none'=>'none']])
+                ->add('alignTitle', ChoiceType::class,['choices'=>['center'=>'center','none'=>'none']])
+                ->getForm();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+//            $pageSection = new PageSection();
+            
+            $em->persist($pageSection);
+            $em->flush();
+            return $this->redirectToRoute('myadmin_page_open', ['id' => $id]);
+        }
+        return $this->render('admin/page/pageSectionEdit.html.twig', ['form' => $form->createView()]);
     }
 
     /**
@@ -196,7 +227,10 @@ class PageController extends BaseController {
                 }
                 $section->setRank($rank)
                         ->setPage($page)
-                        ->setType($form['type']->getData());
+                        ->setType($form['type']->getData())
+                        ->setAlignContent('center')
+                        ->setAlignTitle('center')
+                        ;
                 $em->persist($section);
                 $em->flush();
                 return $this->redirectToRoute('myadmin_page_open', ['id' => $page->getId()]);

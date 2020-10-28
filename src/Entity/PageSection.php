@@ -42,6 +42,16 @@ class PageSection
      */
     private $type;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $alignContent;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $alignTitle;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,6 +113,30 @@ class PageSection
     public function setType(string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getAlignContent(): ?string
+    {
+        return $this->alignContent;
+    }
+
+    public function setAlignContent(string $alignContent): self
+    {
+        $this->alignContent = $alignContent;
+
+        return $this;
+    }
+
+    public function getAlignTitle(): ?string
+    {
+        return $this->alignTitle;
+    }
+
+    public function setAlignTitle(string $alignTitle): self
+    {
+        $this->alignTitle = $alignTitle;
 
         return $this;
     }

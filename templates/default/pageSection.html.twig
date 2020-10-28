@@ -1,4 +1,5 @@
 {% for p in pageSections  %}
-    <h2>{{ p.title }}</h2>   
-    <p>{{ p.content }}</p>   
+
+    <h2 class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
+    <p class="{% if p.alignContent == 'center' %}text-center{% endif %}">{{ p.content }}</p>   
 {% endfor %}
