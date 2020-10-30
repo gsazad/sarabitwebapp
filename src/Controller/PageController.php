@@ -181,18 +181,19 @@ class PageController extends BaseController {
         $form = $this->createFormBuilder($pageSection)
                 ->setAction($this->generateUrl('myadmin_page_section_edit', ['id' => $id]))
                 ->add('title')
-                ->add('type')
-                ->add('alignContent', ChoiceType::class,['choices'=>['center'=>'center','none'=>'none']])
-                ->add('alignTitle', ChoiceType::class,['choices'=>['center'=>'center','none'=>'none']])
+                ->add('content')
+                ->add('type', TextType::class, ['disabled' => true])
+                ->add('alignContent', ChoiceType::class, ['data' => $pageSection->getAlignContent(), 'choices' => ['center' => 'center', 'none' => 'none']])
+                ->add('alignTitle', ChoiceType::class, ['data' => $pageSection->getAlignTitle(), 'choices' => ['center' => 'center', 'none' => 'none']])
                 ->getForm();
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
 //            $pageSection = new PageSection();
-            
+
             $em->persist($pageSection);
             $em->flush();
-            return $this->redirectToRoute('myadmin_page_open', ['id' => $id]);
+            return $this->redirectToRoute('myadmin_page_open', ['id' => $pageSection->getPage()->getId()]);
         }
         return $this->render('admin/page/pageSectionEdit.html.twig', ['form' => $form->createView()]);
     }
@@ -230,7 +231,7 @@ class PageController extends BaseController {
                         ->setType($form['type']->getData())
                         ->setAlignContent('center')
                         ->setAlignTitle('center')
-                        ;
+                ;
                 $em->persist($section);
                 $em->flush();
                 return $this->redirectToRoute('myadmin_page_open', ['id' => $page->getId()]);
