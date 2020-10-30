@@ -9,8 +9,6 @@
 {% endblock %}
 {% block body %}
     {#        <h1 class="my-4">{{home.title}}</h1>#}
-    <p>{{body|raw}}</p>
-
     <div class="row">
         {% for section in sections %}
             <div class="col-sm-4 text-center">
@@ -21,7 +19,7 @@
             </div>
         {% endfor %}
     </div>
-          {{ render(controller(
+    {{ render(controller(
         'App\\Controller\\DefaultController::pageSectionAction',
         { 'pageSections': pageSection }
     )) }}

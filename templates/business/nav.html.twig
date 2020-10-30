@@ -1,9 +1,18 @@
 {% set settings = getsetting() %}
-<nav class="navbar fixed-top navbar-expand-lg fixed-top my-navbar">
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3" style="margin-top: 10px; margin-bottom: 10px">
+            <a href="{{path('homepage')}}">
+                <img src="{{settings.company_logo}}">
+            </a>
+        </div>
+        <div class="col-sm-9 text-right" style="margin-top: 10px; margin-bottom: 10px">
+            <h6>{{settings.header_line_2}}</h6>
+        </div>
+    </div>
+</div>
+<nav class="navbar navbar-expand-lg my-navbar">
     <div class="container">
-        <a class="navbar-brand" href="{{path('homepage')}}">
-            <img src="{{settings.company_logo}}" alt="{{settings.header_line_1}}">
-        </a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"><i class="fa fa-bar"></i></span>
         </button>
@@ -54,37 +63,37 @@
         </div>
     </div>
 </nav>
-    <div class="modal fade" id="megaMenu" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    {% set X = 1 %}
-                    {% for c in cat %}
-                        {% if X == 1 %}<!-- row start X --><div class="row">{% endif %}
-                            <div class="col-sm-4 my-menu-col">
-                                <h5 class="text-white manu-h5">{{c.cat.name}}</h4>
-                                    {% if c.sub %}
-                                        <ul class="list-group" >
-                                            {% for sub in c.sub %}
-                                                <li class="list-group-item"><a href="{{path('product_list',{'catId':sub.id,'slug':sub.name|slug})}}">{{sub.name}}</a></li>
-                                                {% endfor %}
-                                        </ul>
-                                    {% endif %}
+<div class="modal fade" id="megaMenu" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                {% set X = 1 %}
+                {% for c in cat %}
+                    {% if X == 1 %}<!-- row start X --><div class="row">{% endif %}
+                        <div class="col-sm-4 my-menu-col">
+                            <h5 class="text-white manu-h5">{{c.cat.name}}</h4>
+                                {% if c.sub %}
+                                    <ul class="list-group" >
+                                        {% for sub in c.sub %}
+                                            <li class="list-group-item"><a href="{{path('product_list',{'catId':sub.id,'slug':sub.name|slug})}}">{{sub.name}}</a></li>
+                                            {% endfor %}
+                                    </ul>
+                                {% endif %}
 
-                            </div><!-- {{X}} -->
-                            {% if X == 3 %}
-                            </div><!-- row end X -->
-                        {% endif %}
-                        {% set X = X + 1 %}
-                        {% if X == 4 %}{% set X = 1 %}{% endif %}
+                        </div><!-- {{X}} -->
+                        {% if X == 3 %}
+                        </div><!-- row end X -->
+                    {% endif %}
+                    {% set X = X + 1 %}
+                    {% if X == 4 %}{% set X = 1 %}{% endif %}
 
-                    {% endfor %}
-                    {% if (X == 2 or X == 3 ) %}</div><!-- row end X -->{% endif %}
-            </div><!-- modal body -->
+                {% endfor %}
+                {% if (X == 2 or X == 3 ) %}</div><!-- row end X -->{% endif %}
+        </div><!-- modal body -->
 
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
 </div>

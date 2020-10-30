@@ -9,8 +9,7 @@
     <meta property="og:description" content="{{page.description}}" />
 {% endblock %}
 {% block body %}
-    {{ body|raw }}
-      {{ render(controller(
+    {{ render(controller(
         'App\\Controller\\DefaultController::pageSectionAction',
         { 'pageSections': pageSection }
     )) }}
