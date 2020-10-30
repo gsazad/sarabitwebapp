@@ -160,7 +160,7 @@ class PageSection {
         return $this->headerIcon;
     }
 
-    public function setHeaderIcon(string $headerIcon): self {
+    public function setHeaderIcon(?string $headerIcon): self {
         $this->headerIcon = $headerIcon;
 
         return $this;
@@ -176,49 +176,41 @@ class PageSection {
         return $this;
     }
 
-    public function getBackgroundContainment(): ?string
-    {
+    public function getBackgroundContainment(): ?string {
         return $this->backgroundContainment;
     }
 
-    public function setBackgroundContainment(string $backgroundContainment): self
-    {
+    public function setBackgroundContainment(string $backgroundContainment): self {
         $this->backgroundContainment = $backgroundContainment;
 
         return $this;
     }
 
-    public function getContentContainment(): ?string
-    {
+    public function getContentContainment(): ?string {
         return $this->contentContainment;
     }
 
-    public function setContentContainment(string $contentContainment): self
-    {
+    public function setContentContainment(string $contentContainment): self {
         $this->contentContainment = $contentContainment;
 
         return $this;
     }
 
-    public function getBackgroundColor(): ?string
-    {
+    public function getBackgroundColor(): ?string {
         return $this->backgroundColor;
     }
 
-    public function setBackgroundColor(string $backgroundColor): self
-    {
+    public function setBackgroundColor(string $backgroundColor): self {
         $this->backgroundColor = $backgroundColor;
 
         return $this;
     }
 
-    public function getTextColor(): ?string
-    {
+    public function getTextColor(): ?string {
         return $this->textColor;
     }
 
-    public function setTextColor(string $textColor): self
-    {
+    public function setTextColor(string $textColor): self {
         $this->textColor = $textColor;
 
         return $this;

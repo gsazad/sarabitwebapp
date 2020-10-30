@@ -183,7 +183,7 @@ class PageController extends BaseController {
         $section = $em->getRepository(PageSection::class)->findOneBy(['id' => $request->get('id')]);
         $form = $this->createFormBuilder($section)
                 ->setAction($this->generateUrl("myadmin_page_section_icon_edit", ['id' => $request->get('id')]))
-                ->add('headerIcon', TextType::class)
+                ->add('headerIcon', TextType::class, ['required' => false])
                 ->add('headerIconColor', \Symfony\Component\Form\Extension\Core\Type\ColorType::class)
                 ->getForm();
         $form->handleRequest($request);
