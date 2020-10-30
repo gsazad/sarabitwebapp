@@ -132,7 +132,11 @@ class PageController extends BaseController {
                         ->add('title', TextColumn::class, ['label' => 'Title'])
                         ->add('action', TextColumn::class, ['label' => 'Edit', 'render' => function($c, $v) {
                                 $editUrl = $this->generateUrl('myadmin_page_section_edit', ['id' => $v->getId()]);
-                                return"<a href='javascript:void(0)' class='btn btn-sm btn-primary aic-show-large-modal' data-href='$editUrl'>Edit</a>";
+                                $iconEditUrl = $this->generateUrl('myadmin_page_section_icon_edit', ['id' => $v->getId()]);
+                                return "<div class='btn-group'>"
+                                        . "<a href='javascript:void(0)' class='btn btn-sm btn-primary aic-show-large-modal' data-href='$editUrl'>Edit</a>"
+                                        . "<a href='javascript:void(0)' class='btn btn-sm btn-success aic-show-large-modal' data-href='$iconEditUrl'>Edit Icon</a>"
+                                        . "</div>";
                             }])
                         ->addOrderBy('rank', \Omines\DataTablesBundle\DataTable::SORT_ASCENDING)
                         ->createAdapter(ORMAdapter::class, [
@@ -169,6 +173,26 @@ class PageController extends BaseController {
         }
         $em->flush();
         return new JsonResponse(['true']);
+    }
+
+    /**
+     * @Route("/myadmin/page/section/edit/{id}/icon/edit", name="myadmin_page_section_icon_edit", methods={"GET","POST"})
+     */
+    public function pageSectionIconEdit(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $section = $em->getRepository(PageSection::class)->findOneBy(['id' => $request->get('id')]);
+        $form = $this->createFormBuilder($section)
+                ->setAction($this->generateUrl("myadmin_page_section_icon_edit", ['id' => $request->get('id')]))
+                ->add('headerIcon', TextType::class)
+                ->add('headerIconColor', \Symfony\Component\Form\Extension\Core\Type\ColorType::class)
+                ->getForm();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($section);
+            $em->flush();
+            return $this->redirectToRoute('myadmin_page_open', ['id' => $request->get('id')]);
+        }
+        return $this->render('admin/page/pageSectionEdit.html.twig', ['form' => $form->createView()]);
     }
 
     /**

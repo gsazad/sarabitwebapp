@@ -1,5 +1,9 @@
 {% for p in pageSections  %}
-
+    {% if p.headerIcon %}
+        <div class="text-center fa-3x" style="color: {{p.headerIconColor|raw}}">
+            {{ p.headerIcon|raw }}
+        </div>
+    {% endif %}
     <h2 class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
     <p class="{% if p.alignContent == 'center' %}text-center{% endif %}">{{ p.content }}</p>   
 {% endfor %}
