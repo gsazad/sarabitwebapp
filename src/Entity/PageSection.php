@@ -62,6 +62,26 @@ class PageSection {
      */
     private $headerIconColor;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $backgroundContainment;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $contentContainment;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $backgroundColor;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $textColor;
+
     public function getId(): ?int {
         return $this->id;
     }
@@ -152,6 +172,54 @@ class PageSection {
 
     public function setHeaderIconColor(string $headerIconColor): self {
         $this->headerIconColor = $headerIconColor;
+
+        return $this;
+    }
+
+    public function getBackgroundContainment(): ?string
+    {
+        return $this->backgroundContainment;
+    }
+
+    public function setBackgroundContainment(string $backgroundContainment): self
+    {
+        $this->backgroundContainment = $backgroundContainment;
+
+        return $this;
+    }
+
+    public function getContentContainment(): ?string
+    {
+        return $this->contentContainment;
+    }
+
+    public function setContentContainment(string $contentContainment): self
+    {
+        $this->contentContainment = $contentContainment;
+
+        return $this;
+    }
+
+    public function getBackgroundColor(): ?string
+    {
+        return $this->backgroundColor;
+    }
+
+    public function setBackgroundColor(string $backgroundColor): self
+    {
+        $this->backgroundColor = $backgroundColor;
+
+        return $this;
+    }
+
+    public function getTextColor(): ?string
+    {
+        return $this->textColor;
+    }
+
+    public function setTextColor(string $textColor): self
+    {
+        $this->textColor = $textColor;
 
         return $this;
     }

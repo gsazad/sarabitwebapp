@@ -207,8 +207,12 @@ class PageController extends BaseController {
                 ->add('title')
                 ->add('content')
                 ->add('type', TextType::class, ['disabled' => true])
+                ->add('backgroundColor', \Symfony\Component\Form\Extension\Core\Type\ColorType::class)
+                ->add('textColor', \Symfony\Component\Form\Extension\Core\Type\ColorType::class)
                 ->add('alignContent', ChoiceType::class, ['data' => $pageSection->getAlignContent(), 'choices' => ['center' => 'center', 'none' => 'none']])
                 ->add('alignTitle', ChoiceType::class, ['data' => $pageSection->getAlignTitle(), 'choices' => ['center' => 'center', 'none' => 'none']])
+                ->add('backgroundContainment', ChoiceType::class, ['choices' => ['container' => 'container', 'container-fluid' => 'container-fluid']])
+                ->add('contentContainment', ChoiceType::class, ['choices' => ['container' => 'container', 'container-fluid' => 'container-fluid']])
                 ->getForm();
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -255,6 +259,10 @@ class PageController extends BaseController {
                         ->setType($form['type']->getData())
                         ->setAlignContent('center')
                         ->setAlignTitle('center')
+                        ->setBackgroundContainment('container')
+                        ->setContent('container')
+                        ->setBackgroundColor('white')
+                        ->setTextColor('black')
                 ;
                 $em->persist($section);
                 $em->flush();

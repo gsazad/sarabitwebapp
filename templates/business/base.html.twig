@@ -9,7 +9,7 @@
         <title>{% block title %}Webiste{% endblock %}</title>
         <meta name="description" content="{% block description %}Webiste{% endblock %}">
         <meta name="keywords" content="{% block keywords %}Webiste{% endblock %}">
-                {{ encore_entry_link_tags('app') }}
+        {{ encore_entry_link_tags('app') }}
 
         <link href="https://fonts.googleapis.com/css?family=Anton|Baloo+Paaji|Hind|Kalam|Khand|Mukta+Mahee|Noto+Sans|Rajdhani|Ubuntu|Yantramanav" rel="stylesheet" media="nope!" onload="this.media = 'all'">
 
@@ -26,7 +26,7 @@
             <!-- space for header -->
         {% endblock %}
         <!-- Page Content -->
-        <div class="container">
+        <div>
             {% block body %}
             {% endblock %}
         </div>
@@ -39,8 +39,8 @@
             </div>
             <!-- /.container -->
         </footer>
-            
-                  {{ encore_entry_script_tags('app') }}
+
+        {{ encore_entry_script_tags('app') }}
         <script>
             $(document).ready(function () {
 

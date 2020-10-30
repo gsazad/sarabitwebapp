@@ -1,9 +1,29 @@
 {% for p in pageSections  %}
-    {% if p.headerIcon %}
-        <div class="text-center fa-3x" style="color: {{p.headerIconColor|raw}}">
-            {{ p.headerIcon|raw }}
-        </div>
-    {% endif %}
-    <h2 class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
-    <p class="{% if p.alignContent == 'center' %}text-center{% endif %}">{{ p.content }}</p>   
-{% endfor %}
+    {% if p.backgroundContainment == 'container' %}
+        <div class="container my-page-section" style="color: {{ p.textColor|raw }}; background-color: {{ p.backgroundColor|raw }}">
+        {% else %}
+            <div class="container-fluid my-page-section"  style="color: {{ p.textColor|raw }}; background-color: {{ p.backgroundColor|raw }}">
+            {% endif %}
+
+            {% if p.contentContainment == 'container' %}
+                {% if p.backgroundContainment != 'container' %}
+                    <div class="container">
+                    {% else %}
+                        <div>
+                        {% endif %}
+                    {% else %}
+                        <div>
+                        {% endif %}
+                        {% if p.headerIcon %}
+                            <div class="text-center fa-3x" style="color: {{p.headerIconColor|raw}}">
+                                {{ p.headerIcon|raw }}
+                            </div>
+                        {% endif %}
+                        <h2 class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
+                        <p class="{% if p.alignContent == 'center' %}text-center{% endif %}">{{ p.content }}</p>   
+
+                        {#            Container Content#}
+                    </div>
+                    {#Container bg       #}
+                </div>
+            {% endfor %}
