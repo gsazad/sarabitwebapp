@@ -190,7 +190,7 @@ class PageController extends BaseController {
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($section);
             $em->flush();
-            return $this->redirectToRoute('myadmin_page_open', ['id' => $request->get('id')]);
+            return $this->redirectToRoute('myadmin_page_open', ['id' => $section->getPage()->getId()]);
         }
         return $this->render('admin/page/pageSectionEdit.html.twig', ['form' => $form->createView()]);
     }
