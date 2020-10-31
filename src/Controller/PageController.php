@@ -143,6 +143,10 @@ class PageController extends BaseController {
                                     $imageEditUrl = $this->generateUrl('myadmin_page_section_image_edit', ['id' => $v->getId()]);
                                     $html .= "<a href='javascript:void(0)' class='btn btn-sm btn-info aic-show-large-modal' data-href='$imageEditUrl'>Edit Image</a>";
                                 }
+                                if ($v->getType() == 'scroller') {
+                                    $imagesUrl = $this->generateUrl('myadmin_page_section_images', ['id' => $v->getId()]);
+                                    $html .= "<a class='btn btn-sm btn-info' href='$imagesUrl' >Images</a>";
+                                }
                                 $html .= "</div>";
                                 return $html;
                             }])
@@ -275,6 +279,7 @@ class PageController extends BaseController {
                         'simple' => 'simple',
                         'image-right' => 'image-right',
                         'image-left' => 'image-left',
+                        'scroller' => 'scroller',
             ]])
                 ->getForm();
         $form->handleRequest($request);

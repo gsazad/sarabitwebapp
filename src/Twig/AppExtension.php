@@ -2,6 +2,9 @@
 
 namespace App\Twig;
 
+use App\Entity\BossBlock;
+use App\Entity\PageSection;
+use App\Entity\PageSectionImages;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Twig\Extension\AbstractExtension;
@@ -45,7 +48,14 @@ class AppExtension extends AbstractExtension {
             new TwigFunction('getsetting', array($this, 'getSetting')),
             new TwigFunction('getGrapeHead', array($this, 'getGrapeHead')),
             new TwigFunction('strPos', array($this, 'strPos')),
+            new TwigFunction('getPageSectionImages', array($this, 'getPageSectionImages')),
         );
+    }
+
+    public function getPageSectionImages(PageSection $section) {
+        $em = $this->em;
+        $images = $em->getRepository(PageSectionImages::class)->findBy(['pageSection' => $section->getId()], ['rank' => 'ASC']);
+        return $images;
     }
 
     public function strPos($string, $word) {
@@ -63,7 +73,7 @@ class AppExtension extends AbstractExtension {
 
     public function getGrapeHead() {
         $em = $this->em;
-        $header = $em->getRepository(\App\Entity\BossBlock::class)->findOneBy(['name' => 'header']);
+        $header = $em->getRepository(BossBlock::class)->findOneBy(['name' => 'header']);
         return $header;
     }
 

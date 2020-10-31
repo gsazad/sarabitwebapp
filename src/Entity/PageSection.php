@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PageSectionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -96,6 +98,16 @@ class PageSection {
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $imageFileName;
+
+    /**
+     * @ORM\OneToMany(targetEntity=PageSectionImages::class, mappedBy="pageSection")
+     */
+    private $pageSectionImages;
+
+    public function __construct()
+    {
+        $this->pageSectionImages = new ArrayCollection();
+    }
 
     public function getId(): ?int {
         return $this->id;
@@ -263,6 +275,37 @@ class PageSection {
     public function setImageFileName(?string $imageFileName): self
     {
         $this->imageFileName = $imageFileName;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PageSectionImages[]
+     */
+    public function getPageSectionImages(): Collection
+    {
+        return $this->pageSectionImages;
+    }
+
+    public function addPageSectionImage(PageSectionImages $pageSectionImage): self
+    {
+        if (!$this->pageSectionImages->contains($pageSectionImage)) {
+            $this->pageSectionImages[] = $pageSectionImage;
+            $pageSectionImage->setPageSection($this);
+        }
+
+        return $this;
+    }
+
+    public function removePageSectionImage(PageSectionImages $pageSectionImage): self
+    {
+        if ($this->pageSectionImages->contains($pageSectionImage)) {
+            $this->pageSectionImages->removeElement($pageSectionImage);
+            // set the owning side to null (unless already changed)
+            if ($pageSectionImage->getPageSection() === $this) {
+                $pageSectionImage->setPageSection(null);
+            }
+        }
 
         return $this;
     }

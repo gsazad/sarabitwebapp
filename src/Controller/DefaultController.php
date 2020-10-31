@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Enquiry;
 use App\Entity\PageSection;
+use App\Entity\PageSectionImages;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -54,6 +55,24 @@ class DefaultController extends BaseController {
         rewind($s->getImageData());
 
         $response = new Response($data, Response::HTTP_OK, array('content-type' => $s->getImageFileType()));
+        return $this->etagResponse($response, $request, true);
+    }
+
+    /**
+     * @Route("/pagesection/images/{id}/{name}", name="page_section_images")
+     */
+    public function pageSectionImages(Request $request) {
+        $id = $request->get('id');
+        $name = $request->get('name');
+        $em = $this->getDoctrine()->getManager();
+        $s = $em->getRepository(PageSectionImages::class)->findOneBy(['id' => $id]);
+        $data = '';
+        while (!feof($s->getFileData())) {
+            $data .= fread($s->getFileData(), 1024);
+        }
+        rewind($s->getFileData());
+
+        $response = new Response($data, Response::HTTP_OK, array('content-type' => $s->getFileType()));
         return $this->etagResponse($response, $request, true);
     }
 
