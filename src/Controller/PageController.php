@@ -133,12 +133,16 @@ class PageController extends BaseController {
         $datatable = $dtf->create()
                         ->add('rank', NumberColumn::class, ['label' => 'Rank'])
                         ->add('title', TextColumn::class, ['label' => 'Title'])
+                        ->add('type', TextColumn::class, ['label' => 'Type'])
                         ->add('action', TextColumn::class, ['label' => 'Edit', 'render' => function($c, $v) {
                                 $editUrl = $this->generateUrl('myadmin_page_section_edit', ['id' => $v->getId()]);
-                                $iconEditUrl = $this->generateUrl('myadmin_page_section_icon_edit', ['id' => $v->getId()]);
                                 $html = "<div class='btn-group'>"
                                         . "<a href='javascript:void(0)' class='btn btn-sm btn-primary aic-show-large-modal' data-href='$editUrl'>Edit</a>"
-                                        . "<a href='javascript:void(0)' class='btn btn-sm btn-success aic-show-large-modal' data-href='$iconEditUrl'>Edit Icon</a>";
+                                ;
+                                if ($v->getType() != 'scroller') {
+                                    $iconEditUrl = $this->generateUrl('myadmin_page_section_icon_edit', ['id' => $v->getId()]);
+                                    $html .= "<a href='javascript:void(0)' class='btn btn-sm btn-success aic-show-large-modal' data-href='$iconEditUrl'>Edit Icon</a>";
+                                }
                                 if ($v->getType() == 'image-right' || $v->getType() == 'image-left') {
                                     $imageEditUrl = $this->generateUrl('myadmin_page_section_image_edit', ['id' => $v->getId()]);
                                     $html .= "<a href='javascript:void(0)' class='btn btn-sm btn-info aic-show-large-modal' data-href='$imageEditUrl'>Edit Image</a>";
