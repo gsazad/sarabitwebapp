@@ -10,9 +10,12 @@ use Doctrine\ORM\QueryBuilder;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
 use Omines\DataTablesBundle\Column\NumberColumn;
 use Omines\DataTablesBundle\Column\TextColumn;
+use Omines\DataTablesBundle\DataTable;
 use Omines\DataTablesBundle\DataTableFactory;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\ColorType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Form;
@@ -133,12 +136,17 @@ class PageController extends BaseController {
                         ->add('action', TextColumn::class, ['label' => 'Edit', 'render' => function($c, $v) {
                                 $editUrl = $this->generateUrl('myadmin_page_section_edit', ['id' => $v->getId()]);
                                 $iconEditUrl = $this->generateUrl('myadmin_page_section_icon_edit', ['id' => $v->getId()]);
-                                return "<div class='btn-group'>"
+                                $html = "<div class='btn-group'>"
                                         . "<a href='javascript:void(0)' class='btn btn-sm btn-primary aic-show-large-modal' data-href='$editUrl'>Edit</a>"
-                                        . "<a href='javascript:void(0)' class='btn btn-sm btn-success aic-show-large-modal' data-href='$iconEditUrl'>Edit Icon</a>"
-                                        . "</div>";
+                                        . "<a href='javascript:void(0)' class='btn btn-sm btn-success aic-show-large-modal' data-href='$iconEditUrl'>Edit Icon</a>";
+                                if ($v->getType() == 'image-right' || $v->getType() == 'image-left') {
+                                    $imageEditUrl = $this->generateUrl('myadmin_page_section_image_edit', ['id' => $v->getId()]);
+                                    $html .= "<a href='javascript:void(0)' class='btn btn-sm btn-info aic-show-large-modal' data-href='$imageEditUrl'>Edit Image</a>";
+                                }
+                                $html .= "</div>";
+                                return $html;
                             }])
-                        ->addOrderBy('rank', \Omines\DataTablesBundle\DataTable::SORT_ASCENDING)
+                        ->addOrderBy('rank', DataTable::SORT_ASCENDING)
                         ->createAdapter(ORMAdapter::class, [
                             'entity' => PageSection::class,
                             'query' => function (QueryBuilder $builder) use ($page) {
@@ -176,6 +184,32 @@ class PageController extends BaseController {
     }
 
     /**
+     * @Route("/myadmin/page/section/edit/{id}/image/edit", name="myadmin_page_section_image_edit", methods={"GET","POST"})
+     */
+    public function pageSectionImageEdit(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $section = $em->getRepository(PageSection::class)->findOneBy(['id' => $request->get('id')]);
+        $form = $this->createFormBuilder($section)
+                ->setAction($this->generateUrl("myadmin_page_section_image_edit", ['id' => $request->get('id')]))
+                ->add('imageData', FileType::class)
+                ->getForm();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $file = $_FILES['form'];
+            $fileName = $file['name']['imageData'];
+            $fileType = $file['type']['imageData'];
+            $fileTmpName = $file['tmp_name']['imageData'];
+            $section->setImageData(file_get_contents($fileTmpName))
+                    ->setImageFileName($fileName)
+                    ->setImageFileType($fileType);
+            $em->persist($section);
+            $em->flush();
+            return $this->redirectToRoute('myadmin_page_open', ['id' => $section->getPage()->getId()]);
+        }
+        return $this->render('admin/page/pageSectionEdit.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
      * @Route("/myadmin/page/section/edit/{id}/icon/edit", name="myadmin_page_section_icon_edit", methods={"GET","POST"})
      */
     public function pageSectionIconEdit(Request $request) {
@@ -184,7 +218,7 @@ class PageController extends BaseController {
         $form = $this->createFormBuilder($section)
                 ->setAction($this->generateUrl("myadmin_page_section_icon_edit", ['id' => $request->get('id')]))
                 ->add('headerIcon', TextType::class, ['required' => false])
-                ->add('headerIconColor', \Symfony\Component\Form\Extension\Core\Type\ColorType::class)
+                ->add('headerIconColor', ColorType::class)
                 ->getForm();
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -207,8 +241,8 @@ class PageController extends BaseController {
                 ->add('title')
                 ->add('content')
                 ->add('type', TextType::class, ['disabled' => true])
-                ->add('backgroundColor', \Symfony\Component\Form\Extension\Core\Type\ColorType::class)
-                ->add('textColor', \Symfony\Component\Form\Extension\Core\Type\ColorType::class)
+                ->add('backgroundColor', ColorType::class)
+                ->add('textColor', ColorType::class)
                 ->add('alignContent', ChoiceType::class, ['data' => $pageSection->getAlignContent(), 'choices' => ['center' => 'center', 'none' => 'none']])
                 ->add('alignTitle', ChoiceType::class, ['data' => $pageSection->getAlignTitle(), 'choices' => ['center' => 'center', 'none' => 'none']])
                 ->add('backgroundContainment', ChoiceType::class, ['choices' => ['container' => 'container', 'container-fluid' => 'container-fluid']])
@@ -238,7 +272,9 @@ class PageController extends BaseController {
                 ->setAction($this->generateUrl('myadmin_page_new_section', ['id' => $id]))
                 ->add('title', TextType::class)
                 ->add('type', ChoiceType::class, ['choices' => [
-                        'simple' => 'simple'
+                        'simple' => 'simple',
+                        'image-right' => 'image-right',
+                        'image-left' => 'image-left',
             ]])
                 ->getForm();
         $form->handleRequest($request);
@@ -260,7 +296,8 @@ class PageController extends BaseController {
                         ->setAlignContent('center')
                         ->setAlignTitle('center')
                         ->setBackgroundContainment('container')
-                        ->setContent('container')
+                        ->setContentContainment('container')
+                        ->setContent($this->getSmallLerom())
                         ->setBackgroundColor('white')
                         ->setTextColor('black')
                 ;

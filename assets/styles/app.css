@@ -1,3 +1,6 @@
 .my-page-section{
     padding: 10px;
 }
+.page-section-image{
+    max-width: 300px;
+}

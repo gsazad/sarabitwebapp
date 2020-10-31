@@ -40,6 +40,24 @@ class DefaultController extends BaseController {
     }
 
     /**
+     * @Route("/pagesection/image/{id}/{name}", name="page_section_image")
+     */
+    public function pageSectionImage(Request $request) {
+        $id = $request->get('id');
+        $name = $request->get('name');
+        $em = $this->getDoctrine()->getManager();
+        $s = $em->getRepository(PageSection::class)->findOneBy(['id' => $id]);
+        $data = '';
+        while (!feof($s->getImageData())) {
+            $data .= fread($s->getImageData(), 1024);
+        }
+        rewind($s->getImageData());
+
+        $response = new Response($data, Response::HTTP_OK, array('content-type' => $s->getImageFileType()));
+        return $this->etagResponse($response, $request, true);
+    }
+
+    /**
      * @Route("/scroller/{id}/{name}", name="scroller_image")
      */
     public function scrollImgAction(Request $request) {

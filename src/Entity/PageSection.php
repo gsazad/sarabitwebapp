@@ -82,6 +82,21 @@ class PageSection {
      */
     private $textColor;
 
+    /**
+     * @ORM\Column(type="blob",nullable=true)
+     */
+    private $imageData;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $imageFileType;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $imageFileName;
+
     public function getId(): ?int {
         return $this->id;
     }
@@ -212,6 +227,42 @@ class PageSection {
 
     public function setTextColor(string $textColor): self {
         $this->textColor = $textColor;
+
+        return $this;
+    }
+
+    public function getImageData()
+    {
+        return $this->imageData;
+    }
+
+    public function setImageData($imageData): self
+    {
+        $this->imageData = $imageData;
+
+        return $this;
+    }
+
+    public function getImageFileType(): ?string
+    {
+        return $this->imageFileType;
+    }
+
+    public function setImageFileType(?string $imageFileType): self
+    {
+        $this->imageFileType = $imageFileType;
+
+        return $this;
+    }
+
+    public function getImageFileName(): ?string
+    {
+        return $this->imageFileName;
+    }
+
+    public function setImageFileName(?string $imageFileName): self
+    {
+        $this->imageFileName = $imageFileName;
 
         return $this;
     }

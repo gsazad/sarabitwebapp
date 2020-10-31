@@ -14,14 +14,48 @@
                     {% else %}
                         <div>
                         {% endif %}
-                        {% if p.headerIcon %}
-                            <div class="text-center fa-3x" style="color: {{p.headerIconColor|raw}}">
-                                {{ p.headerIcon|raw }}
+
+                        {% if p.type == 'simple' %}
+                            {% if p.headerIcon %}
+                                <div class="text-center fa-3x" style="color: {{p.headerIconColor|raw}}">
+                                    {{ p.headerIcon|raw }}
+                                </div>
+                            {% endif %}
+                            <h2 class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
+                            <p class="{% if p.alignContent == 'center' %}text-center{% endif %}">{{ p.content }}</p>   
+                        {% endif %}
+                        {% if p.type == 'image-right' %}
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    {% if p.headerIcon %}
+                                        <div class="text-center fa-3x" style="color: {{p.headerIconColor|raw}}">
+                                            {{ p.headerIcon|raw }}
+                                        </div>
+                                    {% endif %}
+                                    <h2 class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
+                                    <p class="{% if p.alignContent == 'center' %}text-center{% endif %}">{{ p.content }}</p>   
+                                </div>
+                                <div class="col-sm-4">
+                                    <img class="page-section-image" src="{{ path('page_section_image',{'id':p.id,'name':p.imageFileName}) }}">
+                                </div>
                             </div>
                         {% endif %}
-                        <h2 class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
-                        <p class="{% if p.alignContent == 'center' %}text-center{% endif %}">{{ p.content }}</p>   
-
+                        {% if p.type == 'image-left' %}
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <img class="page-section-image" src="{{ path('page_section_image',{'id':p.id,'name':p.imageFileName}) }}">
+                                </div>
+                                <div class="col-sm-8">
+                                    {% if p.headerIcon %}
+                                        <div class="text-center fa-3x" style="color: {{p.headerIconColor|raw}}">
+                                            {{ p.headerIcon|raw }}
+                                        </div>
+                                    {% endif %}
+                                    <h2 class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
+                                    <p class="{% if p.alignContent == 'center' %}text-center{% endif %}">{{ p.content }}</p>   
+                                </div>
+                            </div>
+                        {% endif %}
                         {#            Container Content#}
                     </div>
                     {#Container bg       #}
