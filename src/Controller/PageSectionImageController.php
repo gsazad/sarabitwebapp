@@ -65,7 +65,7 @@ class PageSectionImageController extends BaseController {
         $section = $em->getRepository(PageSection::class)->findOneBy(['id' => $sectionId]);
         $image = new PageSectionImages();
         $form = $this->createFormBuilder($image)
-                ->setAction($this->generateUrl('page_section_image_new', ['sectionId' => $sectionId]))
+                ->setAction($this->generateUrl('myadmin_page_section_image_new', ['sectionId' => $sectionId]))
                 ->add('title')
                 ->add("fileData", FileType::class)
                 ->getForm();
@@ -88,7 +88,7 @@ class PageSectionImageController extends BaseController {
             $image->setRank($rank);
             $em->persist($image);
             $em->flush();
-            return $this->redirectToRoute('page_section_images', ['id' => $section->getId()]);
+            return $this->redirectToRoute('myadmin_page_section_images', ['id' => $section->getId()]);
         }
         return $this->render('page_section_image/modalForm.html.twig', ['form' => $form->createView()]);
     }
