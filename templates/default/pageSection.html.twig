@@ -1,8 +1,8 @@
 {% for p in pageSections  %}
     {% if p.backgroundContainment == 'container' %}
-        <div class="container my-page-section" style="color: {{ p.textColor|raw }}; background-color: {{ p.backgroundColor|raw }}">
+        <div class="container  my-page-section {% if p.type == 'banner' %}no-margin{% endif %}" style="color: {{ p.textColor|raw }}; background-color: {{ p.backgroundColor|raw }}">
         {% else %}
-            <div class="container-fluid my-page-section"  style="color: {{ p.textColor|raw }}; background-color: {{ p.backgroundColor|raw }}">
+            <div class="container-fluid my-page-section {% if p.type == 'banner' %}no-margin{% endif %}"  style="color: {{ p.textColor|raw }}; background-color: {{ p.backgroundColor|raw }}">
             {% endif %}
 
             {% if p.contentContainment == 'container' %}
@@ -70,8 +70,18 @@
                                 <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
                             </div>
                         {% endif %}
+                        {% if p.type == 'banner' %}
+                            <section class="showcase">
+                                <img src="{{ path('page_section_image',{'id':p.id,'name':p.imageFileName}) }}" alt="Picture">
+                                <div class="overlay">
+                                    <h2>{{ p.title }}</h2>
+                                    <p>{{ p.content }}</p>
+                                </div>
+                            </section>
+                        {% endif %}
                         {#            Container Content#}
                     </div>
                     {#Container bg       #}
                 </div>
+                  </div>
             {% endfor %}

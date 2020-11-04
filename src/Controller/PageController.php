@@ -143,7 +143,7 @@ class PageController extends BaseController {
                                     $iconEditUrl = $this->generateUrl('myadmin_page_section_icon_edit', ['id' => $v->getId()]);
                                     $html .= "<a href='javascript:void(0)' class='btn btn-sm btn-success aic-show-large-modal' data-href='$iconEditUrl'>Edit Icon</a>";
                                 }
-                                if ($v->getType() == 'image-right' || $v->getType() == 'image-left') {
+                                if ($v->getType() == 'image-right' || $v->getType() == 'image-left' || $v->getType() == 'banner') {
                                     $imageEditUrl = $this->generateUrl('myadmin_page_section_image_edit', ['id' => $v->getId()]);
                                     $html .= "<a href='javascript:void(0)' class='btn btn-sm btn-info aic-show-large-modal' data-href='$imageEditUrl'>Edit Image</a>";
                                 }
@@ -284,6 +284,7 @@ class PageController extends BaseController {
                         'image-right' => 'image-right',
                         'image-left' => 'image-left',
                         'scroller' => 'scroller',
+                        'banner' => 'banner',
             ]])
                 ->getForm();
         $form->handleRequest($request);

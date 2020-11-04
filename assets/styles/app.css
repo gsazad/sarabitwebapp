@@ -4,3 +4,45 @@
 .page-section-image{
     max-width: 300px;
 }
+
+.showcase {
+    width: 100%;
+    height: 500px;
+    position: relative;
+    color: white;
+    text-align: center;
+}
+
+.showcase img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index:99
+}
+
+.showcase .overlay {
+    width: 100%;
+    height: 500px;
+    background-color: rgba(0, 35, 82, 0.7);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index:999
+}
+
+.showcase h2 {
+    margin-top: 170px;
+    font-size: 3em;
+}
+
+.showcase p {
+    margin-top: 8px;
+    font-size: 1.2em;
+}
+
+.no-margin{
+    margin: 0px;
+    padding: 0px;
+}
