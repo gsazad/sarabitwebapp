@@ -104,6 +104,11 @@ class PageSection {
      */
     private $pageSectionImages;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $youtubeUrls;
+
     public function __construct()
     {
         $this->pageSectionImages = new ArrayCollection();
@@ -306,6 +311,18 @@ class PageSection {
                 $pageSectionImage->setPageSection(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getYoutubeUrls(): ?string
+    {
+        return $this->youtubeUrls;
+    }
+
+    public function setYoutubeUrls(?string $youtubeUrls): self
+    {
+        $this->youtubeUrls = $youtubeUrls;
 
         return $this;
     }

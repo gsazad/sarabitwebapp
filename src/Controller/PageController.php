@@ -255,7 +255,11 @@ class PageController extends BaseController {
                 ->add('alignTitle', ChoiceType::class, ['data' => $pageSection->getAlignTitle(), 'choices' => ['center' => 'center', 'none' => 'none']])
                 ->add('backgroundContainment', ChoiceType::class, ['choices' => ['container' => 'container', 'container-fluid' => 'container-fluid']])
                 ->add('contentContainment', ChoiceType::class, ['choices' => ['container' => 'container', 'container-fluid' => 'container-fluid']])
-                ->getForm();
+        ;
+        if ($pageSection->getType() == 'youtube-section') {
+            $form = $form->add('youtubeUrls', \Symfony\Component\Form\Extension\Core\Type\UrlType::class);
+        }
+        $form = $form->getForm();
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -285,6 +289,7 @@ class PageController extends BaseController {
                         'image-left' => 'image-left',
                         'scroller' => 'scroller',
                         'banner' => 'banner',
+                        'youtube-section' => 'youtube-section',
             ]])
                 ->getForm();
         $form->handleRequest($request);
@@ -308,8 +313,8 @@ class PageController extends BaseController {
                         ->setBackgroundContainment('container')
                         ->setContentContainment('container')
                         ->setContent($this->getSmallLerom())
-                        ->setBackgroundColor('white')
-                        ->setTextColor('black')
+                        ->setBackgroundColor('#ffffff')
+                        ->setTextColor('#000000')
                 ;
                 $em->persist($section);
                 $em->flush();

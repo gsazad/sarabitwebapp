@@ -49,6 +49,20 @@ class AppExtension extends AbstractExtension {
             new TwigFunction('getGrapeHead', array($this, 'getGrapeHead')),
             new TwigFunction('strPos', array($this, 'strPos')),
             new TwigFunction('getPageSectionImages', array($this, 'getPageSectionImages')),
+            new TwigFunction('hextoRGB', array($this, 'hextoRGB')),
+        );
+    }
+
+    public function hextoRGB($hex) {
+        $hex = str_replace('#', '', $hex);
+        $split = str_split($hex, 2);
+        $r = hexdec($split[0]);
+        $g = hexdec($split[1]);
+        $b = hexdec($split[2]);
+        return array(
+            'r' => $r,
+            'g' => $g,
+            'b' => $b,
         );
     }
 
