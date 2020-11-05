@@ -75,7 +75,7 @@
                                 <img src="{{ path('page_section_image',{'id':p.id,'name':p.imageFileName}) }}" alt="Picture">
                                 {% set rgb = hextoRGB(p.backgroundColor) %}
                                 <div class="overlay" style="background-color: rgb({{rgb.r}},{{rgb.g}},{{rgb.b}},0.5);">
-                                    <h2 style="color: {{ p.textColor|raw }}">{{ p.title }}</h2>
+                                    <h2 style="color: {{ p.titleColor|raw }}">{{ p.title }}</h2>
                                     <p>{{ p.content }}</p>
                                 </div>
                             </section>
