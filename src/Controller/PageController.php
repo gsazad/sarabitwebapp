@@ -186,9 +186,9 @@ class PageController extends BaseController {
     public function pageSectionReorder(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $data = $request->get('data');
-        print_r($data);
+//        print_r($data);
         foreach ($data as $d) {
-            print_r($data);
+            print_r($d);
             $row = $em->getRepository(PageSection::class)->findOneBy(['page' => $request->get('id'), 'rank' => $d['old']]);
             $row->setRank($d['new']);
             $em->persist($row);
