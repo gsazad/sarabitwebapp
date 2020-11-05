@@ -151,6 +151,8 @@ class PageController extends BaseController {
                                     $imagesUrl = $this->generateUrl('myadmin_page_section_images', ['id' => $v->getId()]);
                                     $html .= "<a class='btn btn-sm btn-info' href='$imagesUrl' >Images</a>";
                                 }
+                                 $deleteUrl = $this->generateUrl('myadmin_page_section_delete', ['id' => $v->getId()]);
+                                $html .= "<a href='$deleteUrl' class='btn btn-danger btn-sm'>Delete</a>";
                                 $html .= "</div>";
                                 return $html;
                             }])
@@ -497,5 +499,24 @@ class PageController extends BaseController {
                         ->getForm()
         ;
     }
-
+/**
+     * @Route("/myadmin/page/section/delete/{id}", name="myadmin_page_section_delete", methods={"GET","POST"})
+     */
+    public function pageSectionDelete(Request $request) {
+        $id = $request->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $pageSection = $em->getRepository(PageSection::class)->findOneBy(['id' => $id]);
+        $pageSectionImages = $em->getRepository(\App\Entity\PageSectionImages::class)->findBy(['pageSection' => $pageSection->getId()]);
+        $pageId = $pageSection->getPage()->getId();
+        if ($pageSectionImages) {
+            foreach ($pageSectionImages as $psi) {
+                $pageSectionImage = $em->getRepository(\App\Entity\PageSectionImages::class)->findOneBy(['id' => $psi->getId()]);
+                $em->remove($pageSectionImage);
+            }
+            $em->flush();
+        }
+        $em->remove($pageSection);
+        $em->flush();
+        return $this->redirectToRoute('myadmin_page_open', ['id' => $pageId]);
+    }
 }
