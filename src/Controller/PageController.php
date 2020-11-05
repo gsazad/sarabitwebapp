@@ -199,7 +199,7 @@ class PageController extends BaseController {
     public function pageSectionImageEdit(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $section = $em->getRepository(PageSection::class)->findOneBy(['id' => $request->get('id')]);
-        $form = $this->createFormBuilder($section)
+        $form = $this->createFormBuilder()
                 ->setAction($this->generateUrl("myadmin_page_section_image_edit", ['id' => $request->get('id')]))
                 ->add('imageData', FileType::class)
                 ->getForm();
