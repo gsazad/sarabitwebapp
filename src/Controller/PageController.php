@@ -192,8 +192,10 @@ class PageController extends BaseController {
             if ($d) {
                 if ($d['new']) {
                     $row = $em->getRepository(PageSection::class)->findOneBy(['page' => $request->get('id'), 'rank' => $d['old']]);
-                    $row->setRank($d['new']);
-                    $em->persist($row);
+                    if ($row) {
+                        $row->setRank($d['new']);
+                        $em->persist($row);
+                    }
                 }
             }
         }
