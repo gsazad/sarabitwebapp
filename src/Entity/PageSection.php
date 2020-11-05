@@ -134,6 +134,16 @@ class PageSection {
      */
     private $contentPaddingLeft;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $titleAnimation;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $contentAnimation;
+
     public function __construct()
     {
         $this->pageSectionImages = new ArrayCollection();
@@ -408,6 +418,30 @@ class PageSection {
     public function setContentPaddingLeft(int $contentPaddingLeft): self
     {
         $this->contentPaddingLeft = $contentPaddingLeft;
+
+        return $this;
+    }
+
+    public function getTitleAnimation(): ?string
+    {
+        return $this->titleAnimation;
+    }
+
+    public function setTitleAnimation(?string $titleAnimation): self
+    {
+        $this->titleAnimation = $titleAnimation;
+
+        return $this;
+    }
+
+    public function getContentAnimation(): ?string
+    {
+        return $this->contentAnimation;
+    }
+
+    public function setContentAnimation(?string $contentAnimation): self
+    {
+        $this->contentAnimation = $contentAnimation;
 
         return $this;
     }

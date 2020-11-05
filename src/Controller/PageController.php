@@ -298,6 +298,22 @@ class PageController extends BaseController {
                 ->add('contentPaddingTop')
                 ->add('contentPaddingLeft')
                 ->add('contentPaddingRight')
+                ->add('titleAnimation', ChoiceType::class, [
+                    'choices' => [
+                        "none" => "none",
+                        "uk-animation-slide-left" => "uk-animation-slide-left",
+                        "uk-animation-slide-right" => "uk-animation-slide-right",
+                        "uk-animation-fade" => "uk-animation-fade",
+                    ],
+                ])
+                ->add('contentAnimation', ChoiceType::class, [
+            'choices' => [
+                "none" => "none",
+                "uk-animation-slide-left" => "uk-animation-slide-left",
+                "uk-animation-slide-right" => "uk-animation-slide-right",
+                "uk-animation-fade" => "uk-animation-fade",
+            ],
+                ])
         ;
 
         $form = $form->getForm();
