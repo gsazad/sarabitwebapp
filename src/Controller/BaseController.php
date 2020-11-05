@@ -179,7 +179,6 @@ Quisque volutpat ipsum sed turpis semper finibus. Donec ornare est vitae risus r
     }
 
     public function etagResponse($response, $request, $catch = false) {
-        return $response;
         $encodings = $request->getEncodings();
         if (in_array('gzip', $encodings) && function_exists('gzencode')) {
             $content = gzencode($response->getContent());
