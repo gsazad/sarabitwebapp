@@ -151,7 +151,7 @@ class PageController extends BaseController {
                                     $imagesUrl = $this->generateUrl('myadmin_page_section_images', ['id' => $v->getId()]);
                                     $html .= "<a class='btn btn-sm btn-info' href='$imagesUrl' >Images</a>";
                                 }
-                                 $deleteUrl = $this->generateUrl('myadmin_page_section_delete', ['id' => $v->getId()]);
+                                $deleteUrl = $this->generateUrl('myadmin_page_section_delete', ['id' => $v->getId()]);
                                 $html .= "<a href='$deleteUrl' class='btn btn-danger btn-sm'>Delete</a>";
                                 $html .= "</div>";
                                 return $html;
@@ -252,6 +252,7 @@ class PageController extends BaseController {
                 ->add('content')
                 ->add('type', TextType::class, ['disabled' => true])
                 ->add('backgroundColor', ColorType::class)
+                ->add('titleColor', ColorType::class)
                 ->add('textColor', ColorType::class)
                 ->add('alignContent', ChoiceType::class, ['data' => $pageSection->getAlignContent(), 'choices' => ['center' => 'center', 'none' => 'none']])
                 ->add('alignTitle', ChoiceType::class, ['data' => $pageSection->getAlignTitle(), 'choices' => ['center' => 'center', 'none' => 'none']])
@@ -316,6 +317,7 @@ class PageController extends BaseController {
                         ->setContentContainment('container')
                         ->setContent($this->getSmallLerom())
                         ->setBackgroundColor('#ffffff')
+                        ->setTitleColor('#000000')
                         ->setTextColor('#000000')
                 ;
                 $em->persist($section);
@@ -499,7 +501,8 @@ class PageController extends BaseController {
                         ->getForm()
         ;
     }
-/**
+
+    /**
      * @Route("/myadmin/page/section/delete/{id}", name="myadmin_page_section_delete", methods={"GET","POST"})
      */
     public function pageSectionDelete(Request $request) {
@@ -519,4 +522,5 @@ class PageController extends BaseController {
         $em->flush();
         return $this->redirectToRoute('myadmin_page_open', ['id' => $pageId]);
     }
+
 }

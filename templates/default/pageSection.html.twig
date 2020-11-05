@@ -21,7 +21,7 @@
                                     {{ p.headerIcon|raw }}
                                 </div>
                             {% endif %}
-                            <h2 style="color: {{ p.textColor|raw }}" class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
+                            <h2 style="color: {{ p.titleColor|raw }}" class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
                             <p class="{% if p.alignContent == 'center' %}text-center{% endif %}">{{ p.content }}</p>   
                         {% endif %}
                         {% if p.type == 'image-right' %}
@@ -32,7 +32,7 @@
                                             {{ p.headerIcon|raw }}
                                         </div>
                                     {% endif %}
-                                    <h2 style="color: {{ p.textColor|raw }}" class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
+                                    <h2 style="color: {{ p.titleColor|raw }}" class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
                                     <p class="{% if p.alignContent == 'center' %}text-center{% endif %}">{{ p.content }}</p>   
                                 </div>
                                 <div class="col-sm-4">
@@ -51,7 +51,7 @@
                                             {{ p.headerIcon|raw }}
                                         </div>
                                     {% endif %}
-                                    <h2 style="color: {{ p.textColor|raw }}" class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
+                                    <h2 style="color: {{ p.titleColor|raw }}" class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
                                     <p class="{% if p.alignContent == 'center' %}text-center{% endif %}">{{ p.content }}</p>   
                                 </div>
                             </div>
@@ -86,7 +86,7 @@
                                     {{ p.headerIcon|raw }}
                                 </div>
                             {% endif %}
-                            <h2 style="color: {{ p.textColor|raw }}" class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
+                            <h2 style="color: {{ p.titleColor|raw }}" class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
                             <p class="{% if p.alignContent == 'center' %}text-center{% endif %}">{{ p.content }}</p>   
                             {% if p.youtubeUrls %}
                                 <iframe style="width: 100%; height: 500px" src="https://www.youtube.com/embed/{{ p.youtubeUrls|getYtId }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

@@ -109,6 +109,11 @@ class PageSection {
      */
     private $youtubeUrls;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $titleColor;
+
     public function __construct()
     {
         $this->pageSectionImages = new ArrayCollection();
@@ -323,6 +328,18 @@ class PageSection {
     public function setYoutubeUrls(?string $youtubeUrls): self
     {
         $this->youtubeUrls = $youtubeUrls;
+
+        return $this;
+    }
+
+    public function getTitleColor(): ?string
+    {
+        return $this->titleColor;
+    }
+
+    public function setTitleColor(string $titleColor): self
+    {
+        $this->titleColor = $titleColor;
 
         return $this;
     }
