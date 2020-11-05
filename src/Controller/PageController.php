@@ -188,11 +188,11 @@ class PageController extends BaseController {
         $data = $request->get('data');
 //        print_r($data);
         foreach ($data as $d) {
-            print_r($d);
             if ($d) {
                 if ($d['new']) {
                     $row = $em->getRepository(PageSection::class)->findOneBy(['page' => $request->get('id'), 'rank' => $d['old']]);
                     if ($row) {
+                        print_r($d);
                         $row->setRank($d['new']);
                         $em->persist($row);
                     }
