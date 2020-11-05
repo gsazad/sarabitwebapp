@@ -151,6 +151,8 @@ class PageController extends BaseController {
                                     $imagesUrl = $this->generateUrl('myadmin_page_section_images', ['id' => $v->getId()]);
                                     $html .= "<a class='btn btn-sm btn-info' href='$imagesUrl' >Images</a>";
                                 }
+                                $pageSettingEditUrl = $this->generateUrl('myadmin_page_setting_edit', ['id' => $v->getId()]);
+                                $html .= "<a data-href='$pageSettingEditUrl' href='javascript:void(0)' class='btn btn-danger btn-sm aic-show-large-modal'>SettingEdit</a>";
                                 $deleteUrl = $this->generateUrl('myadmin_page_section_delete', ['id' => $v->getId()]);
                                 $html .= "<a href='$deleteUrl' class='btn btn-danger btn-sm'>Delete</a>";
                                 $html .= "</div>";
@@ -276,6 +278,34 @@ class PageController extends BaseController {
     }
 
     /**
+     * @Route("/myadmin/page/setting/edit/{id}", name="myadmin_page_setting_edit", methods={"GET","POST"})
+     */
+    public function pageSettingEdit(Request $request) {
+        $id = $request->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $pageSection = $em->getRepository(PageSection::class)->findOneBy(['id' => $id]);
+        $form = $this->createFormBuilder($pageSection)
+                ->setAction($this->generateUrl('myadmin_page_setting_edit', ['id' => $id]))
+                ->add('contentPaddingBottom')
+                ->add('contentPaddingTop')
+                ->add('contentPaddingLeft')
+                ->add('contentPaddingRight')
+        ;
+
+        $form = $form->getForm();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+//            $pageSection = new PageSection();
+
+            $em->persist($pageSection);
+            $em->flush();
+            return $this->redirectToRoute('myadmin_page_open', ['id' => $pageSection->getPage()->getId()]);
+        }
+        return $this->render('admin/page/pageSectionEdit.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
      * @Route("/myadmin/new/section_{id}.html", name="myadmin_page_new_section", methods={"GET","POST"})
      */
     public function newSection(Request $request) {
@@ -319,6 +349,10 @@ class PageController extends BaseController {
                         ->setBackgroundColor('#ffffff')
                         ->setTitleColor('#000000')
                         ->setTextColor('#000000')
+                        ->setContentPaddingBottom(0)
+                        ->setContentPaddingTop(0)
+                        ->setContentPaddingLeft(0)
+                        ->setContentPaddingRight(0)
                 ;
                 $em->persist($section);
                 $em->flush();
@@ -519,6 +553,15 @@ class PageController extends BaseController {
             $em->flush();
         }
         $em->remove($pageSection);
+        $em->flush();
+        $pageSections = $em->getRepository(PageSection::class)->findBy(['page' => $pageId], ['rank' => 'DESC']);
+        $x = 1;
+        foreach ($pageSections as $pss) {
+            $ps = $em->getRepository(PageSection::class)->findOneBy(['id' => $pss->getId()]);
+            $ps->setRank($x);
+            $em->persist($ps);
+            $x++;
+        }
         $em->flush();
         return $this->redirectToRoute('myadmin_page_open', ['id' => $pageId]);
     }

@@ -114,6 +114,26 @@ class PageSection {
      */
     private $titleColor;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $contentPaddingTop;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $contentPaddingBottom;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $contentPaddingRight;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $contentPaddingLeft;
+
     public function __construct()
     {
         $this->pageSectionImages = new ArrayCollection();
@@ -340,6 +360,54 @@ class PageSection {
     public function setTitleColor(string $titleColor): self
     {
         $this->titleColor = $titleColor;
+
+        return $this;
+    }
+
+    public function getContentPaddingTop(): ?int
+    {
+        return $this->contentPaddingTop;
+    }
+
+    public function setContentPaddingTop(int $contentPaddingTop): self
+    {
+        $this->contentPaddingTop = $contentPaddingTop;
+
+        return $this;
+    }
+
+    public function getContentPaddingBottom(): ?int
+    {
+        return $this->contentPaddingBottom;
+    }
+
+    public function setContentPaddingBottom(int $contentPaddingBottom): self
+    {
+        $this->contentPaddingBottom = $contentPaddingBottom;
+
+        return $this;
+    }
+
+    public function getContentPaddingRight(): ?int
+    {
+        return $this->contentPaddingRight;
+    }
+
+    public function setContentPaddingRight(int $contentPaddingRight): self
+    {
+        $this->contentPaddingRight = $contentPaddingRight;
+
+        return $this;
+    }
+
+    public function getContentPaddingLeft(): ?int
+    {
+        return $this->contentPaddingLeft;
+    }
+
+    public function setContentPaddingLeft(int $contentPaddingLeft): self
+    {
+        $this->contentPaddingLeft = $contentPaddingLeft;
 
         return $this;
     }

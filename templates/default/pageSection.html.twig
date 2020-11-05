@@ -4,7 +4,7 @@
         {% else %}
             <div class="container-fluid my-page-section {% if p.type == 'banner' %}no-margin-banner{% endif %}"  style="color: {{ p.textColor|raw }}; background-color: {{ p.backgroundColor|raw }}">
             {% endif %}
-
+            {% set contentPaddingStyle = "padding-top:"~p.contentPaddingTop~"px;padding-bottom:"~p.contentPaddingBottom~"px;padding-right:"~p.contentPaddingRight~"px;padding-left:"~p.contentPaddingLeft~"px;" %}
             {% if p.contentContainment == 'container' %}
                 {% if p.backgroundContainment != 'container' %}
                     <div class="container">
@@ -14,85 +14,89 @@
                     {% else %}
                         <div>
                         {% endif %}
-
-                        {% if p.type == 'simple' %}
-                            {% if p.headerIcon %}
-                                <div class="text-center fa-3x" style="color: {{p.headerIconColor|raw}}">
-                                    {{ p.headerIcon|raw }}
-                                </div>
-                            {% endif %}
-                            <h2 style="color: {{ p.titleColor|raw }}" class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
-                            <p class="{% if p.alignContent == 'center' %}text-center{% endif %}">{{ p.content }}</p>   
-                        {% endif %}
-                        {% if p.type == 'image-right' %}
-                            <div class="row">
-                                <div class="col-sm-8">
-                                    {% if p.headerIcon %}
-                                        <div class="text-center fa-3x" style="color: {{p.headerIconColor|raw}}">
-                                            {{ p.headerIcon|raw }}
-                                        </div>
-                                    {% endif %}
-                                    <h2 style="color: {{ p.titleColor|raw }}" class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
-                                    <p class="{% if p.alignContent == 'center' %}text-center{% endif %}">{{ p.content }}</p>   
-                                </div>
-                                <div class="col-sm-4">
-                                    <img class="page-section-image" src="{{ path('page_section_image',{'id':p.id,'name':p.imageFileName}) }}">
-                                </div>
-                            </div>
-                        {% endif %}
-                        {% if p.type == 'image-left' %}
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <img class="page-section-image" src="{{ path('page_section_image',{'id':p.id,'name':p.imageFileName}) }}">
-                                </div>
-                                <div class="col-sm-8">
-                                    {% if p.headerIcon %}
-                                        <div class="text-center fa-3x" style="color: {{p.headerIconColor|raw}}">
-                                            {{ p.headerIcon|raw }}
-                                        </div>
-                                    {% endif %}
-                                    <h2 style="color: {{ p.titleColor|raw }}" class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
-                                    <p class="{% if p.alignContent == 'center' %}text-center{% endif %}">{{ p.content }}</p>   
-                                </div>
-                            </div>
-                        {% endif %}
-                        {% if p.type == 'scroller' %}
-                            <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow>
-                                <ul class="uk-slideshow-items">
-                                    {% set scrollerImages = getPageSectionImages(p) %}
-                                    {% for i in scrollerImages %}
-                                        <li>
-                                            <img src="{{ path('page_section_images',{'id':i.id,'name':i.fileName}) }}" alt="" uk-cover>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                                <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
-                                <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
-                            </div>
-                        {% endif %}
-                        {% if p.type == 'banner' %}
-                            <section class="showcase">
-                                <img src="{{ path('page_section_image',{'id':p.id,'name':p.imageFileName}) }}" alt="Picture">
-                                {% set rgb = hextoRGB(p.backgroundColor) %}
-                                <div class="overlay" style="background-color: rgb({{rgb.r}},{{rgb.g}},{{rgb.b}},0.5);">
-                                    <h2 style="color: {{ p.titleColor|raw }}">{{ p.title }}</h2>
-                                    <p>{{ p.content }}</p>
-                                </div>
-                            </section>
-                        {% endif %}
-                        {% if p.type == 'youtube-section' %}
-                            {% if p.headerIcon %}
-                                <div class="text-center fa-3x" style="color: {{p.headerIconColor|raw}}">
-                                    {{ p.headerIcon|raw }}
-                                </div>
-                            {% endif %}
-                            <h2 style="color: {{ p.titleColor|raw }}" class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
-                            <p class="{% if p.alignContent == 'center' %}text-center{% endif %}">{{ p.content }}</p>   
-                            {% if p.youtubeUrls %}
-                                <iframe style="width: 100%; height: 500px" src="https://www.youtube.com/embed/{{ p.youtubeUrls|getYtId }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <div style="{{ contentPaddingStyle }}">
+                            {% if p.type == 'simple' %}
+                                {% if p.headerIcon %}
+                                    <div class="text-center fa-3x" style="color: {{p.headerIconColor|raw}}">
+                                        {{ p.headerIcon|raw }}
+                                    </div>
                                 {% endif %}
+                                <h2 style="color: {{ p.titleColor|raw }}" class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
+                                <p class="{% if p.alignContent == 'center' %}text-center{% endif %}">{{ p.content }}</p>   
                             {% endif %}
-                            {#            Container Content#}
+                            {% if p.type == 'image-right' %}
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        {% if p.headerIcon %}
+                                            <div class="text-center fa-3x" style="color: {{p.headerIconColor|raw}}">
+                                                {{ p.headerIcon|raw }}
+                                            </div>
+                                        {% endif %}
+                                        <h2 style="color: {{ p.titleColor|raw }}" class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
+                                        <p class="{% if p.alignContent == 'center' %}text-center{% endif %}">{{ p.content }}</p>   
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <img class="page-section-image" src="{{ path('page_section_image',{'id':p.id,'name':p.imageFileName}) }}">
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if p.type == 'image-left' %}
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <img class="page-section-image" src="{{ path('page_section_image',{'id':p.id,'name':p.imageFileName}) }}">
+                                    </div>
+                                    <div class="col-sm-8">
+                                        {% if p.headerIcon %}
+                                            <div class="text-center fa-3x" style="color: {{p.headerIconColor|raw}}">
+                                                {{ p.headerIcon|raw }}
+                                            </div>
+                                        {% endif %}
+                                        <h2 style="color: {{ p.titleColor|raw }}" class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
+                                        <p class="{% if p.alignContent == 'center' %}text-center{% endif %}">{{ p.content }}</p>   
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if p.type == 'scroller' %}
+                                <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow>
+                                    <ul class="uk-slideshow-items">
+                                        {% set scrollerImages = getPageSectionImages(p) %}
+                                        {% for i in scrollerImages %}
+                                            <li>
+                                                <img src="{{ path('page_section_images',{'id':i.id,'name':i.fileName}) }}" alt="" uk-cover>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                    <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
+                                    <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
+                                </div>
+                            {% endif %}
+                            {% if p.type == 'banner' %}
+                                <section class="showcase">
+                                    <img src="{{ path('page_section_image',{'id':p.id,'name':p.imageFileName}) }}" alt="Picture">
+                                    {% set rgb = hextoRGB(p.backgroundColor) %}
+                                    <div class="overlay" style="background-color: rgb({{rgb.r}},{{rgb.g}},{{rgb.b}},0.5);">
+                                        <h2 style="color: {{ p.titleColor|raw }}">{{ p.title }}</h2>
+                                        <p>{{ p.content }}</p>
+                                    </div>
+                                </section>
+                            {% endif %}
+                            {% if p.type == 'youtube-section' %}
+                                {% if p.headerIcon %}
+                                    <div class="text-center fa-3x" style="color: {{p.headerIconColor|raw}}">
+                                        {{ p.headerIcon|raw }}
+                                    </div>
+                                {% endif %}
+                                <h2 style="color: {{ p.titleColor|raw }}" class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
+                                <p class="{% if p.alignContent == 'center' %}text-center{% endif %}">{{ p.content }}</p>   
+                                {% if p.youtubeUrls %}
+                                    <iframe style="width: 100%; height: 500px" src="https://www.youtube.com/embed/{{ p.youtubeUrls|getYtId }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    {% endif %}
+                                {% endif %}
+
+                            {#                        PageSection ContentPadding div#}
+                        </div>
+
+                        {#            Container Content#}
                     </div>
                     {#Container bg       #}
                 </div>
