@@ -31,7 +31,7 @@ class PhotoGallery
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text", length=0, nullable=false)
+     * @ORM\Column(name="description", type="text", nullable=false)
      */
     private $description;
 

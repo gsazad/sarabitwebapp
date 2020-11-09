@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\PhotoGallery;
+use App\Form\PhotoGalleryType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -47,7 +50,7 @@ class PhotoGalleryController extends BaseController {
     public function newAction(Request $request) {
         $albumId = $request->get('albumId');
         $photoGallery = new Photogallery();
-        $form = $this->createForm(\App\Form\PhotoGalleryType::class, $photoGallery);
+        $form = $this->createForm(PhotoGalleryType::class, $photoGallery);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -152,7 +155,7 @@ class PhotoGalleryController extends BaseController {
     public function editAction(Request $request, PhotoGallery $photoGallery) {
         $deleteForm = $this->createDeleteForm($photoGallery);
         $editForm = $this->createFormBuilder($photoGallery)->add('title')
-                        ->add('description')
+                        ->add('description', TextareaType::class)
                         ->add('album', EntityType::class, array(
                             'class' => 'App:Album',
                             'choice_label' => 'name',
@@ -257,7 +260,7 @@ class PhotoGalleryController extends BaseController {
         $content = ob_get_contents();
         ob_end_clean();
         
-        $response = new \Symfony\Component\HttpFoundation\Response($content, 200, ['content-type'=>$type]);
+        $response = new Response($content, 200, ['content-type'=>$type]);
         
         return $this->etagResponse($response, $request, true);
         //resize
