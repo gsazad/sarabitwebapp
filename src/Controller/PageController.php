@@ -321,6 +321,7 @@ class PageController extends BaseController {
                         'image-right' => 'image-right',
                         'image-left' => 'image-left',
                         'scroller' => 'scroller',
+                        'scroller' => 'scroller',
                         'banner' => 'banner',
                         'youtube-section' => 'youtube-section',
             ]])

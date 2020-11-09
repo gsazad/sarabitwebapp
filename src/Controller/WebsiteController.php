@@ -8,6 +8,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Album;
+use App\Entity\YtGallery;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -24,7 +26,7 @@ class WebsiteController extends BaseController {
     public function ytvideo(Request $request) {
         $id = $request->get('id');
         $em = $this->getDoctrine()->getManager();
-        $yt = $em->getRepository(\App\Entity\YtGallery::class)->findOneBy(['id' => $id]);
+        $yt = $em->getRepository(YtGallery::class)->findOneBy(['id' => $id]);
         return $this->render('business/ytVideo.html.twig', ['yt' => $yt]);
     }
 
@@ -33,7 +35,7 @@ class WebsiteController extends BaseController {
      */
     public function ytindex() {
         $em = $this->getDoctrine()->getManager();
-        $yt = $em->getRepository(\App\Entity\YtGallery::class)->findBy([], ['id' => 'DESC']);
+        $yt = $em->getRepository(YtGallery::class)->findBy([], ['id' => 'DESC']);
         return $this->render('business/ytIndex.html.twig', ['yt' => $yt]);
     }
 
@@ -41,8 +43,10 @@ class WebsiteController extends BaseController {
      * @Route("/album", name="album_index")
      */
     public function albumAction() {
+        
         $em = $this->getDoctrine()->getManager();
-        $albums = $em->getRepository('App:Album')->findAll();
+        $albums = $em->getRepository(Album::class)->findAll();
+       
         $array = array();
         foreach ($albums as $v) {
             $array[] = array(
@@ -85,11 +89,12 @@ class WebsiteController extends BaseController {
     }
 
     public function getMax($albumId) {
+       
         $em = $this->getDoctrine()->getManager();
         $lastId = $em->createQueryBuilder()
                 ->select('p')
                 ->from('App:PhotoGallery', 'p')
-                ->where('p.albumId = :id')
+                ->where('p.album = :id')
                 ->orderBy('p.id', 'DESC')
                 ->setParameter('id', $albumId)
                 ->setMaxResults(1)
@@ -97,7 +102,6 @@ class WebsiteController extends BaseController {
                 ->getOneOrNullResult();
         return $lastId;
     }
-
     /**
      * @Route("/products/{catId}/list/{slug}", name="product_list", methods="GET")
      */
