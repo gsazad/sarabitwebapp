@@ -67,7 +67,7 @@ class WebsiteController extends BaseController {
     public function photoGalleryAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $id = $request->get('id');
-        $gallery = $em->getRepository('App:PhotoGallery')->findBy(array('albumId' => $id));
+        $gallery = $em->getRepository('App:PhotoGallery')->findBy(array('album' => $id));
         $album = $em->getRepository('App:Album')->findOneBy(array('id' => $id));
         return $this->render('business/photoGallery.html.twig', array(
                     'gallery' => $gallery,
