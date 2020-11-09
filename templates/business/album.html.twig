@@ -1,20 +1,24 @@
 {% extends "business/base.html.twig" %}
 {% block body %}
     <h1 class="my-4">Photo Gallery</h1>
-    <div class="col-sm-3">
+    <div class="row">
         {% for al in albums %}
-            <div class="card" style="width: 18rem;">
-                {% if al.max == null %}
-                    <img class="card-img-top" src="" alt="Card image cap">
-                {% else %}
-                    <img class="card-img-top" src="{{path('photogallery_thumb',{'id':al.max.id,'size':300,'name':al.max.fileName})}}" alt="Card image cap">
-                {% endif %}
+            <div class="col-sm-4 ">
 
-                <div class="card-body">
-                    <h5 class="card-title">{{al.name}}</h5>
-                    <a href="{{path('photo_gallery',{'id':al.id,'slug':al.name|slug})}}" class="btn btn-primary">View</a>
+                <div class="card" style="width: 18rem;">
+                    {% if al.max == null %}
+                        <img class="card-img-top" src="" alt="Card image cap">
+                    {% else %}
+                        <img class="card-img-top" src="{{path('photogallery_thumb',{'id':al.max.id,'size':300,'name':al.max.fileName})}}" alt="Card image cap">
+                    {% endif %}
+
+                    <div class="card-body">
+                        <h5 class="card-title">{{al.name}}</h5>
+                        <a href="{{path('photo_gallery',{'id':al.id,'slug':al.name|slug})}}" class="btn btn-primary">View</a>
+                    </div>
                 </div>
             </div>
+
         {% endfor %}
 
     </div>
