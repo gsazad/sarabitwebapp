@@ -186,10 +186,18 @@ class PageController extends BaseController {
     public function pageSectionReorder(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $data = $request->get('data');
+//        print_r($data);
         foreach ($data as $d) {
-            $row = $em->getRepository(PageSection::class)->findOneBy(['page' => $request->get('id'), 'rank' => $d['old']]);
-            $row->setRank($d['new']);
-            $em->persist($row);
+            if ($d) {
+                if ($d['new']) {
+                    $row = $em->getRepository(PageSection::class)->findOneBy(['page' => $request->get('id'), 'rank' => $d['old']]);
+                    if ($row) {
+                        print_r($d);
+                        $row->setRank($d['new']);
+                        $em->persist($row);
+                    }
+                }
+            }
         }
         $em->flush();
         return new JsonResponse(['true']);
@@ -290,6 +298,22 @@ class PageController extends BaseController {
                 ->add('contentPaddingTop')
                 ->add('contentPaddingLeft')
                 ->add('contentPaddingRight')
+                ->add('titleAnimation', ChoiceType::class, [
+                    'choices' => [
+                        "none" => "none",
+                        "uk-animation-slide-left" => "uk-animation-slide-left",
+                        "uk-animation-slide-right" => "uk-animation-slide-right",
+                        "uk-animation-fade" => "uk-animation-fade",
+                    ],
+                ])
+                ->add('contentAnimation', ChoiceType::class, [
+            'choices' => [
+                "none" => "none",
+                "uk-animation-slide-left" => "uk-animation-slide-left",
+                "uk-animation-slide-right" => "uk-animation-slide-right",
+                "uk-animation-fade" => "uk-animation-fade",
+            ],
+                ])
         ;
 
         $form = $form->getForm();
