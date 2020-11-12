@@ -54,6 +54,21 @@ class Menu
      */
     private $menus;
 
+    /**
+     * @ORM\Column(type="blob", nullable=true)
+     */
+    private $fileData;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $fileType;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $fileName;
+
     public function __construct()
     {
         $this->menus = new ArrayCollection();
@@ -139,6 +154,42 @@ class Menu
                 $menu->setParent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFileData()
+    {
+        return $this->fileData;
+    }
+
+    public function setFileData($fileData): self
+    {
+        $this->fileData = $fileData;
+
+        return $this;
+    }
+
+    public function getFileType(): ?string
+    {
+        return $this->fileType;
+    }
+
+    public function setFileType(?string $fileType): self
+    {
+        $this->fileType = $fileType;
+
+        return $this;
+    }
+
+    public function getFileName(): ?string
+    {
+        return $this->fileName;
+    }
+
+    public function setFileName(?string $fileName): self
+    {
+        $this->fileName = $fileName;
 
         return $this;
     }

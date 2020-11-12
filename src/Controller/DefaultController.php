@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Enquiry;
+use App\Entity\Menu;
 use App\Entity\PageSection;
 use App\Entity\PageSectionImages;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -110,6 +111,22 @@ class DefaultController extends BaseController {
 
         return new Response($data, Response::HTTP_OK, array('content-type' => $s->getType()));
     }
+    /**
+     * @Route("/menu/{id}/photo/{name}", name="menu_image")
+     */
+    public function menuImgAction(Request $request) {
+        $id = $request->get('id');
+        $name = $request->get('name');
+        $em = $this->getDoctrine()->getManager();
+        $s = $em->getRepository(Menu::class)->findOneBy(['id' => $id]);
+        $data = '';
+        while (!feof($s->getFileData())) {
+            $data .= fread($s->getFileData(), 1024);
+        }
+        rewind($s->getFileData());
+
+        return new Response($data, Response::HTTP_OK, array('content-type' => $s->getFileType()));
+    }
 
     /**
      * @Route("/photoG/{id}/photo/{name}", name="pg_image2")
@@ -208,7 +225,7 @@ class DefaultController extends BaseController {
         $nav = array();
         $productMenuId = $this->getSetting()['product_manu_id'];
         foreach ($menus as $k => $v) {
-            $submenus = $em->getRepository(\App\Entity\Menu::class)->findBy(['parent' => $v->getId()]);
+            $submenus = $em->getRepository(Menu::class)->findBy(['parent' => $v->getId()]);
             if ($submenus) {
                 $submenusArr = [];
                 foreach ($submenus as $subs) {

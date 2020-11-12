@@ -22,6 +22,17 @@ Morbi facilisis suscipit iaculis. Donec semper nibh a felis tincidunt, a dapibus
     public function getSmallLerom() {
         return "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla congue sollicitudin mauris ac blandit. Duis pellentesque condimentum sem nec pellentesque";
     }
+      public function getUploadedFileInfo($file) {
+        return $info = array(
+            'name' => $file->getClientOriginalName(),
+            'filename' => $file->getClientOriginalName(),
+            'tmp_path' => $file->getRealPath(),
+            'realPath' => $file->getRealPath(),
+            'error' => $file->getError(),
+            'mimetype' => $file->getClientMimeType(),
+            'size' => $file->getClientSize(),
+        );
+    }
 
     public function bodyFilter($body) {
         $logoScroller = $this->getLogoScroller();

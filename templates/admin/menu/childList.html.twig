@@ -7,18 +7,23 @@
                 <th>id</th>
                 <th>Name</th>
                 <th>Location</th>
+                <th>Image</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
             {% for cm in childMenu %}
-                        <tr>
+                <tr>
 
-            <td>{{ cm.id }}</td>
-            <td>{{ cm.name }}</td>
-            <td>{{ cm.location }}</td>
-            </tr>
+                    <td>{{ cm.id }}</td>
+                    <td>{{ cm.name }}</td>
+                    <td>{{ cm.location }}</td>
+                    <td><img src={{ path('menu_image',{'id':cm.id,'name':'xby.jpg'})}}</td>
+                    <td><a class="btn btn-sm btn-info aic-show-large-modal" href="javascript:void(0)" data-href="{{ path('myadmin_menu_child_image_upload', { 'id': parentId }) }}">Image Upload</a>
+                    
+                </tr>
 
-        {% endfor %}
-    </tbody>
-</table>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

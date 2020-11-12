@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Menu;
 use App\Form\MenuType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -151,6 +152,35 @@ class MenuController extends BaseController {
         $childMenu = $em->getRepository(Menu::class)->findBy(['parent' => $id]);
 
         return $this->render('admin/menu/childList.html.twig', ['childMenu' => $childMenu, 'parentId' => $id]);
+    }
+
+    /**
+     * @Route("/myadmin/menu/child/{id}/image/upload", name="myadmin_menu_child_image_upload", methods={"GET","POST"})
+     */
+    public function menu_child_image_upload(Request $request) {
+        $id = $request->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $menu = $em->getRepository(Menu::class)->findOneBy(['id' => $id]);
+        $form = $this->createFormBuilder($menu)
+                ->setAction($this->generateUrl('myadmin_menu_child_list', ['id' => $id]))
+                ->add('upload', FileType::class, ['mapped' => false])
+                ->getForm();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form['upload']->getData();
+            $fileinfo = $this->getUploadedFileInfo($file);
+            $filedata = file_get_contents($fileinfo['realPath']);
+            $filedata = $this->imageResize($filedata, $fileinfo['mimetype'], 600);
+            $menu->setFileData($filedata)
+                    ->setFileType($fileinfo['mimetype'])
+                    ->setFileName($fileinfo['filename'])
+
+            ;
+            $em->persist($menu);
+            $em->flush();
+            return $this->redirectToRoute('myadmin_menu_child_list', ['id' => $id]);
+        }
+        return $this->render('admin/menu/imageUpload.html.twig', ['form' => $form->createView()]);
     }
 
     /**
