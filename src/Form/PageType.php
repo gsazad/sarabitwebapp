@@ -24,9 +24,15 @@ class PageType extends AbstractType {
                 ->add('body', TextareaType::class, array('attr' => array('novalidate' => 'novalidate')))
                 ->add('menu', EntityType::class, array(
                     'class' => 'App:Menu',
-                    'choice_label' => 'name',
+                    'choice_label' => function($c) {
+                        if ($c->getParent()) {
+                            return $c->getName() . " -- " . $c->getParent()->getName();
+                        } else {
+                            return $c->getName();
+                        }
+                    },
                 ))
-                ->add('url', TextType::class,array('required'=>false))
+                ->add('url', TextType::class, array('required' => false))
                 ->add('target', ChoiceType::class, array('choices' => array('Open in Same Window' => '_top', 'Open In New Window' => '_blank')));
     }
 
