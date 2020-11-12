@@ -29,7 +29,7 @@ body {
     list-style: none;
     background-color: {{settings.navbar_bg_color|raw}};
     background-clip: padding-box;
-    border: 1px solid rgb(167, 139, 123);
+    border: 1px solid {{settings.navbar_font|raw}};
     border-radius: 0;
 }
 
