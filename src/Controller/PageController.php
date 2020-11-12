@@ -86,7 +86,7 @@ class PageController extends BaseController {
         $id = $request->get('id');
         $em = $this->getDoctrine()->getManager();
         $page = $em->getRepository('App:Page')->findOneBy(['id' => $id]);
-        if (count($page) == 1) {
+        if ($page) {
             $em->remove($page);
             //$em->persist($page);
             $em->flush();
