@@ -111,6 +111,7 @@ class DefaultController extends BaseController {
 
         return new Response($data, Response::HTTP_OK, array('content-type' => $s->getType()));
     }
+
     /**
      * @Route("/menu/{id}/photo/{name}", name="menu_image")
      */
@@ -244,9 +245,6 @@ class DefaultController extends BaseController {
                     if ($pCount == 0) {
                         $arr['sub'] = FALSE;
                         $arr['pages'] = null;
-                    } elseif ($pCount == 1) {
-                        $arr['pages'] = $page;
-                        $arr['sub'] = FALSE;
                     } else {
                         $arr['pages'] = $page;
                         $arr['sub'] = TRUE;
