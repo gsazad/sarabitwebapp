@@ -29,8 +29,8 @@
                             <div class="dropdown-menu megamenu" style="width:100%">
                                 <div class="row">
                                     {% set subsub = menu.submenu %}
-                                    {{ dump(menu) }}
                                     {% for sub in subsub %}
+                                        {{ dump(sub) }}
                                         <div class="col-sm-4">
                                             <ul class="navbar-nav">
                                                 {% if sub.sub %}
