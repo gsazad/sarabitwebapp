@@ -46,14 +46,14 @@
                                         <p {{ contentAnimation|raw }} class="{% if p.alignContent == 'center' %}text-center{% endif %}">{{ p.content }}</p>   
                                     </div>
                                     <div class="col-sm-4">
-                                        <img class="page-section-image" src="{{ path('page_section_image',{'id':p.id,'name':p.imageFileName}) }}">
+                                        <img uk-img class="page-section-image" src="{{ path('page_section_image',{'id':p.id,'name':p.imageFileName}) }}">
                                     </div>
                                 </div>
                             {% endif %}
                             {% if p.type == 'image-left' %}
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        <img class="page-section-image" src="{{ path('page_section_image',{'id':p.id,'name':p.imageFileName}) }}">
+                                        <img uk-img class="page-section-image" src="{{ path('page_section_image',{'id':p.id,'name':p.imageFileName}) }}">
                                     </div>
                                     <div class="col-sm-8">
                                         {% if p.headerIcon %}
