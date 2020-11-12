@@ -420,7 +420,13 @@ class PageController extends BaseController {
                                     ->setParameter('name', 'Home')
                                     ->orderBy('M.name', 'ASC');
                         },
-                        'choice_label' => 'name',
+                        'choice_label' => function($c) {
+                            if ($c->getParent()) {
+                                return $c->getName() . " -- " . $c->getParent()->getName();
+                            } else {
+                                return $c->getName();
+                            }
+                        },
             ));
         }
 
