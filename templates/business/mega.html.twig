@@ -25,7 +25,7 @@
                 {% for menu in menus %}
                     {% if menu.submenu is defined %}
                         <li class="nav-item dropdown has-megamenu">
-                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"> Mega menu  </a>
+                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">{{ menu.menu.name }}</a>
                             <div class="dropdown-menu megamenu" style="width:100%">
                                 <div class="row">
                                     {% set subsub = menu.submenu %}
@@ -36,7 +36,7 @@
                                                     <li class="nav-item">
                                                         <a class="nav-link " href="#" id="dropdown-{{sub.menu.id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><b>{{sub.menu.name}}</b></a>
                                                          {% if sub.menu.fileData  %}
-                                                <img  style="display: block;margin-left: auto; margin-right: auto;width: 50%;" src="{{ path('menu_image',{'id':sub.menu.id,'name':sub.menu.fileName}) }}">
+                                                <img  style="width: 50%;" src="{{ path('menu_image',{'id':sub.menu.id,'name':sub.menu.fileName}) }}">
                                             {% endif %}
                                                         <div  aria-labelledby="dropdown-{{sub.menu.id}}">
                                                             {% for page in sub.pages %}
