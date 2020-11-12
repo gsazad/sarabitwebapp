@@ -231,7 +231,7 @@ class DefaultController extends BaseController {
                 $submenusArr = [];
                 foreach ($submenus as $subs) {
                     $arr = [];
-                    $page = $em->getRepository('App:Page')->findBy(array('menu' => $v->getId()));
+                    $page = $em->getRepository('App:Page')->findBy(array('menu' => $subs->getId()));
                     $arr['menu'] = $subs;
                     $pCount = count($page);
                     $arr['count'] = $pCount;
