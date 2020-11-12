@@ -202,9 +202,88 @@ class DefaultController extends BaseController {
         return new Response($js, 200, array('content-type' => 'text/javascript'));
     }
 
+    public function megaAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $menus = $em->getRepository('App:Menu')->findBy(['parent' => null]);
+        $nav = array();
+        $productMenuId = $this->getSetting()['product_manu_id'];
+        foreach ($menus as $k => $v) {
+            $submenus = $em->getRepository(\App\Entity\Menu::class)->findBy(['parent' => $v->getId()]);
+            if ($submenus) {
+                $submenusArr = [];
+                foreach ($submenus as $subs) {
+                    $arr = [];
+                    $page = $em->getRepository('App:Page')->findBy(array('menu' => $v->getId()));
+                    $arr['menu'] = $subs;
+                    $pCount = count($page);
+                    $arr['count'] = $pCount;
+                    if ($v->getId() == $productMenuId) {
+                        $arr['productmenu'] = true;
+                        $pCount = 0;
+                    } else {
+                        $arr['productmenu'] = false;
+                    }
+
+                    if ($pCount == 0) {
+                        $arr['sub'] = FALSE;
+                        $arr['pages'] = null;
+                    } elseif ($pCount == 1) {
+                        $arr['pages'] = $page;
+                        $arr['sub'] = FALSE;
+                    } else {
+                        $arr['pages'] = $page;
+                        $arr['sub'] = TRUE;
+                    }
+                    $submenusArr[] = $arr;
+                }
+                $nav[$k]['menu'] = $v;
+                $nav[$k]['submenu'] = $submenusArr;
+            } else {
+                $page = $em->getRepository('App:Page')->findBy(array('menu' => $v->getId()));
+//            $submenus = $em->getRepository(\App\Entity\Menu::class)->findBy(['parent'=>$v->getIOd])
+                $nav[$k]['menu'] = $v;
+                $pCount = count($page);
+                $nav[$k]['count'] = $pCount;
+                if ($v->getId() == $productMenuId) {
+                    $nav[$k]['productmenu'] = true;
+                    $pCount = 0;
+                } else {
+                    $nav[$k]['productmenu'] = false;
+                }
+
+                if ($pCount == 0) {
+                    $nav[$k]['sub'] = FALSE;
+                    $nav[$k]['pages'] = null;
+                } elseif ($pCount == 1) {
+                    $nav[$k]['pages'] = $page;
+                    $nav[$k]['sub'] = FALSE;
+                } else {
+                    $nav[$k]['pages'] = $page;
+                    $nav[$k]['sub'] = TRUE;
+                }
+            }
+        }
+
+        $procat = $em->getRepository('App:ProCat')->findBy(['parent' => '0']);
+        $pcat = array();
+        foreach ($procat as $k => $v) {
+            $subcat = $em->getRepository('App:ProCat')->findBy(['parent' => $v->getId()]);
+            $pcat[$k]['cat'] = $v;
+            if (count($subcat) > 0) {
+                $pcat[$k]['sub'] = $subcat;
+            } else {
+                $pcat[$k]['sub'] = null;
+            }
+        }
+
+
+
+        return $this->render('business/mega.html.twig', ['menus' => $nav, 'cat' => $pcat]);
+    }
+
     public function navAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-        $menus = $em->getRepository('App:Menu')->findAll();
+        $menus = $em->getRepository('App:Menu')->findBy(['parent' => null]);
         $nav = array();
         $productMenuId = $this->getSetting()['product_manu_id'];
         foreach ($menus as $k => $v) {

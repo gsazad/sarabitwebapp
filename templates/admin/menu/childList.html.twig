@@ -1,0 +1,24 @@
+{% extends "baseAdmin.html.twig" %}
+{% block body %}
+    <a href="{{ path('myadmin_menu_add_child_menu',{'id':parentId}) }}">Create New</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Name</th>
+                <th>Location</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cm in childMenu %}
+                        <tr>
+
+            <td>{{ cm.id }}</td>
+            <td>{{ cm.name }}</td>
+            <td>{{ cm.location }}</td>
+            </tr>
+
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

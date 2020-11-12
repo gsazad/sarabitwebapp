@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Menu;
+use App\Form\MenuType;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -22,7 +24,7 @@ class MenuController extends BaseController {
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
-        $menus = $em->getRepository('App:Menu')->findAll();
+        $menus = $em->getRepository('App:Menu')->findBy(['parent' => null]);
 
         $array = array();
         foreach ($menus as $k => $v) {
@@ -116,6 +118,42 @@ class MenuController extends BaseController {
     }
 
     /**
+     * @Route("/myadmin/menu/add/child/{id}", name="myadmin_menu_add_child_menu", methods={"GET","POST"})
+     */
+    public function addChildMenu(Request $request) {
+        $id = $request->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $parent = $em->getRepository(Menu::class)->findOneBy(['id' => $id]);
+        $menu = new Menu();
+        $form = $this->createForm(MenuType::class, $menu);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $menu->setParent($parent);
+            $em->persist($menu);
+            $em->flush();
+
+            return $this->redirectToRoute('myadmin_menu_child_list', array('id' => $id));
+        }
+
+        return $this->render('admin/menu/new.html.twig', array(
+                    'menu' => $menu,
+                    'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/myadmin/menu/child/{id}/list", name="myadmin_menu_child_list", methods={"GET","POST"})
+     */
+    public function menuChildList(Request $request) {
+        $id = $request->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $childMenu = $em->getRepository(Menu::class)->findBy(['parent' => $id]);
+
+        return $this->render('admin/menu/childList.html.twig', ['childMenu' => $childMenu, 'parentId' => $id]);
+    }
+
+    /**
      * Deletes a menu entity.
      *
      */
@@ -144,7 +182,7 @@ class MenuController extends BaseController {
      *
      * @param Menu $menu The menu entity
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return Form The form
      */
     private function createDeleteForm(Menu $menu) {
         return $this->createFormBuilder()

@@ -20,55 +20,60 @@
     </head>
     <body>
         <!-- Navigation -->
+        {% if settings.submenu_type == 'default' %}
         {{render(controller('App\\Controller\\DefaultController:navAction'))}}
+        {% endif %}
+            {% if settings.submenu_type == 'mega' %}
+            {{render(controller('App\\Controller\\DefaultController:megaAction'))}}
+            {% endif %}
 
-        {% block header %}
-            <!-- space for header -->
-        {% endblock %}
-        <!-- Page Content -->
-        <div>
-            {% block body %}
-            {% endblock %}
-        </div>
+                {% block header %}
+                    <!-- space for header -->
+                {% endblock %}
+                <!-- Page Content -->
+                <div>
+                    {% block body %}
+                    {% endblock %}
+                </div>
 
-        <!-- /.container -->
-        <!-- Footer -->
-        <footer class="py-5 bg-dark">
-            <div class="container">
-                <p class="m-0 text-center text-white">Copyright &copy; {{settings.header_line_1}}, {{"now"|date('Y')}}</p>
-            </div>
-            <!-- /.container -->
-        </footer>
+                <!-- /.container -->
+                <!-- Footer -->
+                <footer class="py-5 bg-dark">
+                    <div class="container">
+                        <p class="m-0 text-center text-white">Copyright &copy; {{settings.header_line_1}}, {{"now"|date('Y')}}</p>
+                    </div>
+                    <!-- /.container -->
+                </footer>
 
-        {{ encore_entry_script_tags('app') }}
-        <script>
-            $(document).ready(function () {
+                {{ encore_entry_script_tags('app') }}
+                <script>
+                    $(document).ready(function () {
 
-                $('.customer-logos').slick({
-                    slidesToShow: 6,
-                    slidesToScroll: 1,
-                    autoplay: true,
-                    autoplaySpeed: 1500,
-                    arrows: false,
-                    dots: false,
-                    pauseOnHover: false,
-                    responsive: [{
-                            breakpoint: 768,
-                            settings: {
-                                slidesToShow: 4
-                            }
-                        }, {
-                            breakpoint: 520,
-                            settings: {
-                                slidesToShow: 3
-                            }
-                        }]
-                });
-            });
+                        $('.customer-logos').slick({
+                            slidesToShow: 6,
+                            slidesToScroll: 1,
+                            autoplay: true,
+                            autoplaySpeed: 1500,
+                            arrows: false,
+                            dots: false,
+                            pauseOnHover: false,
+                            responsive: [{
+                                    breakpoint: 768,
+                                    settings: {
+                                        slidesToShow: 4
+                                    }
+                                }, {
+                                    breakpoint: 520,
+                                    settings: {
+                                        slidesToShow: 3
+                                    }
+                                }]
+                        });
+                    });
 
-            $('#megaMenuBtn').on('click', function (e) {
-                $('#megaMenu').modal('toggle');
-            });
-        </script>
-    </body>
-</html>
+                    $('#megaMenuBtn').on('click', function (e) {
+                        $('#megaMenu').modal('toggle');
+                    });
+                </script>
+            </body>
+        </html>

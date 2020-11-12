@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -42,6 +44,21 @@ class Menu
      */
     private $rank;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Menu::class, inversedBy="menus")
+     */
+    private $parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Menu::class, mappedBy="parent")
+     */
+    private $menus;
+
+    public function __construct()
+    {
+        $this->menus = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -79,6 +96,49 @@ class Menu
     public function setRank(int $rank): self
     {
         $this->rank = $rank;
+
+        return $this;
+    }
+
+    public function getParent(): ?self
+    {
+        return $this->parent;
+    }
+
+    public function setParent(?self $parent): self
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getMenus(): Collection
+    {
+        return $this->menus;
+    }
+
+    public function addMenu(self $menu): self
+    {
+        if (!$this->menus->contains($menu)) {
+            $this->menus[] = $menu;
+            $menu->setParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMenu(self $menu): self
+    {
+        if ($this->menus->contains($menu)) {
+            $this->menus->removeElement($menu);
+            // set the owning side to null (unless already changed)
+            if ($menu->getParent() === $this) {
+                $menu->setParent(null);
+            }
+        }
 
         return $this;
     }

@@ -21,8 +21,11 @@
                         <td>{{ menu.menu.location }}</td>
                         <td>
                             {% if menu.menu.name != 'Home' %}
-                            <a class="btn btn-sm btn-info" href="{{ path('myadmin_menu_edit', { 'id': menu.menu.id }) }}"><i class="fa fa-edit"></i> edit</a>
-                            {% endif %}
+                                <div class="btn-group">
+                            <a class="btn btn-sm btn-primary" href="{{ path('myadmin_menu_edit', { 'id': menu.menu.id }) }}"><i class="fa fa-edit"></i> edit</a>
+                            <a class="btn btn-sm btn-info" href="{{ path('myadmin_menu_child_list', { 'id': menu.menu.id }) }}"><i class="fa fa-child"></i>Child List</a>
+                                </div>
+                                {% endif %}
                         </td>
                     </tr>
                 {% endfor %}
