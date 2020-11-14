@@ -52,6 +52,8 @@ class BossFuxtures extends Fixture {
             'logo_album_id' => array('type' => 'number', 'data' => '', 'options' => ''),
             'default_home_sections' => array('type' => 'select', 'data' => 'no', 'options' => json_encode(['yes', 'no'])),
             'home_header' => array('type' => 'select', 'data' => 'slider', 'options' => json_encode(['slider'])),
+            'nav_type' => array('type' => 'select', 'data' => 'fixed-top', 'options' => json_encode(['default','fixed-top'])),
+            'submenu_type' => array('type' => 'select', 'data' => 'mega', 'options' => json_encode(['default','mega'])),
         );
 
         foreach ($settings as $k => $v) {
