@@ -63,18 +63,11 @@
                             // checks if window is scrolled more than 500px, adds/removes solid class
                             if ($(this).scrollTop() > 500) {
                                 $('.navbar').addClass('solid');
-                    {% if app.request.get('_route') != 'homepage' %}
-                                    $('.navbar').addClass('fixed-top');
-                    {% endif %}
-                                } else {
-                                    $('.navbar').removeClass('solid');
-                    {% if app.request.get('_route') != 'homepage' %}
-                                                                                    $('.navbar').removeClass('fixed-top');
-                    {% endif %}
-
-                                                                                }
-                                                                            });
-                                                                        });
+                            } else {
+                                $('.navbar').removeClass('solid');
+                            }
+                        });
+                    });
                 </script>
                 {% endif %}
                     {% endblock %}
