@@ -24,53 +24,98 @@
         { 'pageSections': pageSection }
     )) }}
 {% endblock %}
-
-
-
-{% block header %}
-    {% if settings.home_header == 'slider' %}
-    <header>
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                {% set X = 0 %}
-                {% for s in scroller %}
-                    {% if X == 0 %}
-                        <li data-target="#carouselExampleIndicators" data-slide-to="{{X}}" class="active"></li>
-                        {% else %}
-                        <li data-target="#carouselExampleIndicators" data-slide-to="{{X}}"></li>
-                        {% endif %}
-                        {% set X = X+1 %}
-                    {% endfor %}
-            </ol>
-            <div class="carousel-inner" role="listbox">
-                <!-- Slide -->
-                {% set X = 0 %}
-                {% for s in scroller %}
-                    {% if X == 0 %}
-                        {% set active = 'active' %}
-                    {% else %}
-                        {% set active = '' %}
-                    {% endif %}
-                    <div class="carousel-item {{active}}" style="background-image: url('{{path('scroller_image',{'id':s.id,'name':'img.img'})}}')">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h3>{{s.header}}</h3>
-                            <p>{{s.description}}</p>
-                        </div>
-                    </div>
-                    {% set X = X+1 %}
-                {% endfor %}
-                <!-- Slide -->
-
-            </div>
-            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
-    </header>
+{% block css %}
+    {% if settings.nav_type == 'fixed-top' %}
+    <style>
+        .navbar {
+            height: 80px;
+            background-color: transparent;
+            border: none;
+            color: white;
+            z-index: 5000;
+            -webkit-transition: background-color 1s ease 0s;
+            transition: background-color 1s ease 0s;
+        }
+        .navbar.solid {
+            background-color: {{ settings.navbar_bg_color }};
+            -webkit-transition: background-color 1s ease 0s;
+            transition: background-color 1s ease 0s;
+            box-shadow: 0 0 4px grey;
+        }
+        .navbar.solid .navbar-brand {
+            color: {{ settings.navbar_text_color }};
+            -webkit-transition: color 1s ease 0s;
+            transition: color 1s ease 0s;
+        }
+        .navbar.solid .navbar-nav > li > a {
+            color: {{ settings.navbar_text_color }};
+            -webkit-transition: color 1s ease 0s;
+            transition: color 1s ease 0s;
+        }
+    </style>
     {% endif %}
         {% endblock %}
+            {% block javascript %}
+                {% if settings.nav_type == 'fixed-top' %}
+                <script>
+                    $(document).ready(function () {
+                        // Transition effect for navbar 
+                        $(window).scroll(function () {
+                            // checks if window is scrolled more than 500px, adds/removes solid class
+                            if ($(this).scrollTop() > 500) {
+                                $('.navbar').addClass('solid');
+                            } else {
+                                $('.navbar').removeClass('solid');
+                            }
+                        });
+                    });
+                </script>
+                {% endif %}
+                    {% endblock %}
+                        {% block header %}
+                            {% if settings.home_header == 'slider' %}
+                            <header>
+                                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                                    <ol class="carousel-indicators">
+                                        {% set X = 0 %}
+                                        {% for s in scroller %}
+                                            {% if X == 0 %}
+                                                <li data-target="#carouselExampleIndicators" data-slide-to="{{X}}" class="active"></li>
+                                                {% else %}
+                                                <li data-target="#carouselExampleIndicators" data-slide-to="{{X}}"></li>
+                                                {% endif %}
+                                                {% set X = X+1 %}
+                                            {% endfor %}
+                                    </ol>
+                                    <div class="carousel-inner" role="listbox">
+                                        <!-- Slide -->
+                                        {% set X = 0 %}
+                                        {% for s in scroller %}
+                                            {% if X == 0 %}
+                                                {% set active = 'active' %}
+                                            {% else %}
+                                                {% set active = '' %}
+                                            {% endif %}
+                                            <div class="carousel-item {{active}}" style="background-image: url('{{path('scroller_image',{'id':s.id,'name':'img.img'})}}')">
+                                                <div class="carousel-caption d-none d-md-block">
+                                                    <h3>{{s.header}}</h3>
+                                                    <p>{{s.description}}</p>
+                                                </div>
+                                            </div>
+                                            {% set X = X+1 %}
+                                        {% endfor %}
+                                        <!-- Slide -->
+
+                                    </div>
+                                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </div>
+                            </header>
+                            {% endif %}
+                                {% endblock %}
