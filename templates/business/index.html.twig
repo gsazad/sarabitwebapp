@@ -63,13 +63,18 @@
                             // checks if window is scrolled more than 500px, adds/removes solid class
                             if ($(this).scrollTop() > 500) {
                                 $('.navbar').addClass('solid');
-                                $('.navbar').addClass('fixed-top');
-                            } else {
-                                $('.navbar').removeClass('solid');
-                                $('.navbar').removeClass('fixed-top');
-                            }
-                        });
-                    });
+                    {% if app.request.get('_route') != 'homepage' %}
+                                    $('.navbar').addClass('fixed-top');
+                    {% endif %}
+                                } else {
+                                    $('.navbar').removeClass('solid');
+                    {% if app.request.get('_route') != 'homepage' %}
+                                                                                    $('.navbar').removeClass('fixed-top');
+                    {% endif %}
+
+                                                                                }
+                                                                            });
+                                                                        });
                 </script>
                 {% endif %}
                     {% endblock %}
