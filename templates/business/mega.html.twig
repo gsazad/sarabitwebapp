@@ -15,144 +15,149 @@
 {% endif %}
     <nav class="navbar navbar-expand-lg my-navbar {% if settings.nav_type == 'fixed-top' %}fixed-top{% endif %}">
         <div class="container">
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"><i class="fa fa-bar"></i></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
+            {% if settings.nav_type == 'fixed-top' %}
+            <a class="navbar-brand" href="{{path('homepage')}}">
+                <img src="{{settings.company_logo}}" alt="{{settings.header_line_1}}">
+            </a>
+            {% endif %}
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"><i class="fa fa-bar"></i></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
 
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{path('homepage')}}">Home</a>
-                    </li>
-                    {% for menu in menus %}
-                        {% if menu.submenu is defined %}
-                            <li class="nav-item dropdown has-megamenu">
-                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">{{ menu.menu.name }}</a>
-                                <div class="dropdown-menu megamenu" style="width:100%">
-                                    <div class="row">
-                                        {% set subsub = menu.submenu %}
-                                        {% for sub in subsub %}
-                                            <div class="col-sm-4">
-                                                <ul class="navbar-nav">
-                                                    {% if sub.sub %}
-                                                        <li class="nav-item">
-                                                            <a class="nav-link " href="#" id="dropdown-{{sub.menu.id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><b>{{sub.menu.name}}</b></a>
-                                                        </li>
-                                                        {% if sub.menu.fileData  %}
-                                                            <img  style="width: 50%;" src="{{ path('menu_image',{'id':sub.menu.id,'name':sub.menu.fileName}) }}">
-                                                        {% endif %}
-                                                        <div  aria-labelledby="dropdown-{{sub.menu.id}}">
-                                                            {% for page in sub.pages %}
-                                                                {% if page.url == '' %}
-                                                                    <a class="dropdown-item" href="{{path('page_show',{'id':page.id,'slug':page.name|slug})}}" target="{{page.target}}">{{page.name}}</a>  
-                                                                {% else %}
-                                                                    <a class="dropdown-item" href="{{page.url}}" target="{{page.target}}">{{page.name}}</a>
-                                                                {% endif %}
-                                                            {% endfor %}
-                                                        </div>
-                                                        </li>
-                                                    {% elseif(sub.productmenu) %}
-                                                        <li class="nav-item">
-                                                            <a class="nav-link" href="#" id="megaMenuBtn">{{menu.menu.name}}</a>
-                                                        </li>
-                                                    {% else %}
-                                                        {% if sub.count ==1 %}
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{path('homepage')}}">Home</a>
+                        </li>
+                        {% for menu in menus %}
+                            {% if menu.submenu is defined %}
+                                <li class="nav-item dropdown has-megamenu">
+                                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">{{ menu.menu.name }}</a>
+                                    <div class="dropdown-menu megamenu" style="width:100%">
+                                        <div class="row">
+                                            {% set subsub = menu.submenu %}
+                                            {% for sub in subsub %}
+                                                <div class="col-sm-4">
+                                                    <ul class="navbar-nav">
+                                                        {% if sub.sub %}
                                                             <li class="nav-item">
+                                                                <a class="nav-link " href="#" id="dropdown-{{sub.menu.id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><b>{{sub.menu.name}}</b></a>
+                                                            </li>
+                                                            {% if sub.menu.fileData  %}
+                                                                <img  style="width: 50%;" src="{{ path('menu_image',{'id':sub.menu.id,'name':sub.menu.fileName}) }}">
+                                                            {% endif %}
+                                                            <div  aria-labelledby="dropdown-{{sub.menu.id}}">
                                                                 {% for page in sub.pages %}
-                                                                    {% if page.name != 'Home' %}
-                                                                        {% if page.url == '' %}
-                                                                            <a class="nav-link" href="{{path('page_show',{'id':page.id,'slug':page.name|slug})}}" target="{{page.target}}">{{sub.menu.name}}</a>
-                                                                        {% else %}
-                                                                            <a class="nav-link" href="{{page.url}}" target="{{page.target}}">{{menu.menu.name}}</a>
-                                                                        {% endif %}
+                                                                    {% if page.url == '' %}
+                                                                        <a class="dropdown-item" href="{{path('page_show',{'id':page.id,'slug':page.name|slug})}}" target="{{page.target}}">{{page.name}}</a>  
+                                                                    {% else %}
+                                                                        <a class="dropdown-item" href="{{page.url}}" target="{{page.target}}">{{page.name}}</a>
                                                                     {% endif %}
                                                                 {% endfor %}
+                                                            </div>
                                                             </li>
+                                                        {% elseif(sub.productmenu) %}
+                                                            <li class="nav-item">
+                                                                <a class="nav-link" href="#" id="megaMenuBtn">{{menu.menu.name}}</a>
+                                                            </li>
+                                                        {% else %}
+                                                            {% if sub.count ==1 %}
+                                                                <li class="nav-item">
+                                                                    {% for page in sub.pages %}
+                                                                        {% if page.name != 'Home' %}
+                                                                            {% if page.url == '' %}
+                                                                                <a class="nav-link" href="{{path('page_show',{'id':page.id,'slug':page.name|slug})}}" target="{{page.target}}">{{sub.menu.name}}</a>
+                                                                            {% else %}
+                                                                                <a class="nav-link" href="{{page.url}}" target="{{page.target}}">{{menu.menu.name}}</a>
+                                                                            {% endif %}
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                </li>
+                                                            {% endif %}
                                                         {% endif %}
-                                                    {% endif %}
-                                                </ul>
+                                                    </ul>
 
-                                            </div>
-                                        {% endfor %}
-                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
 
-                                </div> <!-- dropdown-mega-menu.// -->
-                            </li>
-                        {% else %}
-                            {% if menu.sub %}
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="dropdown-{{menu.menu.id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{menu.menu.name}}</a>
-                                    <div class="dropdown-menu" aria-labelledby="dropdown-{{menu.menu.id}}">
-                                        {% for page in menu.pages %}
-                                            {% if page.url == '' %}
-                                                <a class="dropdown-item" href="{{path('page_show',{'id':page.id,'slug':page.name|slug})}}" target="{{page.target}}">{{page.name}}</a>  
-                                            {% else %}
-                                                <a class="dropdown-item" href="{{page.url}}" target="{{page.target}}">{{page.name}}</a>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </div>
-                                </li>
-                            {% elseif(menu.productmenu) %}
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#" id="megaMenuBtn">{{menu.menu.name}}</a>
+                                    </div> <!-- dropdown-mega-menu.// -->
                                 </li>
                             {% else %}
-                                {% if menu.count ==1 %}
-                                    <li class="nav-item">
-                                        {% for page in menu.pages %}
-                                            {% if page.name != 'Home' %}
+                                {% if menu.sub %}
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="dropdown-{{menu.menu.id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{menu.menu.name}}</a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdown-{{menu.menu.id}}">
+                                            {% for page in menu.pages %}
                                                 {% if page.url == '' %}
-                                                    <a class="nav-link" href="{{path('page_show',{'id':page.id,'slug':page.name|slug})}}" target="{{page.target}}">{{menu.menu.name}}</a>
+                                                    <a class="dropdown-item" href="{{path('page_show',{'id':page.id,'slug':page.name|slug})}}" target="{{page.target}}">{{page.name}}</a>  
                                                 {% else %}
-                                                    <a class="nav-link" href="{{page.url}}" target="{{page.target}}">{{menu.menu.name}}</a>
+                                                    <a class="dropdown-item" href="{{page.url}}" target="{{page.target}}">{{page.name}}</a>
                                                 {% endif %}
-                                            {% endif %}
-                                        {% endfor %}
+                                            {% endfor %}
+                                        </div>
                                     </li>
+                                {% elseif(menu.productmenu) %}
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#" id="megaMenuBtn">{{menu.menu.name}}</a>
+                                    </li>
+                                {% else %}
+                                    {% if menu.count ==1 %}
+                                        <li class="nav-item">
+                                            {% for page in menu.pages %}
+                                                {% if page.name != 'Home' %}
+                                                    {% if page.url == '' %}
+                                                        <a class="nav-link" href="{{path('page_show',{'id':page.id,'slug':page.name|slug})}}" target="{{page.target}}">{{menu.menu.name}}</a>
+                                                    {% else %}
+                                                        <a class="nav-link" href="{{page.url}}" target="{{page.target}}">{{menu.menu.name}}</a>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </li>
+                                    {% endif %}
                                 {% endif %}
+
                             {% endif %}
 
-                        {% endif %}
-
-                    {% endfor %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{path('enquiry')}}">Enquiry</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <div class="modal fade" id="megaMenu" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        {% endfor %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{path('enquiry')}}">Enquiry</a>
+                        </li>
+                    </ul>
                 </div>
-                <div class="modal-body">
-                    {% set X = 1 %}
-                    {% for c in cat %}
-                        {% if X == 1 %}<!-- row start X --><div class="row">{% endif %}
-                            <div class="col-sm-4 my-menu-col">
-                                <h5 class="text-white manu-h5">{{c.cat.name}}</h4>
-                                    {% if c.sub %}
-                                        <ul class="list-group" >
-                                            {% for sub in c.sub %}
-                                                <li class="list-group-item"><a href="{{path('product_list',{'catId':sub.id,'slug':sub.name|slug})}}">{{sub.name}}</a></li>
-                                                {% endfor %}
-                                        </ul>
-                                    {% endif %}
+            </div>
+        </nav>
+        <div class="modal fade" id="megaMenu" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        {% set X = 1 %}
+                        {% for c in cat %}
+                            {% if X == 1 %}<!-- row start X --><div class="row">{% endif %}
+                                <div class="col-sm-4 my-menu-col">
+                                    <h5 class="text-white manu-h5">{{c.cat.name}}</h4>
+                                        {% if c.sub %}
+                                            <ul class="list-group" >
+                                                {% for sub in c.sub %}
+                                                    <li class="list-group-item"><a href="{{path('product_list',{'catId':sub.id,'slug':sub.name|slug})}}">{{sub.name}}</a></li>
+                                                    {% endfor %}
+                                            </ul>
+                                        {% endif %}
 
-                            </div><!-- {{X}} -->
-                            {% if X == 3 %}
-                            </div><!-- row end X -->
-                        {% endif %}
-                        {% set X = X + 1 %}
-                        {% if X == 4 %}{% set X = 1 %}{% endif %}
+                                </div><!-- {{X}} -->
+                                {% if X == 3 %}
+                                </div><!-- row end X -->
+                            {% endif %}
+                            {% set X = X + 1 %}
+                            {% if X == 4 %}{% set X = 1 %}{% endif %}
 
-                    {% endfor %}
-                    {% if (X == 2 or X == 3 ) %}</div><!-- row end X -->{% endif %}
-            </div><!-- modal body -->
+                        {% endfor %}
+                        {% if (X == 2 or X == 3 ) %}</div><!-- row end X -->{% endif %}
+                </div><!-- modal body -->
 
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
