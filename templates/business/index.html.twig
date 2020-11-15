@@ -58,7 +58,8 @@
                 {% if settings.nav_type == 'fixed-top' %}
                 <script>
                     $(document).ready(function () {
-                        // Transition effect for navbar 
+                        // Transition effect for navbar
+                        $('.navbar').addClass('fixed-top');
                         $(window).scroll(function () {
                             // checks if window is scrolled more than 500px, adds/removes solid class
                             if ($(this).scrollTop() > 500) {
