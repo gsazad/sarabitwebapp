@@ -21,12 +21,16 @@
                 {% set contentAnimation = "" %}
             {% endif %}
             {% set titleFont = '' %}
-            {% if p.titleFont.name  != 'default'%}
-                {% set titleFont = "font-family: "~p.titleFont.familyName~";" %}
+            {% if p.titleFont %}
+                {% if p.titleFont.name  != 'default'%}
+                    {% set titleFont = "font-family: "~p.titleFont.familyName~";" %}
+                {% endif %}
             {% endif %}
             {% set contentFont = '' %}
-            {% if p.contentFont.name  != 'default'%}
-                {% set contentFont = "font-family: "~p.contentFont.familyName~";" %}
+            {% if p.contentFont %}
+                {% if p.contentFont.name  != 'default'%}
+                    {% set contentFont = "font-family: "~p.contentFont.familyName~";" %}
+                {% endif %}
             {% endif %}
             {% if p.contentContainment == 'container' %}
                 {% if p.backgroundContainment != 'container' %}
