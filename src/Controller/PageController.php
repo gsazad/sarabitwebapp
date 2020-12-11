@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Gfont;
 use App\Entity\GrapeBlock;
 use App\Entity\Page;
 use App\Entity\PageSection;
+use App\Entity\PageSectionImages;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
@@ -18,6 +20,7 @@ use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -88,7 +91,7 @@ class PageController extends BaseController {
         $page = $em->getRepository('App:Page')->findOneBy(['id' => $id]);
         if ($page) {
             $em->remove($page);
-            //$em->persist($page);
+//$em->persist($page);
             $em->flush();
         }
         return $this->redirectToRoute('myadmin_page_index');
@@ -153,6 +156,8 @@ class PageController extends BaseController {
                                 }
                                 $pageSettingEditUrl = $this->generateUrl('myadmin_page_setting_edit', ['id' => $v->getId()]);
                                 $html .= "<a data-href='$pageSettingEditUrl' href='javascript:void(0)' class='btn btn-danger btn-sm aic-show-large-modal'>SettingEdit</a>";
+                                $pageFontEditUrl = $this->generateUrl('myadmin_page_font_edit', ['id' => $v->getId()]);
+                                $html .= "<a data-href='$pageFontEditUrl' href='javascript:void(0)' class='btn btn-danger btn-sm aic-show-large-modal'>FontEdit</a>";
                                 $deleteUrl = $this->generateUrl('myadmin_page_section_delete', ['id' => $v->getId()]);
                                 $html .= "<a href='$deleteUrl' class='btn btn-danger btn-sm'>Delete</a>";
                                 $html .= "</div>";
@@ -270,7 +275,7 @@ class PageController extends BaseController {
                 ->add('contentContainment', ChoiceType::class, ['choices' => ['container' => 'container', 'container-fluid' => 'container-fluid']])
         ;
         if ($pageSection->getType() == 'youtube-section') {
-            $form = $form->add('youtubeUrls', \Symfony\Component\Form\Extension\Core\Type\UrlType::class);
+            $form = $form->add('youtubeUrls', UrlType::class);
         }
         $form = $form->getForm();
         $form->handleRequest($request);
@@ -278,6 +283,29 @@ class PageController extends BaseController {
 
 //            $pageSection = new PageSection();
 
+            $em->persist($pageSection);
+            $em->flush();
+            return $this->redirectToRoute('myadmin_page_open', ['id' => $pageSection->getPage()->getId()]);
+        }
+        return $this->render('admin/page/pageSectionEdit.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
+     * @Route("/myadmin/page/font/edit/{id}", name="myadmin_page_font_edit", methods={"GET","POST"})
+     */
+    public function pageFontEdit(Request $request) {
+        $id = $request->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $pageSection = $em->getRepository(PageSection::class)->findOneBy(['id' => $id]);
+        $form = $this->createFormBuilder($pageSection)
+                ->setAction($this->generateUrl('myadmin_page_font_edit', ['id' => $id]))
+                ->add('titleFont', EntityType::class,['class'=> Gfont::class,'choice_label'=>'name'])
+                ->add('contentFont',EntityType::class,['class'=> Gfont::class,'choice_label'=>'name'])
+                ->getform();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+//            $pageSection->setTitleFont([$form['titleFont']->getData()])
+//                    ->setContentFont($form['contentFont']->getData());
             $em->persist($pageSection);
             $em->flush();
             return $this->redirectToRoute('myadmin_page_open', ['id' => $pageSection->getPage()->getId()]);
@@ -393,10 +421,10 @@ class PageController extends BaseController {
      * @Route("/myadmin/page.edit.html", name="myadmin_page_edit", methods={"GET","POST"})
      */
     public function editAction(Request $request) {
-        //$deleteForm = $this->createDeleteForm($page);
+//$deleteForm = $this->createDeleteForm($page);
         $em = $this->getDoctrine()->getManager();
         $page = $em->getRepository(Page::class)->findOneBy(['id' => $request->get('id')]);
-        // $editForm = $this->createForm('App\Form\PageType', $page);
+// $editForm = $this->createForm('App\Form\PageType', $page);
         $formBuilder = $this->createFormBuilder($page);
         if ($page->getIsHome() == TRUE) {
             $formBuilder->add('name', TextType::class, ['attr' => ['readonly' => 'readonly']])
@@ -441,7 +469,7 @@ class PageController extends BaseController {
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            //$this->getDoctrine()->getManager()->flush();
+//$this->getDoctrine()->getManager()->flush();
             $em = $this->getDoctrine()->getManager();
             if ($page->getIsHome() == TRUE) {
                 $page->setName('Home');
@@ -494,10 +522,10 @@ class PageController extends BaseController {
      */
     public function edit2Action(Request $request) {
 
-        //$deleteForm = $this->createDeleteForm($page);
+//$deleteForm = $this->createDeleteForm($page);
         $em = $this->getDoctrine()->getManager();
         $page = $em->getRepository(Page::class)->findOneBy(['id' => $request->get('id')]);
-        // $editForm = $this->createForm('App\Form\PageType', $page);
+// $editForm = $this->createForm('App\Form\PageType', $page);
         $formBuilder = $this->createFormBuilder($page);
         if ($page->getIsHome() == TRUE) {
             $formBuilder->add('name', TextType::class, ['attr' => ['readonly' => 'readonly']])
@@ -532,7 +560,7 @@ class PageController extends BaseController {
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            //$this->getDoctrine()->getManager()->flush();
+//$this->getDoctrine()->getManager()->flush();
             $em = $this->getDoctrine()->getManager();
             if ($page->getIsHome() == TRUE) {
                 $page->setName('Home');
@@ -574,11 +602,11 @@ class PageController extends BaseController {
         $id = $request->get('id');
         $em = $this->getDoctrine()->getManager();
         $pageSection = $em->getRepository(PageSection::class)->findOneBy(['id' => $id]);
-        $pageSectionImages = $em->getRepository(\App\Entity\PageSectionImages::class)->findBy(['pageSection' => $pageSection->getId()]);
+        $pageSectionImages = $em->getRepository(PageSectionImages::class)->findBy(['pageSection' => $pageSection->getId()]);
         $pageId = $pageSection->getPage()->getId();
         if ($pageSectionImages) {
             foreach ($pageSectionImages as $psi) {
-                $pageSectionImage = $em->getRepository(\App\Entity\PageSectionImages::class)->findOneBy(['id' => $psi->getId()]);
+                $pageSectionImage = $em->getRepository(PageSectionImages::class)->findOneBy(['id' => $psi->getId()]);
                 $em->remove($pageSectionImage);
             }
             $em->flush();

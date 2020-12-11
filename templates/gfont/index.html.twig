@@ -1,0 +1,40 @@
+{% extends 'baseAdmin.html.twig' %}
+{% block title %}Gfont index{% endblock %}
+
+{% block body %}
+    <h1>Gfont index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>FamilyName</th>
+                <th>Name</th>
+                <th>Url</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for gfont in gfonts %}
+            <tr>
+                <td>{{ gfont.id }}</td>
+                <td>{{ gfont.familyName }}</td>
+                <td>{{ gfont.name }}</td>
+                <td>{{ gfont.url }}</td>
+                {% if gfont.name != 'default' %}
+                <td>
+                    <a href="{{ path('gfont_show', {'id': gfont.id}) }}">show</a>
+                    <a href="{{ path('gfont_edit', {'id': gfont.id}) }}">edit</a>
+                </td>
+                {% endif %}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('gfont_new') }}">Create new</a>
+{% endblock %}

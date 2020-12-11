@@ -144,6 +144,17 @@ class PageSection {
      */
     private $contentAnimation;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Gfont::class, inversedBy="pageSections")
+     */
+    private $titleFont;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Gfont::class, inversedBy="pageSections")
+     */
+    private $contentFont;
+
+
     public function __construct()
     {
         $this->pageSectionImages = new ArrayCollection();
@@ -445,5 +456,31 @@ class PageSection {
 
         return $this;
     }
+
+    public function getTitleFont(): ?Gfont
+    {
+        return $this->titleFont;
+    }
+
+    public function setTitleFont(?Gfont $titleFont): self
+    {
+        $this->titleFont = $titleFont;
+
+        return $this;
+    }
+
+    public function getContentFont(): ?Gfont
+    {
+        return $this->contentFont;
+    }
+
+    public function setContentFont(?Gfont $contentFont): self
+    {
+        $this->contentFont = $contentFont;
+
+        return $this;
+    }
+
+ 
 
 }

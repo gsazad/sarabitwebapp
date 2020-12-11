@@ -1,3 +1,9 @@
+
+{% set pageFontLinks = getPageFont(pageSections) %}
+{{ dump(pageFontLinks) }}
+{% for f in pageFontLinks %}
+    <link href="{{ f.url }}" rel="stylesheet">
+{% endfor %}
 {% for p in pageSections  %}
     {% if p.backgroundContainment == 'container' %}
         <div class="container  my-page-section {% if p.type == 'banner' %}no-margin-banner{% endif %}" style="color: {{ p.textColor|raw }}; background-color: {{ p.backgroundColor|raw }}">
@@ -15,6 +21,14 @@
             {% else %}
                 {% set contentAnimation = "" %}
             {% endif %}
+            {% set titleFont = '' %}
+            {% if p.titleFont.name  != 'default'%}
+                {% set titleFont = "font-family: "~p.titleFont.familyName~";" %}
+            {% endif %}
+            {% set contentFont = '' %}
+            {% if p.contentFont.name  != 'default'%}
+                {% set contentFont = "font-family: "~p.contentFont.familyName~";" %}
+            {% endif %}
             {% if p.contentContainment == 'container' %}
                 {% if p.backgroundContainment != 'container' %}
                     <div class="container">
@@ -31,8 +45,8 @@
                                         {{ p.headerIcon|raw }}
                                     </div>
                                 {% endif %}
-                                <h2 {{ titleAnimation|raw }} style="color: {{ p.titleColor|raw }}" class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
-                                <p {{ contentAnimation|raw }} class="{% if p.alignContent == 'center' %}text-center{% endif %}">{{ p.content }}</p>   
+                                <h2 {{ titleAnimation|raw }} style="{{ titleFont|raw }} color: {{ p.titleColor|raw }}" class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
+                                <p {{ contentAnimation|raw }} style="{{ contentFont|raw }}" class="{% if p.alignContent == 'center' %}text-center{% endif %}">{{ p.content }}</p>   
                             {% endif %}
                             {% if p.type == 'image-right' %}
                                 <div class="row">
@@ -42,8 +56,8 @@
                                                 {{ p.headerIcon|raw }}
                                             </div>
                                         {% endif %}
-                                        <h2 {{ titleAnimation|raw }} style="color: {{ p.titleColor|raw }}" class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
-                                        <p {{ contentAnimation|raw }} class="{% if p.alignContent == 'center' %}text-center{% endif %}">{{ p.content }}</p>   
+                                        <h2 {{ titleAnimation|raw }} style="{{ titleFont|raw }}color: {{ p.titleColor|raw }}" class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
+                                        <p {{ contentAnimation|raw }} style="{{ contentFont|raw }}" class="{% if p.alignContent == 'center' %}text-center{% endif %}">{{ p.content }}</p>   
                                     </div>
                                     <div class="col-sm-4">
                                         <img uk-img class="page-section-image" src="{{ path('page_section_image',{'id':p.id,'name':p.imageFileName}) }}">
@@ -61,8 +75,8 @@
                                                 {{ p.headerIcon|raw }}
                                             </div>
                                         {% endif %}
-                                        <h2 {{ titleAnimation|raw }} style="color: {{ p.titleColor|raw }}" class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
-                                        <p {{ contentAnimation|raw }} class="{% if p.alignContent == 'center' %}text-center{% endif %}">{{ p.content }}</p>   
+                                        <h2 {{ titleAnimation|raw }} style="{{ titleFont|raw }}color: {{ p.titleColor|raw }}" class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
+                                        <p {{ contentAnimation|raw }} class="{% if p.alignContent == 'center' %}text-center{% endif %}" style="{{ contentFont|raw }}">{{ p.content }}</p>   
                                     </div>
                                 </div>
                             {% endif %}
@@ -85,8 +99,8 @@
                                     <img src="{{ path('page_section_image',{'id':p.id,'name':p.imageFileName}) }}" alt="Picture">
                                     {% set rgb = hextoRGB(p.backgroundColor) %}
                                     <div class="overlay" style="background-color: rgb({{rgb.r}},{{rgb.g}},{{rgb.b}},0.5);">
-                                        <h2 {{ titleAnimation|raw }} style="color: {{ p.titleColor|raw }}">{{ p.title }}</h2>
-                                        <p {{ contentAnimation|raw }}>{{ p.content }}</p>
+                                        <h2 {{ titleAnimation|raw }} style="{{ titleFont|raw }}color: {{ p.titleColor|raw }}">{{ p.title }}</h2>
+                                        <p {{ contentAnimation|raw }} style="{{ contentFont|raw }}">{{ p.content }}</p>
                                     </div>
                                 </section>
                             {% endif %}
@@ -96,8 +110,8 @@
                                         {{ p.headerIcon|raw }}
                                     </div>
                                 {% endif %}
-                                <h2 {{ titleAnimation|raw }} style="color: {{ p.titleColor|raw }}" class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
-                                <p {{ contentAnimation|raw }} class="{% if p.alignContent == 'center' %}text-center{% endif %}">{{ p.content }}</p>   
+                                <h2 {{ titleAnimation|raw }} style="{{ titleFont|raw }}color: {{ p.titleColor|raw }}" class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
+                                <p {{ contentAnimation|raw }} style="{{ contentFont|raw }}" class="{% if p.alignContent == 'center' %}text-center{% endif %}">{{ p.content }}</p>   
                                 {% if p.youtubeUrls %}
                                     <iframe style="width: 100%; height: 500px" src="https://www.youtube.com/embed/{{ p.youtubeUrls|getYtId }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                     {% endif %}

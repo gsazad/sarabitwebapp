@@ -50,6 +50,7 @@ class AppExtension extends AbstractExtension {
             new TwigFunction('strPos', array($this, 'strPos')),
             new TwigFunction('getPageSectionImages', array($this, 'getPageSectionImages')),
             new TwigFunction('hextoRGB', array($this, 'hextoRGB')),
+            new TwigFunction('getPageFont', array($this, 'getPageFont')),
         );
     }
 
@@ -83,6 +84,21 @@ class AppExtension extends AbstractExtension {
     public function getYtId($url) {
         $url = explode('?v=', $url);
         return $url[1];
+    }
+
+    public function getPageFont($pageSections) {
+        $array = [];
+        foreach ($pageSections as $p) {
+            $titleFontId = $p->getTitleFont()->getId();
+            $contentFontId = $p->getContentFont()->getId();
+            if ($p->getTitleFont()->getName() != 'default') {
+                $array[$titleFontId] = $p->getTitleFont();
+            }
+            if ($p->getContentFont()->getName() != 'default') {
+                $array[$contentFontId] = $p->getContentFont();
+            }
+        }
+        return $array;
     }
 
     public function getGrapeHead() {
