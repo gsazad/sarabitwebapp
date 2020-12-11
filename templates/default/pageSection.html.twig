@@ -1,6 +1,5 @@
 
 {% set pageFontLinks = getPageFont(pageSections) %}
-{{ dump(pageFontLinks) }}
 {% for f in pageFontLinks %}
     <link href="{{ f.url }}" rel="stylesheet">
 {% endfor %}
