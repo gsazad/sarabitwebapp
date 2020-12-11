@@ -89,13 +89,15 @@ class AppExtension extends AbstractExtension {
     public function getPageFont($pageSections) {
         $array = [];
         foreach ($pageSections as $p) {
-            $titleFontId = $p->getTitleFont()->getId();
-            $contentFontId = $p->getContentFont()->getId();
-            if ($p->getTitleFont()->getName() != 'default') {
-                $array[$titleFontId] = $p->getTitleFont();
-            }
-            if ($p->getContentFont()->getName() != 'default') {
-                $array[$contentFontId] = $p->getContentFont();
+            if ($p->getTitleFont() && $p->getContentFont()) {
+                $titleFontId = $p->getTitleFont()->getId();
+                $contentFontId = $p->getContentFont()->getId();
+                if ($p->getTitleFont()->getName() != 'default') {
+                    $array[$titleFontId] = $p->getTitleFont();
+                }
+                if ($p->getContentFont()->getName() != 'default') {
+                    $array[$contentFontId] = $p->getContentFont();
+                }
             }
         }
         return $array;
