@@ -222,7 +222,7 @@ class DefaultController extends BaseController {
 
     public function megaAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-        $menus = $em->getRepository('App:Menu')->findBy(['parent' => null]);
+        $menus = $em->getRepository('App:Menu')->findBy(['parent' => null],['rank'=>'DESC']);
         $nav = array();
         $productMenuId = $this->getSetting()['product_manu_id'];
         foreach ($menus as $k => $v) {
