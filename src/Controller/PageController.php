@@ -338,6 +338,8 @@ class PageController extends BaseController {
                         "none" => "none",
                         "uk-animation-slide-left" => "uk-animation-slide-left",
                         "uk-animation-slide-right" => "uk-animation-slide-right",
+                        "uk-animation-slide-top" => "uk-animation-slide-top",
+                        "uk-animation-slide-bottom" => "uk-animation-slide-bottom",
                         "uk-animation-fade" => "uk-animation-fade",
                     ],
                 ])
