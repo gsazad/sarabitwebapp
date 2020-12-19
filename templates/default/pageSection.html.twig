@@ -101,7 +101,7 @@
                                 <section class="showcase">
                                     <img src="{{ path('page_section_image',{'id':p.id,'name':p.imageFileName}) }}" alt="Picture">
                                     {% set rgb = hextoRGB(p.backgroundColor) %}
-                                    <div class="overlay" style="background-color: rgb({{rgb.r}},{{rgb.g}},{{rgb.b}},0.5);">
+                                    <div class="overlay" style="background-color: rgb({{rgb.r}},{{rgb.g}},{{rgb.b}},{% if p.bannerOpacity == 'none' %}0{% endif %}{% if p.bannerOpacity == 'low' %}0.3{% endif %}{% if p.bannerOpacity == 'high' %}0.5{% endif %});">
                                         <h2 {{ titleAnimation|raw }} style="{{ titleFont|raw }}color: {{ p.titleColor|raw }}">{{ p.title }}</h2>
                                         <p {{ contentAnimation|raw }} style="{{ contentFont|raw }}">{{ p.content }}</p>
                                     </div>

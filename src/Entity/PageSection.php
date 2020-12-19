@@ -154,6 +154,11 @@ class PageSection {
      */
     private $contentFont;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $bannerOpacity;
+
 
     public function __construct()
     {
@@ -477,6 +482,18 @@ class PageSection {
     public function setContentFont(?Gfont $contentFont): self
     {
         $this->contentFont = $contentFont;
+
+        return $this;
+    }
+
+    public function getBannerOpacity(): ?string
+    {
+        return $this->bannerOpacity;
+    }
+
+    public function setBannerOpacity(?string $bannerOpacity): self
+    {
+        $this->bannerOpacity = $bannerOpacity;
 
         return $this;
     }

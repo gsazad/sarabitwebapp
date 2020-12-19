@@ -274,6 +274,13 @@ class PageController extends BaseController {
                 ->add('backgroundContainment', ChoiceType::class, ['choices' => ['container' => 'container', 'container-fluid' => 'container-fluid']])
                 ->add('contentContainment', ChoiceType::class, ['choices' => ['container' => 'container', 'container-fluid' => 'container-fluid']])
         ;
+        if ($pageSection->getType() == 'banner') {
+            $form = $form->add('bannerOpacity', ChoiceType::class, ['choices' => [
+                    'none' => 'none',
+                    'low' => 'low',
+                    'high' => 'high',
+            ]]);
+        }
         if ($pageSection->getType() == 'youtube-section') {
             $form = $form->add('youtubeUrls', UrlType::class);
         }
@@ -299,8 +306,8 @@ class PageController extends BaseController {
         $pageSection = $em->getRepository(PageSection::class)->findOneBy(['id' => $id]);
         $form = $this->createFormBuilder($pageSection)
                 ->setAction($this->generateUrl('myadmin_page_font_edit', ['id' => $id]))
-                ->add('titleFont', EntityType::class,['class'=> Gfont::class,'choice_label'=>'name'])
-                ->add('contentFont',EntityType::class,['class'=> Gfont::class,'choice_label'=>'name'])
+                ->add('titleFont', EntityType::class, ['class' => Gfont::class, 'choice_label' => 'name'])
+                ->add('contentFont', EntityType::class, ['class' => Gfont::class, 'choice_label' => 'name'])
                 ->getform();
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
