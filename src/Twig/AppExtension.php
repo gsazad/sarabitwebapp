@@ -51,7 +51,17 @@ class AppExtension extends AbstractExtension {
             new TwigFunction('getPageSectionImages', array($this, 'getPageSectionImages')),
             new TwigFunction('hextoRGB', array($this, 'hextoRGB')),
             new TwigFunction('getPageFont', array($this, 'getPageFont')),
+            new TwigFunction('isFirstSectionBanner', array($this, 'isFirstSectionBanner')),
         );
+    }
+
+    public function isFirstSectionBanner(\App\Entity\Page $page) {
+        $repo = $this->em->getRepository(PageSection::class)->findOneBy(['type' => 'banner', 'rank' => 1, 'page' => $page->getId()]);
+        if ($repo) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function hextoRGB($hex) {

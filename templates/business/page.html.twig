@@ -8,9 +8,63 @@
     <meta property="og:url" content="{{url('page_show',{'id':page.id,'slug':page.name|slug})}}" />
     <meta property="og:description" content="{{page.description}}" />
 {% endblock %}
-{% block body %}
-    {{ render(controller(
+{% set isBanner = isFirstSectionBanner(page) %}
+{% block css %}
+    {% if isBanner %}
+        {% if settings.nav_type == 'fixed-top' %}
+        <style>
+            .navbar {
+                background-color: transparent;
+                border: none;
+                color: white;
+                z-index: 5000;
+                -webkit-transition: background-color 1s ease 0s;
+                transition: background-color 1s ease 0s;
+            }
+            .navbar.solid {
+                background-color: {{ settings.navbar_bg_color }};
+                -webkit-transition: background-color 1s ease 0s;
+                transition: background-color 1s ease 0s;
+                box-shadow: 0 0 4px grey;
+            }
+            .navbar.solid .navbar-brand {
+                color: {{ settings.navbar_text_color }};
+                -webkit-transition: color 1s ease 0s;
+                transition: color 1s ease 0s;
+            }
+            .navbar.solid .navbar-nav > li > a {
+                color: {{ settings.navbar_text_color }};
+                -webkit-transition: color 1s ease 0s;
+                transition: color 1s ease 0s;
+            }
+        </style>
+    {% endif %}
+    {% endif %}
+        {% endblock %}
+            {% block javascript %}
+                {% if isBanner %}
+                    {% if settings.nav_type == 'fixed-top' %}
+                    <script>
+                        $(document).ready(function () {
+                            // Transition effect for navbar
+                            $('.navbar').addClass('fixed-top');
+                            $(window).scroll(function () {
+                                // checks if window is scrolled more than 500px, adds/removes solid class
+                                if ($(this).scrollTop() > 500) {
+                                    $('.navbar').addClass('solid');
+                                } else {
+                                    $('.navbar').removeClass('solid');
+                                }
+                            });
+                        });
+                    </script>
+                {% endif %}
+                {% endif %}
+                    {% endblock %}
+
+                        {% block body %}
+                            {{ render(controller(
         'App\\Controller\\DefaultController::pageSectionAction',
         { 'pageSections': pageSection }
     )) }}
-{% endblock %}
+                        {% endblock %}
