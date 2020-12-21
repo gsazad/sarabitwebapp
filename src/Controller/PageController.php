@@ -639,23 +639,27 @@ class PageController extends BaseController {
      */
     public function seo(Request $request) {
         $pageId = $request->get('pageId');
-        $em=$this->getDoctrine()->getManager();
-        $page=$em->getRepository(Page::class)->findOneBy(['id'=>$pageId]);
-        $form=$this->createFormBuilder($page)
-                ->setAction($this->generateUrl('seo_city',['pageId'=>$pageId]))
-                ->add('name')
-                ->add('title')
+        $em = $this->getDoctrine()->getManager();
+        $page = $em->getRepository(Page::class)->findOneBy(['id' => $pageId]);
+        $form = $this->createFormBuilder($page)
+                ->setAction($this->generateUrl('seo_city', ['pageId' => $pageId]));
+        if ($page->getName() == 'Home') {
+            $form = $form > add('name', TextType::class, ['disabled' => true]);
+        } else {
+            $form = $form->add('name');
+        }
+        $form = $form->add('title')
                 ->add('description', TextType::class)
                 ->add('keywords')
                 ->getForm();
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
-            
+        if ($form->isSubmitted() && $form->isValid()) {
+
             $em->persist($page);
             $em->flush();
             return $this->redirectToRoute('myadmin_page_index');
         }
-        return $this->render('admin/page/seoCity.html.twig',['form'=>$form->createView()]);
+        return $this->render('admin/page/seoCity.html.twig', ['form' => $form->createView()]);
     }
 
 }
