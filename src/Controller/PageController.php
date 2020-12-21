@@ -644,7 +644,7 @@ class PageController extends BaseController {
         $form = $this->createFormBuilder($page)
                 ->setAction($this->generateUrl('seo_city', ['pageId' => $pageId]));
         if ($page->getName() == 'Home') {
-            $form = $form > add('name', TextType::class, ['disabled' => true]);
+            $form = $form->add('name', TextType::class, ['disabled' => true]);
         } else {
             $form = $form->add('name');
         }
