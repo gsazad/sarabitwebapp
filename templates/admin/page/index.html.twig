@@ -27,6 +27,7 @@
                             <a class="btn btn-sm btn-warning" href="{{ path('myadmin_page_edit', { 'id': page.id }) }}">Basic</a>
                             <a class="btn btn-sm btn-success" href="{{ path('myadmin_page_edit2', { 'id': page.id }) }}">Advanced</a>
                             <a class="btn btn-sm btn-info" href="{{ path('myadmin_page_open', { 'id': page.id }) }}">Open</a>
+                            <a href="javascript:void(0)" class="btn btn-sm btn-dark aic-show-large-modal" data-href="{{ path('seo_city', { 'pageId': page.id }) }}">Seo</a>
                         </div>
                         {#
                         <ul>
@@ -44,6 +45,6 @@
     </table>
 
     <div class="pull-left">
-        <a href="{{path('myadmin_page_new')}}" class="btn btn-info"><i class="fa fa-plus"></i> New Page</a>
+        <a  href="{{path('myadmin_page_new')}}" class="btn btn-info "><i class="fa fa-plus"></i> New Page</a>
     </div>
 {% endblock %}

@@ -47,7 +47,7 @@ class Page
     /**
      * @var string
      *
-     * @ORM\Column(name="keywords", type="text", length=0, nullable=false)
+     * @ORM\Column(name="keywords", type="text", nullable=false)
      */
     private $keywords;
 

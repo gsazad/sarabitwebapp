@@ -634,4 +634,28 @@ class PageController extends BaseController {
         return $this->redirectToRoute('myadmin_page_open', ['id' => $pageId]);
     }
 
+    /**
+     * @Route("/seo/city/{pageId}", name="seo_city")
+     */
+    public function seo(Request $request) {
+        $pageId = $request->get('pageId');
+        $em=$this->getDoctrine()->getManager();
+        $page=$em->getRepository(Page::class)->findOneBy(['id'=>$pageId]);
+        $form=$this->createFormBuilder($page)
+                ->setAction($this->generateUrl('seo_city',['pageId'=>$pageId]))
+                ->add('name')
+                ->add('title')
+                ->add('description', TextType::class)
+                ->add('keywords')
+                ->getForm();
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            
+            $em->persist($page);
+            $em->flush();
+            return $this->redirectToRoute('myadmin_page_index');
+        }
+        return $this->render('admin/page/seoCity.html.twig',['form'=>$form->createView()]);
+    }
+
 }
