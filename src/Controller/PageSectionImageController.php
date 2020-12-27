@@ -32,6 +32,14 @@ class PageSectionImageController extends BaseController {
         $datatable = $dtf->create()
                         ->add('rank', NumberColumn::class, ['label' => 'Rank'])
                         ->add('title', TextColumn::class, ['label' => 'Title'])
+                        ->add('image', TextColumn::class, [
+                            'label' => 'Image',
+                            'render' => function($c, $v) {
+                                $src = $this->generateUrl('page_section_images', ['id' => $v->getId(), 'name' => $v->getId()]);
+                                $html = "<img src='" . $src . "'>";
+                                return $html;
+                            }
+                        ])
                         ->add('action', TextColumn::class, ['label' => 'Edit', 'render' => function($c, $v) {
                                 $editRoute = $this->generateUrl('myadmin_page_section_image_edit_content', ['sectionId' => $v->getPageSection()->getId(), 'imageId' => $v->getId()]);
                                 $html = "<a class='btn btn-sm btn-primary aic-show-large-modal' href='javascript:void(0)' data-href='" . $editRoute . "'>Edit</a>";
@@ -68,7 +76,7 @@ class PageSectionImageController extends BaseController {
         $imageId = $request->get('imageId');
         $image = $em->getRepository(PageSectionImages::class)->findOneBy(['id' => $imageId, 'pageSection' => $sectionId]);
         $form = $this->createFormBuilder($image)
-                ->setAction($this->generateUrl('myadmin_page_section_image_edit_content',['sectionId'=>$sectionId,'imageId'=>$imageId]))
+                ->setAction($this->generateUrl('myadmin_page_section_image_edit_content', ['sectionId' => $sectionId, 'imageId' => $imageId]))
                 ->add('title')
                 ->add('description')
                 ->add('showTitle', ChoiceType::class, ['choices' => ['yes' => 'yes', 'no' => 'no']])
