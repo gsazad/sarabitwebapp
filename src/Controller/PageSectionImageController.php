@@ -78,7 +78,7 @@ class PageSectionImageController extends BaseController {
         $em = $this->getDoctrine()->getManager();
         $sectionId = $request->get('sectionId');
         $imageId = $request->get('imageId');
-        $pageSectionImages = $em->getRepository(PageSectionImages::class)->findOneBy(['pageSection' => $sectionId, 'imageId' => $imageId]);
+        $pageSectionImages = $em->getRepository(PageSectionImages::class)->findOneBy(['pageSection' => $sectionId, 'id' => $imageId]);
         $em->remove($pageSectionImages);
         $em->flush();
         return $this->redirectToReffer($request);
