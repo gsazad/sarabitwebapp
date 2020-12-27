@@ -42,7 +42,11 @@ class PageSectionImageController extends BaseController {
                         ])
                         ->add('action', TextColumn::class, ['label' => 'Edit', 'render' => function($c, $v) {
                                 $editRoute = $this->generateUrl('myadmin_page_section_image_edit_content', ['sectionId' => $v->getPageSection()->getId(), 'imageId' => $v->getId()]);
-                                $html = "<a class='btn btn-sm btn-primary aic-show-large-modal' href='javascript:void(0)' data-href='" . $editRoute . "'>Edit</a>";
+                                $deleteRoute = $this->generateUrl('myadmin_page_section_image_delete', ['sectionId' => $v->getPageSection()->getId(), 'imageId' => $v->getId()]);
+                                $html = '<div class="btn-group">';
+                                $html .= "<a class='btn btn-sm btn-primary aic-show-large-modal' href='javascript:void(0)' data-href='" . $editRoute . "'>Edit</a>";
+                                $html .= '<a class="btn btn-sm btn-danger" href="' . $deleteRoute . '">Delete</a>';
+                                $html .= '</div>';
                                 return $html;
                             }])
                         ->addOrderBy('rank', DataTable::SORT_ASCENDING)
@@ -65,6 +69,19 @@ class PageSectionImageController extends BaseController {
                     'datatable' => $datatable,
                     'section' => $section,
         ]);
+    }
+
+    /**
+     * @Route("/page/section/{sectionId}/image/{imageId}/delete/image", name="myadmin_page_section_image_delete")
+     */
+    public function deleteImage(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $sectionId = $request->get('sectionId');
+        $imageId = $request->get('imageId');
+        $pageSectionImages = $em->getRepository(PageSectionImages::class)->findOneBy(['pageSection' => $sectionId, 'imageId' => $imageId]);
+        $em->remove($pageSectionImages);
+        $em->flush();
+        return $this->redirectToReffer($request);
     }
 
     /**
