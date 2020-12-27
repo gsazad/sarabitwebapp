@@ -159,6 +159,11 @@ class PageSection {
      */
     private $bannerOpacity;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $sliderRatio;
+
 
     public function __construct()
     {
@@ -494,6 +499,18 @@ class PageSection {
     public function setBannerOpacity(?string $bannerOpacity): self
     {
         $this->bannerOpacity = $bannerOpacity;
+
+        return $this;
+    }
+
+    public function getSliderRatio(): ?string
+    {
+        return $this->sliderRatio;
+    }
+
+    public function setSliderRatio(?string $sliderRatio): self
+    {
+        $this->sliderRatio = $sliderRatio;
 
         return $this;
     }

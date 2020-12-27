@@ -352,6 +352,9 @@ class PageController extends BaseController {
             ],
                 ])
         ;
+        if ($pageSection->getType == 'scroller') {
+            $form = $form->add('scrollerRatio', ChoiceType::class, ['choices' => ['9:3' => '9:3', '8:6' => '8:6', '6:3' => "6:3", '1:1', '1:1', '4:2' => '4:2']]);
+        }
 
         $form = $form->getForm();
         $form->handleRequest($request);
@@ -415,6 +418,7 @@ class PageController extends BaseController {
                         ->setContentPaddingTop(0)
                         ->setContentPaddingLeft(0)
                         ->setContentPaddingRight(0)
+                        ->setSliderRatio('9:3')
                 ;
                 $em->persist($section);
                 $em->flush();
