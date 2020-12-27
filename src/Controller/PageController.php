@@ -388,6 +388,7 @@ class PageController extends BaseController {
                         'scroller' => 'scroller',
                         'banner' => 'banner',
                         'youtube-section' => 'youtube-section',
+                        'html-section' => 'html-section',
             ]])
                 ->getForm();
         $form->handleRequest($request);

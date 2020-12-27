@@ -51,6 +51,15 @@
                                 <h2 {{ titleAnimation|raw }} style="{{ titleFont|raw }} color: {{ p.titleColor|raw }}" class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
                                 <p {{ contentAnimation|raw }} style="{{ contentFont|raw }}" class="{% if p.alignContent == 'center' %}text-center{% endif %}">{{ p.content }}</p>   
                             {% endif %}
+                            {% if p.type == 'html-section' %}
+                                {% if p.headerIcon %}
+                                    <div class="text-center fa-3x" style="color: {{p.headerIconColor|raw}}">
+                                        {{ p.headerIcon|raw }}
+                                    </div>
+                                {% endif %}
+                                <h2 {{ titleAnimation|raw }} style="{{ titleFont|raw }} color: {{ p.titleColor|raw }}" class="{% if p.alignTitle == 'center' %}text-center{% endif %}">{{ p.title }}</h2>   
+                                <p {{ contentAnimation|raw }} style="{{ contentFont|raw }}" class="{% if p.alignContent == 'center' %}text-center{% endif %}">{{ p.content|raw }}</p>   
+                            {% endif %}
                             {% if p.type == 'image-right' %}
                                 <div class="row">
                                     <div class="col-sm-8">
