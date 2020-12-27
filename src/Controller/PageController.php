@@ -294,7 +294,7 @@ class PageController extends BaseController {
             $em->flush();
             return $this->redirectToRoute('myadmin_page_open', ['id' => $pageSection->getPage()->getId()]);
         }
-        return $this->render('admin/page/pageSectionEdit.html.twig', ['form' => $form->createView()]);
+        return $this->render('admin/page/pageSectionEdit.html.twig', ['form' => $form->createView(), 'pageSection' => $pageSection]);
     }
 
     /**
