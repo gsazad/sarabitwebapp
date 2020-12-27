@@ -36,7 +36,7 @@ class PageSectionImageController extends BaseController {
                             'label' => 'Image',
                             'render' => function($c, $v) {
                                 $src = $this->generateUrl('page_section_images', ['id' => $v->getId(), 'name' => $v->getId()]);
-                                $html = "<img src='" . $src . "'>";
+                                $html = "<img src='" . $src . "' height='120px'>";
                                 return $html;
                             }
                         ])
