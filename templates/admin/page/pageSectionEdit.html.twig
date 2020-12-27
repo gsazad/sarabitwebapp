@@ -3,7 +3,7 @@
 <input type="submit" value="submit" class="btn btn-primary">
 {{ form_end(form)}} 
 
-{% if is defined pageSection %}
+{% if pageSection is defined %}
     {% if pageSection.type == 'html-section' %}
         <script src="{{asset('')}}bundles/app/tinymce2/js/tinymce/tinymce.min.js"></script>
         <script type="text/javascript">
