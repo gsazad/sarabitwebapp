@@ -98,7 +98,7 @@
                                                                 <h2 uk-slideshow-parallax="x: 200,0,0" style="{% if i.colorTitle %}color: {{ i.colorTitle|raw }};{% endif %}">{{ i.title }}</h2>
                                                             {% endif %}
                                                             {% if i.showDescription == 'yes' %}
-                                                                <p uk-slideshow-parallax="x: 400,0,0;" style="{% if i.colorDescription %}color: {{ i.colorDescription:raw }};{% endif %}">{{ i.description }}</p>
+                                                                <p uk-slideshow-parallax="x: 400,0,0;" style="{% if i.colorDescription %}color: {{ i.colorDescription|raw }};{% endif %}">{{ i.description }}</p>
                                                             {% endif %}
                                                         </div>
                                                     </div>
