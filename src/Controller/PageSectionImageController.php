@@ -68,6 +68,7 @@ class PageSectionImageController extends BaseController {
         $imageId = $request->get('imageId');
         $image = $em->getRepository(PageSectionImages::class)->findOneBy(['id' => $imageId, 'pageSection' => $sectionId]);
         $form = $this->createFormBuilder($image)
+                ->setAction($this->generateUrl('myadmin_page_section_image_edit_content',['sectionId'=>$sectionId,'imageId'=>$imageId]))
                 ->add('title')
                 ->add('description')
                 ->add('showTitle', ChoiceType::class, ['choices' => ['yes' => 'yes', 'no' => 'no']])
