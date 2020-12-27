@@ -95,10 +95,10 @@
                                                     <div class="uk-position-center uk-position-medium uk-text-center">
                                                         <div uk-slideshow-parallax="scale: 1,1,0.8">
                                                             {% if i.showTitle == 'yes' %}
-                                                                <h2 uk-slideshow-parallax="x: 200,0,0" style="{% if i.colorTitle %}color: {{ i.colorTitle|raw }};{% endif %}">{{ i.title }}</h2>
+                                                                <h2 uk-slideshow-parallax="x: 200,0,0" style="{% if i.titleColor %}color: {{ i.titleColor|raw }};{% endif %}">{{ i.title }}</h2>
                                                             {% endif %}
                                                             {% if i.showDescription == 'yes' %}
-                                                                <p uk-slideshow-parallax="x: 400,0,0;" style="{% if i.colorDescription %}color: {{ i.colorDescription|raw }};{% endif %}">{{ i.description }}</p>
+                                                                <p uk-slideshow-parallax="x: 400,0,0;" style="{% if i.descriptionColor %}color: {{ i.descriptionColor|raw }};{% endif %}">{{ i.description }}</p>
                                                             {% endif %}
                                                         </div>
                                                     </div>
