@@ -47,6 +47,31 @@ class PageSectionImages
      */
     private $title;
 
+    /**
+     * @ORM\Column(type="text",nullable=true)
+     */
+    private $description;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $showTitle;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $showDescription;
+
+    /**
+     * @ORM\Column(type="string", length=10, nullable=true)
+     */
+    private $titleColor;
+
+    /**
+     * @ORM\Column(type="string", length=10, nullable=true)
+     */
+    private $descriptionColor;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +145,66 @@ class PageSectionImages
     public function setTitle(string $title): self
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getShowTitle(): ?string
+    {
+        return $this->showTitle;
+    }
+
+    public function setShowTitle(?string $showTitle): self
+    {
+        $this->showTitle = $showTitle;
+
+        return $this;
+    }
+
+    public function getShowDescription(): ?string
+    {
+        return $this->showDescription;
+    }
+
+    public function setShowDescription(?string $showDescription): self
+    {
+        $this->showDescription = $showDescription;
+
+        return $this;
+    }
+
+    public function getTitleColor(): ?string
+    {
+        return $this->titleColor;
+    }
+
+    public function setTitleColor(?string $titleColor): self
+    {
+        $this->titleColor = $titleColor;
+
+        return $this;
+    }
+
+    public function getDescriptionColor(): ?string
+    {
+        return $this->descriptionColor;
+    }
+
+    public function setDescriptionColor(?string $descriptionColor): self
+    {
+        $this->descriptionColor = $descriptionColor;
 
         return $this;
     }

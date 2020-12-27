@@ -90,6 +90,19 @@
                                         {% for i in scrollerImages %}
                                             <li>
                                                 <img src="{{ path('page_section_images',{'id':i.id,'name':i.fileName}) }}" alt="" uk-cover>
+                                                {% if i.showTitle == 'yes' or i.showDescription == 'yes' %}
+                                                    <div class="uk-position-cover" uk-slideshow-parallax="opacity: 0,0,0.2; backgroundColor: #000,#000"></div>
+                                                    <div class="uk-position-center uk-position-medium uk-text-center">
+                                                        <div uk-slideshow-parallax="scale: 1,1,0.8">
+                                                            {% if i.showTitle == 'yes' %}
+                                                                <h2 uk-slideshow-parallax="x: 200,0,0" style="{% if i.colorTitle %}color: {{ i.colorTitle|raw }};{% endif %}">{{ i.title }}</h2>
+                                                            {% endif %}
+                                                            {% if i.showDescription == 'yes' %}
+                                                                <p uk-slideshow-parallax="x: 400,0,0;" style="{% if i.colorDescription %}color: {{ i.colorDescription:raw }};{% endif %}">{{ i.description }}</p>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
                                             </li>
                                         {% endfor %}
                                     </ul>

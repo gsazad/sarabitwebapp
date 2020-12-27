@@ -10,6 +10,8 @@ use Omines\DataTablesBundle\Column\NumberColumn;
 use Omines\DataTablesBundle\Column\TextColumn;
 use Omines\DataTablesBundle\DataTable;
 use Omines\DataTablesBundle\DataTableFactory;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +33,8 @@ class PageSectionImageController extends BaseController {
                         ->add('rank', NumberColumn::class, ['label' => 'Rank'])
                         ->add('title', TextColumn::class, ['label' => 'Title'])
                         ->add('action', TextColumn::class, ['label' => 'Edit', 'render' => function($c, $v) {
-                                $html = "";
+                                $editRoute = $this->generateUrl('myadmin_page_section_image_edit_content', ['sectionId' => $v->getPageSection()->getId(), 'imageId' => $v->getId()]);
+                                $html = "<a class='btn btn-sm btn-primary aic-show-large-modal' href='javascript:void(0)' data-href='" . $editRoute . "'>Edit</a>";
                                 return $html;
                             }])
                         ->addOrderBy('rank', DataTable::SORT_ASCENDING)
@@ -54,6 +57,33 @@ class PageSectionImageController extends BaseController {
                     'datatable' => $datatable,
                     'section' => $section,
         ]);
+    }
+
+    /**
+     * @Route("/page/section/{sectionId}/image/{imageId}/edit/content", name="myadmin_page_section_image_edit_content")
+     */
+    public function editContent(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $sectionId = $request->get('sectionId');
+        $imageId = $request->get('imageId');
+        $image = $em->getRepository(PageSectionImages::class)->findOneBy(['id' => $imageId, 'sectionId' => $sectionId]);
+        $form = $this->createFormBuilder($image)
+                ->add('title')
+                ->add('description')
+                ->add('showTitle', ChoiceType::class, ['choices' => ['yes' => 'yes', 'no' => 'no']])
+                ->add('showDescription', ChoiceType::class, ['choices' => ['yes' => 'yes', 'no' => 'no']])
+                ->add('titleColor', ColorType::class)
+                ->add('descriptionColor', ColorType::class)
+                ->getForm()
+        ;
+        $form->handleRequest($request);
+        if ($form->isValid() && $form->isSubmitted()) {
+            $em->persist($image);
+            $em->flush();
+
+            return $this->redirectToRoute('myadmin_page_section_images', ['id' => $sectionId]);
+        }
+        return $this->render('page_section_image/modalForm.html.twig', ['form' => $form->createView()]);
     }
 
     /**
