@@ -66,7 +66,7 @@ class PageSectionImageController extends BaseController {
         $em = $this->getDoctrine()->getManager();
         $sectionId = $request->get('sectionId');
         $imageId = $request->get('imageId');
-        $image = $em->getRepository(PageSectionImages::class)->findOneBy(['id' => $imageId, 'pageSectionId' => $sectionId]);
+        $image = $em->getRepository(PageSectionImages::class)->findOneBy(['id' => $imageId, 'pageSection' => $sectionId]);
         $form = $this->createFormBuilder($image)
                 ->add('title')
                 ->add('description')
