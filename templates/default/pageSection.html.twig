@@ -93,7 +93,7 @@
                                 </div>
                             {% endif %}
                             {% if p.type == 'scroller' %}
-                                <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow="{% if p.sliderRatio %}ratio: {{ p.sliderRatio|raw }};{% endif %}">
+                                <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow="{% if p.sliderRatio %}ratio: {{ p.sliderRatio|raw }};{% endif %} autoplay: true;">
                                     <ul class="uk-slideshow-items">
                                         {% set scrollerImages = getPageSectionImages(p) %}
                                         {% for i in scrollerImages %}
