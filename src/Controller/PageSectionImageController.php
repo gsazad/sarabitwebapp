@@ -77,7 +77,7 @@ class PageSectionImageController extends BaseController {
                 ->getForm()
         ;
         $form->handleRequest($request);
-        if ($form->isValid() && $form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($image);
             $em->flush();
 
